@@ -1,5 +1,3 @@
-val xjbOutputDir = file("$buildDir/generated-sources/jaxb2")
-
 tasks {
     val generateJaxb2 by tasks.creating(Jaxb2Task::class) {
         outputDir = ext["xjbOutputDir"] as File

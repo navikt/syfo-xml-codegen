@@ -1,0 +1,883 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+legeerklæring ved arbeidsuførhet, versjon 1.0 2008-06-06,
+tilrettelagt for bruk med Hodemelding.
+Produsert av KITH på oppdrag fra NAV - www.kith.no - www.nav.no
+-->
+<!--
+Endret 2008-06-06
+NyeLegeopplysninger endret fra int til string
+-->
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:xsd="schemaLocation for xmlns:xsd http://www.w3.org/2001/XMLSchema.xsd" xmlns:le="http://www.kith.no/xmlstds/legeerklaring/2008-06-06" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" targetNamespace="http://www.kith.no/xmlstds/legeerklaring/2008-06-06" elementFormDefault="qualified" attributeFormDefault="unqualified">
+    <import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="http://www.w3.org/TR/xmldsig-core/xmldsig-core-schema.xsd"/>
+    <element name="Legeerklaring">
+        <annotation>
+            <documentation>Spesialisering av den abstrakte klassen Melding, til  klassen Legeerklæring ved arbeidsuførhet.</documentation>
+        </annotation>
+        <complexType>
+            <sequence>
+                <element ref="le:LegeerklaringGjelder" maxOccurs="4"/>
+                <element ref="le:Pasientopplysninger"/>
+                <element ref="le:PlanUtredBehandle" minOccurs="0"/>
+                <element ref="le:DiagnoseArbeidsuforhet"/>
+                <element ref="le:ForslagTiltak"/>
+                <element ref="le:VurderingFunksjonsevne"/>
+                <element ref="le:Prognose"/>
+                <element ref="le:ArsakssammenhengLegeerklaring" minOccurs="0"/>
+                <element ref="le:ForbeholdLegeerklaring"/>
+                <element ref="le:AndreOpplysninger" minOccurs="0"/>
+                <element ref="le:Kontakt" minOccurs="0" maxOccurs="unbounded"/>
+            </sequence>
+        </complexType>
+    </element>
+    <element name="VurderingFunksjonsevne">
+        <annotation>
+            <documentation>For å beskrive hvordan pasientens generelle funksjonsevne er nedsatt.</documentation>
+        </annotation>
+        <complexType>
+            <sequence>
+                <element ref="le:Arbeidssituasjon" maxOccurs="unbounded"/>
+                <element ref="le:VurderingArbeidsevne" minOccurs="0"/>
+                <element name="Funksjonsevne" type="le:typeTekst" minOccurs="0"/>
+                <element name="KravArbeid" type="le:typeTekst" minOccurs="0"/>
+            </sequence>
+        </complexType>
+    </element>
+    <element name="ArsakssammenhengLegeerklaring" type="le:typeTekst">
+        <annotation>
+            <documentation>For å angi hvor stor betydning funksjonsnedsettelsen har for at arbeidsevnen er nedsatt.</documentation>
+        </annotation>
+    </element>
+    <element name="ForbeholdLegeerklaring">
+        <annotation>
+            <documentation>For å angi om det er noe i legeerklæringen som pasienten ikke bør få vite av medisinske grunner.</documentation>
+        </annotation>
+        <complexType>
+            <sequence>
+                <element name="BorTilbakeholdes" type="le:typeTekst" minOccurs="0"/>
+            </sequence>
+            <attribute name="tilbakeholdInnhold" type="le:typeJaNei" use="optional"/>
+        </complexType>
+    </element>
+    <element name="AndreOpplysninger">
+        <annotation>
+            <documentation>For å angi andre opplysninger.</documentation>
+        </annotation>
+        <complexType>
+            <sequence>
+                <element name="Opplysning" type="le:typeTekst"/>
+            </sequence>
+            <attribute name="onskesKopi" type="le:typeJaNei" use="optional"/>
+        </complexType>
+    </element>
+    <element name="Kontakt">
+        <annotation>
+            <documentation>For å angi hvem legen ønsker at trygdekontoret skal ta kontakt med.</documentation>
+        </annotation>
+        <complexType>
+            <attribute name="kontakt" type="le:typeKontakt" use="required"/>
+            <attribute name="annenInstans" type="string" use="optional"/>
+        </complexType>
+    </element>
+    <element name="LegeerklaringGjelder">
+        <annotation>
+            <documentation>For å angi om legeerklæringen gjelder sykefravær i mer enn 8 uker, rehabiliteringspenger, yrkesrettet attføring eller uførepensjon.  Det benyttes en forekomst av klassen for hver valgmulighet (tilsvarer et kryss på skjemaet). Hvis både felt 0.1 og felt 0.3 er avkrysset må meldingen inneholde to forekomster av klassen.'</documentation>
+        </annotation>
+        <complexType>
+            <attribute name="typeLegeerklaring" type="le:typeLegeerklaring"/>
+        </complexType>
+    </element>
+    <element name="Prognose">
+        <annotation>
+            <documentation>For å angi prognose for bedring av arbeidsevnen, varighet av sykdom/skade, varighet av funksjonsnedsettelse, varighet av nedsatt arbeidsevne.</documentation>
+        </annotation>
+        <complexType>
+            <sequence>
+                <element name="AntattVarighet" type="le:typeTekst" minOccurs="0"/>
+                <element name="VarighetFunksjonsnedsettelse" type="le:typeTekst" minOccurs="0"/>
+                <element name="VarighetNedsattArbeidsevne" type="le:typeTekst" minOccurs="0"/>
+            </sequence>
+            <attribute name="bedreArbeidsevne" type="le:typeJaNei"/>
+        </complexType>
+    </element>
+    <element name="VurderingArbeidsevne">
+        <annotation>
+            <documentation>For å angi vurdering av arbeidsevne, begrensninger i forhold til arbeidet pasienten er sykmeldt fra og begrensninger ved vurdering av alternativt arbeid eller yrke.</documentation>
+        </annotation>
+        <complexType>
+            <sequence>
+                <element name="IkkeGjore" type="le:typeTekst" minOccurs="0"/>
+                <element name="HensynAnnetYrke" type="le:typeTekst" minOccurs="0"/>
+            </sequence>
+            <attribute name="gjenopptaArbeid" type="le:typeJaNei" use="optional"/>
+            <attribute name="narGjenopptaArbeid" type="le:typeNaEtter" use="optional"/>
+            <attribute name="taAnnetArbeid" type="le:typeJaNei" use="optional"/>
+            <attribute name="narTaAnnetArbeid" type="le:typeNaEtter" use="optional"/>
+        </complexType>
+    </element>
+    <element name="Arbeidssituasjon">
+        <annotation>
+            <documentation>For å angi type arbeid og hvilke krav som stilles.</documentation>
+        </annotation>
+        <complexType>
+            <attribute name="arbeidssituasjon" type="le:typeArbeidssituasjon"/>
+            <attribute name="annenArbeidssituasjon" type="string"/>
+        </complexType>
+    </element>
+    <element name="DiagnoseArbeidsuforhet">
+        <annotation>
+            <documentation>For å angi dato for når sykmeldingsperioden begynte i dette sykmeldingstilfellet.</documentation>
+        </annotation>
+        <complexType>
+            <sequence>
+                <element ref="le:DiagnoseKodesystem"/>
+                <element ref="le:VurderingYrkesskade"/>
+                <element name="StatusPresens" type="le:typeTekst"/>
+                <element name="SymptomerBehandling" type="le:typeTekst"/>
+            </sequence>
+            <attribute name="arbeidsuforFra" type="date"/>
+        </complexType>
+    </element>
+    <element name="PlanUtredBehandle">
+        <annotation>
+            <documentation>Plan, utredning og behandling.</documentation>
+        </annotation>
+        <complexType>
+            <sequence>
+                <element ref="le:HenvistUtredning" minOccurs="0"/>
+                <element ref="le:HenvistBehandling" minOccurs="0"/>
+                <element name="NyeLegeopplysninger" type="string" minOccurs="0"/>
+                <element name="IkkeVidereBehandling" type="le:typeTekst" minOccurs="0"/>
+                <element name="NyVurdering" type="le:typeTekst" minOccurs="0"/>
+                <element name="BehandlingsPlan" type="le:typeTekst" minOccurs="0"/>
+                <element name="UtredningsPlan" type="le:typeTekst" minOccurs="0"/>
+            </sequence>
+        </complexType>
+    </element>
+    <element name="HenvistUtredning">
+        <annotation>
+            <documentation>For å angi type utredning, hvor denne skal foregå, henvisningsdato og antatt ventetid.</documentation>
+        </annotation>
+        <complexType>
+            <sequence>
+                <element ref="le:Spesifikasjon"/>
+            </sequence>
+            <attribute name="henvistDato" type="date" use="required"/>
+            <attribute name="antattVentetid" type="nonNegativeInteger" use="required"/>
+        </complexType>
+    </element>
+    <element name="HenvistBehandling">
+        <annotation>
+            <documentation>For å angi type behandling, hvor denne skal foregå, henvisningsdato og antatt ventetid.</documentation>
+        </annotation>
+        <complexType>
+            <sequence>
+                <element ref="le:Spesifikasjon"/>
+            </sequence>
+            <attribute name="henvistDato" type="date" use="required"/>
+            <attribute name="antattVentetid" type="nonNegativeInteger" use="required"/>
+        </complexType>
+    </element>
+    <element name="Spesifikasjon" type="le:typeTekst"/>
+    <element name="AktueltTiltak">
+        <annotation>
+            <documentation>For å angi ett aktuelt tiltak. En forekomst av klassen inneholder et tiltak. Flere tiltak forutsetter flere forkomster av klassen.</documentation>
+        </annotation>
+        <complexType>
+            <sequence>
+                <element name="HvilkeAndreTiltak" type="le:typeTekst"/>
+            </sequence>
+            <attribute name="typeTiltak" type="le:typeTiltak" use="required"/>
+        </complexType>
+    </element>
+    <element name="VurderingYrkesskade">
+        <annotation>
+            <documentation>For angi om trygdekontoret bør vurdere om det er en yrkesskade/yrkessykdom.</documentation>
+        </annotation>
+        <complexType>
+            <attribute name="borVurderes" type="le:typeJaNei"/>
+            <attribute name="skadeDato" type="date" use="optional"/>
+        </complexType>
+    </element>
+    <element name="ForslagTiltak">
+        <annotation>
+            <documentation>For å angi aktuelle tiltak ut fra medisinsk vurdering, nærmere opplysninger om disse tiltakene, evt. begrensninger i forhold til tiltakene eller begrunnelse for at det ikke er aktuelt med tiltak.</documentation>
+        </annotation>
+        <complexType>
+            <sequence>
+                <element ref="le:AktueltTiltak" minOccurs="0" maxOccurs="unbounded"/>
+                <element name="Opplysninger" type="le:typeTekst"/>
+                <choice>
+                    <element name="BegrensningerTiltak" type="le:typeTekst"/>
+                    <element name="BegrunnelseIkkeTiltak" type="le:typeTekst"/>
+                </choice>
+            </sequence>
+            <attribute name="tiltak" type="le:typeJaNei" use="optional"/>
+        </complexType>
+    </element>
+    <simpleType name="typeLegeerklaring">
+        <annotation>
+            <documentation>Kodeverdier 1-4</documentation>
+        </annotation>
+        <restriction base="nonNegativeInteger">
+            <enumeration value="1">
+                <annotation>
+                    <documentation>Sykefravær mer enn 8 uker</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="2">
+                <annotation>
+                    <documentation>Rehabiliteringspenger</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="3">
+                <annotation>
+                    <documentation>Yrkesrette attføring</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="4">
+                <annotation>
+                    <documentation>Uførepensjon</documentation>
+                </annotation>
+            </enumeration>
+        </restriction>
+    </simpleType>
+    <simpleType name="typeArbeidssituasjon">
+        <annotation>
+            <documentation>Kodeverdier 1-4</documentation>
+        </annotation>
+        <restriction base="nonNegativeInteger">
+            <enumeration value="1">
+                <annotation>
+                    <documentation>Inntektsgivende arbeid</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="2">
+                <annotation>
+                    <documentation>Hjemmearbeidende</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="3">
+                <annotation>
+                    <documentation>Student</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="4">
+                <annotation>
+                    <documentation>Annet</documentation>
+                </annotation>
+            </enumeration>
+        </restriction>
+    </simpleType>
+    <simpleType name="typeKontakt">
+        <annotation>
+            <documentation>Kodeverdier 1-5</documentation>
+        </annotation>
+        <restriction base="nonNegativeInteger">
+            <enumeration value="1">
+                <annotation>
+                    <documentation>Behandlende lege</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="2">
+                <annotation>
+                    <documentation>Arbeidsgiver</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="3">
+                <annotation>
+                    <documentation>Arbeidskontor</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="4">
+                <annotation>
+                    <documentation>Basisgruppe</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="5">
+                <annotation>
+                    <documentation>Annen instans</documentation>
+                </annotation>
+            </enumeration>
+        </restriction>
+    </simpleType>
+    <simpleType name="typeTiltak">
+        <annotation>
+            <documentation>Kodeverdier 1-7</documentation>
+        </annotation>
+        <restriction base="nonNegativeInteger">
+            <enumeration value="1">
+                <annotation>
+                    <documentation>Kjøp av helsetjenester</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="2">
+                <annotation>
+                    <documentation>Reisetilskudd i stedet for sykepenger</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="3">
+                <annotation>
+                    <documentation>Aktiv sykmelding</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="4">
+                <annotation>
+                    <documentation>Hjelpemidler på arbeidsplassen</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="5">
+                <annotation>
+                    <documentation>Yrkesrettet attføring</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="6">
+                <annotation>
+                    <documentation>Friskmelding til arbeidsformidling</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="7">
+                <annotation>
+                    <documentation>Andre</documentation>
+                </annotation>
+            </enumeration>
+        </restriction>
+    </simpleType>
+    <!--
+
+FELLES ELEMENTER og TYPER
+
+-->
+    <element name="DiagnoseKodesystem">
+        <annotation>
+            <documentation>For å angi benyttet diagnosekodesystem.</documentation>
+        </annotation>
+        <complexType>
+            <sequence>
+                <element ref="le:Enkeltdiagnose" maxOccurs="unbounded"/>
+            </sequence>
+            <attribute name="kodesystem" type="le:typeKodesystem" use="required">
+                <annotation>
+                    <documentation>For LE gjelder 1, 2 og 3. For SM gjelder 3 og 5.</documentation>
+                </annotation>
+            </attribute>
+        </complexType>
+    </element>
+    <element name="Enkeltdiagnose">
+        <annotation>
+            <documentation>For å angi kodeverdi, tekstlig beskrivelse av kodeverdi og sorteringsrekkefølge for enkeltdiagnoser (en pasient kan ha flere diagnoser). En hoveddiagnose må alltid oppgis.</documentation>
+        </annotation>
+        <complexType>
+            <attribute name="diagnose" type="string" use="optional"/>
+            <attribute name="kodeverdi" type="string" use="required"/>
+            <attribute name="sortering" type="nonNegativeInteger" use="required"/>
+        </complexType>
+    </element>
+    <simpleType name="typeTekst">
+        <annotation>
+            <documentation>Type for utførende beskrivelser</documentation>
+        </annotation>
+        <restriction base="string">
+            <whiteSpace value="preserve"/>
+        </restriction>
+    </simpleType>
+    <simpleType name="typeFormOfLanguage">
+        <annotation>
+            <documentation>Kodeverdier 1-2</documentation>
+        </annotation>
+        <restriction base="nonNegativeInteger">
+            <enumeration value="1">
+                <annotation>
+                    <documentation>Bokmål</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="2">
+                <annotation>
+                    <documentation>Nynorsk</documentation>
+                </annotation>
+            </enumeration>
+        </restriction>
+    </simpleType>
+    <simpleType name="typeKodesystem">
+        <annotation>
+            <documentation>Kodeverdier 1-5</documentation>
+        </annotation>
+        <restriction base="nonNegativeInteger">
+            <enumeration value="1">
+                <annotation>
+                    <documentation>ICPC</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="2">
+                <annotation>
+                    <documentation>ICD-9</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="3">
+                <annotation>
+                    <documentation>ICD-10</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="4">
+                <annotation>
+                    <documentation>ICPC-1</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="5">
+                <annotation>
+                    <documentation>ICPC-2</documentation>
+                </annotation>
+            </enumeration>
+        </restriction>
+    </simpleType>
+    <simpleType name="typeJaNei">
+        <annotation>
+            <documentation>Kodeverdier 1-2</documentation>
+        </annotation>
+        <restriction base="nonNegativeInteger">
+            <enumeration value="1">
+                <annotation>
+                    <documentation>Ja</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="2">
+                <annotation>
+                    <documentation>Nei</documentation>
+                </annotation>
+            </enumeration>
+        </restriction>
+    </simpleType>
+    <simpleType name="typeJaNeiVetikke">
+        <annotation>
+            <documentation>Kodeverdier 1-3</documentation>
+        </annotation>
+        <restriction base="nonNegativeInteger">
+            <enumeration value="1">
+                <annotation>
+                    <documentation>Ja</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="2">
+                <annotation>
+                    <documentation>Nei</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="3">
+                <annotation>
+                    <documentation>Vet ikke / Usikkert</documentation>
+                </annotation>
+            </enumeration>
+        </restriction>
+    </simpleType>
+    <simpleType name="typeNaEtter">
+        <annotation>
+            <documentation>Kodeverider 1-2</documentation>
+        </annotation>
+        <restriction base="nonNegativeInteger">
+            <enumeration value="1">
+                <annotation>
+                    <documentation>Nå</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="2">
+                <annotation>
+                    <documentation>Etter</documentation>
+                </annotation>
+            </enumeration>
+        </restriction>
+        <!-- Kodeverk: Kodeverk er ikke spesifisert i skjema -->
+    </simpleType>
+    <!--
+
+PERSONOPPLYSNINGER
+
+-->
+    <element name="Pasientopplysninger">
+        <complexType>
+            <sequence>
+                <element ref="le:Pasient"/>
+            </sequence>
+            <attribute name="flereArbeidsforhold" type="le:typeJaNeiVetikke" use="required"/>
+        </complexType>
+    </element>
+    <element name="Pasient">
+        <annotation>
+            <documentation>Hjelpeklasse</documentation>
+        </annotation>
+        <complexType>
+            <sequence>
+                <element ref="le:Navn"/>
+                <element ref="le:Arbeidsforhold" minOccurs="0"/>
+                <element ref="le:PersonAdr" minOccurs="0" maxOccurs="unbounded"/>
+            </sequence>
+            <attribute name="fodselsnummer" type="string" use="required"/>
+            <attribute name="trygdekontor" type="string" use="required"/>
+        </complexType>
+    </element>
+    <element name="PersonAdr" type="le:typeAdresse">
+        <annotation>
+            <documentation>Inneholder opplysninger om type adresse.</documentation>
+        </annotation>
+    </element>
+    <element name="Arbeidsforhold">
+        <annotation>
+            <documentation>For å angi informasjon om personens arbeidsforhold.</documentation>
+        </annotation>
+        <complexType>
+            <sequence>
+                <element ref="le:Virksomhet" minOccurs="0"/>
+                <element name="Yrkesbetegnelse" type="string"/>
+            </sequence>
+            <attribute name="yrkeskode" type="string" use="optional"/>
+            <attribute name="primartArbeidsforhold" type="le:typeJaNei"/>
+        </complexType>
+    </element>
+    <element name="Virksomhet">
+        <annotation>
+            <documentation>Denne klassen benyttes til å beskrive de virksomheter som direkte eller indirekte skal kunne refereres fra en eller flere EPJ. Dette kan f.eks. være pasienters arbeidsgivere, virksomheter som det overføres journalinformasjon til, eller som har vært kilde til informasjon i EPJ, f.eks. et eksternt laboratorium.</documentation>
+        </annotation>
+        <complexType>
+            <sequence>
+                <element ref="le:VirksomhetsAdr" minOccurs="0"/>
+            </sequence>
+            <attribute name="virksomhetsBetegnelse" type="string"/>
+            <attribute name="organisasjonsnummer" type="string" use="optional"/>
+        </complexType>
+    </element>
+    <element name="VirksomhetsAdr" type="le:typeAdresse">
+        <annotation>
+            <documentation>Beskriver egenskap ved virksomhetens adresse</documentation>
+        </annotation>
+    </element>
+    <element name="Teleinformasjon">
+        <annotation>
+            <documentation>Telekommunikasjonsadresse, inklusive kommunikasjonstype. Denne klassen benyttes for å registrere telefonnummer, telefaks, personsøker etc., knyttes opp mot de registrerte adressene.</documentation>
+        </annotation>
+        <complexType>
+            <simpleContent>
+                <extension base="string">
+                    <attribute name="typeTelekom" type="le:typeTelekomtype"/>
+                </extension>
+            </simpleContent>
+        </complexType>
+    </element>
+    <element name="PostalAddress" type="le:typePostalAddress">
+        <annotation>
+            <documentation>Inneholder adresseopplysinger. Full adresse bestående av f.eks. gatenavn, husnummer, postnummer, poststed etc. Bør registreres ferdig linjedelt for utskrift.</documentation>
+        </annotation>
+    </element>
+    <element name="Navn" type="le:typeNavn"/>
+    <element name="Etternavn" type="string"/>
+    <element name="Fornavn" type="string"/>
+    <element name="Mellomnavn" type="string"/>
+    <complexType name="typeAdresse">
+        <sequence>
+            <element ref="le:PostalAddress" minOccurs="0" maxOccurs="unbounded"/>
+            <element ref="le:Teleinformasjon" minOccurs="0" maxOccurs="unbounded"/>
+        </sequence>
+        <attribute name="adressetype" type="le:typeAdressetype"/>
+    </complexType>
+    <complexType name="typePostalAddress">
+        <sequence>
+            <element name="StreetAddress" type="string"/>
+            <element name="PostalCode" type="string"/>
+            <element name="City" type="string"/>
+            <element name="Country" type="string" default="no" minOccurs="0"/>
+        </sequence>
+    </complexType>
+    <complexType name="typeNavn">
+        <sequence>
+            <element ref="le:Etternavn"/>
+            <element ref="le:Fornavn"/>
+            <element ref="le:Mellomnavn" minOccurs="0"/>
+        </sequence>
+    </complexType>
+    <simpleType name="typeHelsepersonell">
+        <restriction base="string">
+            <enumeration value="BI">
+                <annotation>
+                    <documentation>Bioingeniør</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="ET">
+                <annotation>
+                    <documentation>Ergoterapeut</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="FA">
+                <annotation>
+                    <documentation>Farmasøyt</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="FO">
+                <annotation>
+                    <documentation>Fotterapeut</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="FT">
+                <annotation>
+                    <documentation>Fysioterapeut</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="HP">
+                <annotation>
+                    <documentation>Hjelpepleier</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="HS">
+                <annotation>
+                    <documentation>Helsesøster</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="JO">
+                <annotation>
+                    <documentation>Jordmor</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="KI">
+                <annotation>
+                    <documentation>Kiropraktor</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="LE">
+                <annotation>
+                    <documentation>Lege</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="OI">
+                <annotation>
+                    <documentation>Ortopediingeniør</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="OP">
+                <annotation>
+                    <documentation>Optiker</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="PS">
+                <annotation>
+                    <documentation>Psykolog</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="RA">
+                <annotation>
+                    <documentation>Radiograf</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="SP">
+                <annotation>
+                    <documentation>Sykepleier</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="TL">
+                <annotation>
+                    <documentation>Tannlege</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="TP">
+                <annotation>
+                    <documentation>Tannpleier</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="VE">
+                <annotation>
+                    <documentation>Veterinær</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="VP">
+                <annotation>
+                    <documentation>Vernepleier</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="AA">
+                <annotation>
+                    <documentation>Ambulansearbeider</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="AT">
+                <annotation>
+                    <documentation>Apotektekniker</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="AU">
+                <annotation>
+                    <documentation>Audiograf</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="HE">
+                <annotation>
+                    <documentation>Helsesekretær</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="KE">
+                <annotation>
+                    <documentation>Klinisk ernæringsfysiolog</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="OA">
+                <annotation>
+                    <documentation>Omsorgsarbeider</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="OR">
+                <annotation>
+                    <documentation>Ortoptist</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="PE">
+                <annotation>
+                    <documentation>Perfusjonist</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="TH">
+                <annotation>
+                    <documentation>Tannhelsesekretær</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="TT">
+                <annotation>
+                    <documentation>Tanntekniker</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="MT">
+                <annotation>
+                    <documentation>Manuellterapeut</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="IN">
+                <annotation>
+                    <documentation>Institusjon</documentation>
+                </annotation>
+            </enumeration>
+        </restriction>
+    </simpleType>
+    <simpleType name="typeAdressetype">
+        <annotation>
+            <documentation>HL7-verdier</documentation>
+        </annotation>
+        <restriction base="string">
+            <enumeration value="RES">
+                <annotation>
+                    <documentation>Besøksadresse</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="PST">
+                <annotation>
+                    <documentation>Postadresse</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="INV">
+                <annotation>
+                    <documentation>Faktureringsadresse</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="TMP">
+                <annotation>
+                    <documentation>Midlertidig adresse</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="BAD">
+                <annotation>
+                    <documentation>Ubrukelig adresse</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="H">
+                <annotation>
+                    <documentation>Bostedsadresse</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="HP">
+                <annotation>
+                    <documentation>Folkeregistrert adresse</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="HV">
+                <annotation>
+                    <documentation>Ferieadresse</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="WP">
+                <annotation>
+                    <documentation>Arbeidsplass</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="ABC">
+                <annotation>
+                    <documentation>Alfabetisk</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="SYL">
+                <annotation>
+                    <documentation>Stavet</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="IDE">
+                <annotation>
+                    <documentation>Ideografisk</documentation>
+                </annotation>
+            </enumeration>
+        </restriction>
+    </simpleType>
+    <simpleType name="typeTelekomtype">
+        <annotation>
+            <documentation>HL7-verdier + egen utvidelse</documentation>
+        </annotation>
+        <restriction base="string">
+            <enumeration value="H">
+                <annotation>
+                    <documentation>Hjemme eller ukjent</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="HP">
+                <annotation>
+                    <documentation>Hovedtelefon</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="HV">
+                <annotation>
+                    <documentation>Ferietelefon</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="WP">
+                <annotation>
+                    <documentation>Arbeidsplass</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="WD">
+                <annotation>
+                    <documentation>Arbeidsplass, direktenummer</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="WC">
+                <annotation>
+                    <documentation>Arbeidsplass, sentralbord</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="AS">
+                <annotation>
+                    <documentation>Telefonsvarer</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="EC">
+                <annotation>
+                    <documentation>Nødnummer</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="PG">
+                <annotation>
+                    <documentation>Personsøker</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="MC">
+                <annotation>
+                    <documentation>Mobiltelefon</documentation>
+                </annotation>
+            </enumeration>
+            <enumeration value="F">
+                <annotation>
+                    <documentation>Fax</documentation>
+                </annotation>
+            </enumeration>
+        </restriction>
+    </simpleType>
+</schema>

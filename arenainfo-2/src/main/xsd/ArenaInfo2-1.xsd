@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- edited with XMLSpy v2006 U (http://www.altova.com) by Dag Rune Grebstad (Bluegarden Technologies AS) -->
+<!-- edited with XMLSPY v5 rel. 3 U (http://www.xmlspy.com) by Trygdeetaten (Rikstrygdeverket) -->
+<xs:schema targetNamespace="http://www.nav.no/xml/arenaeiainfo/2-0" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns="http://www.nav.no/xml/arenaeiainfo/2-0" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="ArenaEiaInfo">
+		<xs:annotation>
+			<xs:documentation>Rotelement</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="PasientData">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Arbeidsforhold" type="ArbeidsforholdType" minOccurs="0" maxOccurs="unbounded"/>
+						</xs:sequence>
+						<xs:attribute name="fnr" use="required">
+							<xs:annotation>
+								<xs:documentation>Pasientens fodselsnummer, 11 siffer</xs:documentation>
+							</xs:annotation>
+							<xs:simpleType>
+								<xs:restriction base="xs:string">
+									<xs:length value="11"/>
+								</xs:restriction>
+							</xs:simpleType>
+						</xs:attribute>
+						<xs:attribute name="sperret" type="xs:boolean" use="required">
+							<xs:annotation>
+								<xs:documentation>Om pasienten er sperret i forhold til dette trygdekontor nummer</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="tkNummer" type="xs:string" use="required">
+							<xs:annotation>
+								<xs:documentation>tknummer pasienten tilhorer</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="tkNavn" type="xs:string" use="optional"/>
+						<xs:attribute name="spesreg" type="xs:int" use="optional">
+							<xs:annotation>
+								<xs:documentation>Om pasienten har spesreg kode</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="LegeData">
+					<xs:complexType>
+						<xs:attribute name="navn" type="xs:string" use="required"/>
+						<xs:attribute name="fnr" type="xs:string" use="required"/>
+						<xs:attribute name="tssid" type="xs:string" use="optional"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="EiaData">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="SystemSvar" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:complexContent>
+										<xs:extension base="SystemSvarType"/>
+									</xs:complexContent>
+								</xs:complexType>
+							</xs:element>
+							<xs:choice>
+								<xs:element name="Sykmelding" minOccurs="0">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="MeldingTilNav" minOccurs="0">
+												<xs:complexType>
+													<xs:sequence>
+														<xs:element name="Erklering" type="xs:boolean">
+															<xs:annotation>
+																<xs:documentation>Punkt 6.1</xs:documentation>
+															</xs:annotation>
+														</xs:element>
+														<xs:element name="Informasjon" type="xs:boolean">
+															<xs:annotation>
+																<xs:documentation>Punkt 6.2</xs:documentation>
+															</xs:annotation>
+														</xs:element>
+														<xs:element name="Melding" type="xs:string">
+															<xs:annotation>
+																<xs:documentation>Punkt 6   teksten</xs:documentation>
+															</xs:annotation>
+														</xs:element>
+													</xs:sequence>
+												</xs:complexType>
+											</xs:element>
+											<xs:element name="Oppfolgingsplan" minOccurs="0">
+												<xs:complexType>
+													<xs:sequence>
+														<xs:element name="MottattOppfolgingsplan" type="xs:boolean" minOccurs="0">
+															<xs:annotation>
+																<xs:documentation>Punkt 6.3</xs:documentation>
+															</xs:annotation>
+														</xs:element>
+														<xs:element name="InnkaltDialogmote1" type="xs:boolean" minOccurs="0">
+															<xs:annotation>
+																<xs:documentation>Punkt 6.4</xs:documentation>
+															</xs:annotation>
+														</xs:element>
+														<xs:element name="DeltattDialogmote1" type="xs:boolean" minOccurs="0">
+															<xs:annotation>
+																<xs:documentation>Hvis Ja deltok du</xs:documentation>
+															</xs:annotation>
+														</xs:element>
+														<xs:element name="ArsakIkkeDeltatt" type="xs:string" minOccurs="0">
+															<xs:annotation>
+																<xs:documentation>Hvis nei, angi arsak</xs:documentation>
+															</xs:annotation>
+														</xs:element>
+													</xs:sequence>
+												</xs:complexType>
+											</xs:element>
+											<xs:element name="VeiledningArbeidsgiver" minOccurs="0">
+												<xs:complexType>
+													<xs:sequence>
+														<xs:element name="Beskrivelse" type="xs:string"/>
+														<xs:element name="Tilbakemelding" type="xs:boolean"/>
+													</xs:sequence>
+												</xs:complexType>
+											</xs:element>
+											<xs:element name="FoersteFravaersdag" type="xs:date" minOccurs="0">
+												<xs:annotation>
+													<xs:documentation>Foerste fravaersdag i sykmeldingen</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+											<xs:element name="IdentDato" type="xs:date" minOccurs="0">
+												<xs:annotation>
+													<xs:documentation>Identdato fra Infotrygd = Startdato for fravaerstilfelle</xs:documentation>
+												</xs:annotation>
+											</xs:element>
+											<xs:element ref="Sykmeldingsgrad" minOccurs="0" maxOccurs="unbounded"/>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+							</xs:choice>
+							<xs:element name="SignaturDato" type="xs:date"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="ediloggId" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation>Id for aa identifisere meldingen i ephorte</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="skjemaType" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation>Beskriver om det er legeerkleing eller sykmelding</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="mappeType" type="xs:string" use="required">
+				<xs:annotation>
+					<xs:documentation>Beskriver om det er (SP,RP,UP og ny AT)
+Erstattes av AAP?</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="hendelseStatus" use="required">
+				<xs:annotation>
+					<xs:documentation>Logg eller Oppgave i Arena</xs:documentation>
+				</xs:annotation>
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:enumeration value="TIL_VURDERING"/>
+						<xs:enumeration value="FERDIG_BEHANDLET"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:attribute>
+			<xs:attribute name="version" type="xs:string" use="optional">
+				<xs:annotation>
+					<xs:documentation source="Angir versjon av meldingen"/>
+				</xs:annotation>
+			</xs:attribute>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Sykmeldingsgrad">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="fraTilDato">
+					<xs:sequence>
+						<xs:element name="Grad" type="xs:decimal"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="PostAdresseType">
+		<xs:sequence>
+			<xs:element name="GateAdresse" type="xs:string" nillable="true" minOccurs="0"/>
+			<xs:element name="Postnummer" type="xs:string" nillable="true" minOccurs="0"/>
+			<xs:element name="Sted" type="xs:string" nillable="true" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ArbeidsforholdType">
+		<xs:annotation>
+			<xs:documentation>Data fra aaregisteret pr person.  Brukes ofte om pasient.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="orgNr" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>Organisasjonsnr, eller f_snr for forenklet innrapportering.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="orgNavn" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Redigert navn som skal vises i arkivet</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="stillingsandel" type="xs:float" use="optional">
+			<xs:annotation>
+				<xs:documentation>antall timer i uken</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="erIAVirksomhet" type="xs:boolean" use="required">
+			<xs:annotation>
+				<xs:documentation>Er organisasjonen en IA bedrift?</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="erHovedarbeidsgiver" type="xs:boolean" use="required">
+			<xs:annotation>
+				<xs:documentation>Er dette hovedarbeidsforholdet (unik arbeidsgiver IKKE unik arbeidsforhold)</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="SystemSvarType">
+		<xs:annotation>
+			<xs:documentation>Dette elementet inneholder ett svar/utfall fra kontrollsystemet.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="meldingsNr" type="xs:integer" use="required">
+			<xs:annotation>
+				<xs:documentation>Et tall som identifisererer dette utfallet av kontrollsystem.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="meldingsTekst" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Tekst som beskriver utfallet av kontrollsystemet.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="meldingsPrioritet" type="xs:nonNegativeInteger" use="optional">
+			<xs:annotation>
+				<xs:documentation>Dette er et ordningstall som sorterer svarene etter viktighet. Lavt tall er foerst/viktigst.
+
+1 - 4 </xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="meldingsHjelpURL" type="xs:anyURI" use="optional">
+			<xs:annotation>
+				<xs:documentation>Relevant i de tilfeller hvor meldingstype angir at det er en feil og hvor applikasjonssvaret skal sendes til bake til avsender. 
+
+Dette skal vaere en URL som peker paa en webside hvor en avsender kan faa mer informasjon om feilkoden og hva som maa gjoeres for aa  korrigere feilsituasjonen.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="meldingsType" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>Verdien angir om dette utfallet er en avvisningsgrunn, en opplysning til ved arkiver eller om det krever oppfolging.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="fraTilDato">
+		<xs:sequence>
+			<xs:element name="FraDato" type="xs:date"/>
+			<xs:element name="TilDato" type="xs:date"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="SystemMeldingsType">
+		<xs:annotation>
+			<xs:documentation>Feil eller opplysning</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:appinfo source="Feil"/>
+					<xs:documentation>Dette indikerer at det er en sak som har feil i inputdata. Denne informasjonen kan sendes tilbake til avsender.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:appinfo>Opplysning
+</xs:appinfo>
+					<xs:documentation>Dette indikerer at dette er en opplysning. Denne informasjonen er intern.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3">
+				<xs:annotation>
+					<xs:appinfo>Oppfolging</xs:appinfo>
+					<xs:documentation>Dette indikerer at det er en sak som boer foelges opp. Denne informasjonen er intern.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

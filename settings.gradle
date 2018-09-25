@@ -2,4 +2,5 @@ rootProject.name = 'syfo-xml-codegen'
 include 'arenainfo-2'
 include 'sm2013'
 include 'legeerklaering'
+include 'fellesformat'
 

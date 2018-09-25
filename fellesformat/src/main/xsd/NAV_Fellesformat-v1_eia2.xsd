@@ -6,9 +6,16 @@
 			<xs:documentation>Tanken med denne strukturen er at etterhvert som sykmeldingen passerer gjennom prosesseringsskjeden så vil de enkelte prossesseringsledd legge til hele elemeneter eller hele strukturer under et element, men ikke endre de elementer som er lagt inn av de foregående elementer.</xs:documentation>
 		</xs:annotation>
 		<xs:complexType>
-			<xs:sequence>
-				<xs:choice>
-					<xs:element name="Content" minOccurs="0">
+			<xs:complexContent>
+				<xs:restriction base="xs:anyType">
+					<xs:sequence>
+						<xs:any minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:restriction>
+			</xs:complexContent>
+		</xs:complexType>
+		</xs:element>
+					<xs:element name="Content">
 						<xs:complexType>
 							<xs:complexContent>
 								<xs:restriction base="xs:anyType">
@@ -19,8 +26,8 @@
 							</xs:complexContent>
 						</xs:complexType>
 					</xs:element>
-				</xs:choice>
-				<xs:element name="MottakenhetBlokk" minOccurs="0">
+
+				<xs:element name="MottakenhetBlokk">
 					<xs:annotation>
 						<xs:documentation>Dette elementet innholder den informasjon og de data som genereres i mottaket og som sendes med sykmelding/legeerklæringen for videre behandling innnover i systemet.</xs:documentation>
 					</xs:annotation>
@@ -30,13 +37,13 @@
 						</xs:complexContent>
 					</xs:complexType>
 				</xs:element>
-				<xs:element name="SporinformasjonBlokk" type="SporinformasjonBlokk_type" minOccurs="0" maxOccurs="unbounded">
+				<xs:element name="SporinformasjonBlokk" type="SporinformasjonBlokk_type">
 					<xs:annotation>
 						<xs:documentation>Dette elementet innholder data fra kjøringen av kontrollsystemet.
 							Denne blokken kan også legges ut av andre programmer som prosesserer meldingen gjennom systemet.</xs:documentation>
 					</xs:annotation>
 				</xs:element>
-				<xs:element name="KontrollSystemBlokk" minOccurs="0">
+				<xs:element name="KontrollSystemBlokk">
 					<xs:annotation>
 						<xs:documentation>Dette elementet inneholder informasjon og data om/fra sykmeldingen/legeerklæringen som genereres i kontrollsystemet  </xs:documentation>
 					</xs:annotation>
@@ -46,13 +53,10 @@
 						</xs:complexContent>
 					</xs:complexType>
 				</xs:element>
-			</xs:sequence>
-		</xs:complexType>
-	</xs:element>
+
 	<xs:complexType name="SporinformasjonBlokk_type">
 		<xs:annotation>
-			<xs:documentation>Denne blokken inneholder informasjon som dokumenterer hvilket kontrollprogram, i hvilken versjon som ble kjørt når og hva resultatet av kjøringen var. Dette for å kunne gjøre sporing siden.
-				.</xs:documentation>
+			<xs:documentation>Denne blokken inneholder informasjon som dokumenterer hvilket kontrollprogram, i hvilken versjon som ble kjørt når og hva resultatet av kjøringen var. Dette for å kunne gjøre sporing siden.</xs:documentation>
 		</xs:annotation>
 		<xs:attribute name="programID" type="xs:string" use="required"/>
 		<xs:attribute name="programVersjonID" type="xs:string" use="required"/>

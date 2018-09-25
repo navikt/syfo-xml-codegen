@@ -1,4 +1,4 @@
-version = "1.0"
+version = "1.0.0"
 tasks {
     val generateJaxb2 by tasks.creating(Jaxb2Task::class) {
         outputDir = ext["xjbOutputDir"] as File

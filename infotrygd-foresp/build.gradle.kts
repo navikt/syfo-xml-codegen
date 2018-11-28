@@ -5,7 +5,7 @@ tasks {
         sourceDir = file("$projectDir/src/main/xsd")
         config = listOf(
                 Jaxb2Config(
-                        targetPackage = "no.nav.helse.infotrygdForesp",
+                        targetPackage = "no.nav.helse.infotrygd.foresp",
                         schema = "RTV_IT_IFT.v14.xsd",
                         encoding = "UTF-8"
                 )

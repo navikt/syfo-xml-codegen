@@ -1,0 +1,1799 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- edited with XMLSPY v5 rel. 3 U (http://www.xmlspy.com) by Trygdeetaten (Rikstrygdeverket) -->
+<!--v12: splittet opp de enkelte svarelementene, og la til attributtet harFrikort i Pasient blokken.-->
+<!--v13: DGA: Endret typen på garantertYtelseUngUtfoer fra boolean til string, da Infotrygd returnerer "T" eller "F" og lagt til verdi "H" i utredetOperert.-->
+<!--v13: DGA: Lagt til verdi "K" i utredetOperert.-->
+<!--v14: DGA: Lagt til avventendeSykmelding og avventendeSykmeldingTOM .-->
+
+<xs:schema targetNamespace="http://www.trygdeetaten.no/xml/it/1/" xmlns="http://www.trygdeetaten.no/xml/it/1/" xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="InfotrygdForesp">
+		<xs:annotation>
+			<xs:documentation>Dette elementet inneholder forespørselinformasjon. 
+
+Ved forespørsel sendes kun dette elementet. De resterende elementene legges til av svarer som er Infotrygd. Dvs at dette elementet skal være med tilbake fra Infotrygd.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence minOccurs="0">
+				<xs:sequence>
+					<xs:element name="BehandlerInfo" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Svar på spørring nr.2 og nr.1</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="Behandler" minOccurs="0" maxOccurs="unbounded">
+									<xs:annotation>
+										<xs:documentation>Informasjon om Behandler. Behandlertype, nummer etc. Kun mottakere for TKnummer som kommer inn.</xs:documentation>
+									</xs:annotation>
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="Navn" type="typeNavn"/>
+											<xs:element name="Adresse" type="typePostAdresse"/>
+										</xs:sequence>
+										<xs:attribute name="mottakerKode" type="typeMottakerKode" use="optional">
+											<xs:annotation>
+												<xs:documentation>Denne er ufullstendig: 
+trenger alle.</xs:documentation>
+											</xs:annotation>
+										</xs:attribute>
+										<xs:attribute name="fylke" type="xs:string" use="optional"/>
+										<xs:attribute name="mottakerNr" use="required">
+											<xs:simpleType>
+												<xs:restriction base="xs:integer">
+													<xs:whiteSpace value="collapse"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:attribute>
+										<xs:attribute name="fagomraade" use="optional">
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:length value="3"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:attribute>
+										<xs:attribute name="kommune" use="optional">
+											<xs:annotation>
+												<xs:documentation>Den kommunen hvor praksisen ligger.</xs:documentation>
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:length value="4"/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:attribute>
+										<xs:attribute name="dodsdato" type="xs:date" use="optional"/>
+										<xs:attribute name="opphor" use="optional">
+											<xs:annotation>
+												<xs:documentation>Valigvis : 'J' men for leger og spesialleger brukes:
+D - død
+F - flyttet
+S - suspendert
+A - andre årsaker</xs:documentation>
+											</xs:annotation>
+											<xs:simpleType>
+												<xs:restriction base="xs:string">
+													<xs:whiteSpace value="preserve"/>
+													<xs:enumeration value="J"/>
+													<xs:enumeration value="D"/>
+													<xs:enumeration value="F"/>
+													<xs:enumeration value="S"/>
+													<xs:enumeration value="A"/>
+													<xs:enumeration value=" "/>
+												</xs:restriction>
+											</xs:simpleType>
+										</xs:attribute>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="Status" type="statusType"/>
+							</xs:sequence>
+							<xs:attribute name="tidsstempel" type="xs:dateTime" use="required"/>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="SMhistorikk" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Historiske sykemeldinger med historikk, fra og med input dato. Henter fra ISH. Gi inn fraDato på denne SM samt eldste intressente dato tilbake i tid (2 år). Svar på spørring nr.3 og nr.1</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="Sykmelding" type="typeSMinfo" minOccurs="0" maxOccurs="unbounded"/>
+								<xs:element name="Status" type="statusType"/>
+							</xs:sequence>
+							<xs:attribute name="tidsstempel" type="xs:dateTime" use="required"/>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="ParallelleYtelser" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Alle parallelle ytelser for denne person på denne dato.  Svar på spørring nr.4 og nr.1</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="Ytelse" minOccurs="0" maxOccurs="unbounded">
+									<xs:complexType>
+										<xs:choice>
+											<xs:element name="BarnSykdom">
+												<xs:complexType>
+													<xs:sequence>
+														<xs:element name="Periode" type="typeYtelsePeriode"/>
+														<xs:element name="Annet">
+															<xs:complexType>
+																<xs:attribute name="antallBarnU12aar" type="xs:integer" use="optional"/>
+																<xs:attribute name="aleneOmsorg" type="xs:boolean" use="optional"/>
+																<xs:attribute name="oppholdFOM" type="xs:date" use="optional"/>
+																<xs:attribute name="oppholdTOM" type="xs:date" use="optional"/>
+																<xs:attribute name="barnetsFodselsnummer" use="optional">
+																	<xs:simpleType>
+																		<xs:restriction base="xs:string">
+																			<xs:maxLength value="11"/>
+																		</xs:restriction>
+																	</xs:simpleType>
+																</xs:attribute>
+															</xs:complexType>
+														</xs:element>
+													</xs:sequence>
+												</xs:complexType>
+											</xs:element>
+											<xs:element name="Fodselspenger">
+												<xs:complexType>
+													<xs:sequence>
+														<xs:element name="Periode" type="typeYtelsePeriode"/>
+														<xs:element name="Annet">
+															<xs:complexType>
+																<xs:attribute name="feriedagerPeriode" type="xs:integer" use="optional"/>
+																<xs:attribute name="feriedagerPlanlagt" type="xs:integer" use="optional"/>
+																<xs:attribute name="dekningsGrad" type="xs:integer" use="optional"/>
+																<xs:attribute name="sammenfallendePeriode" type="xs:boolean" use="required"/>
+																<xs:attribute name="sammenfallendeDagerMask" type="xs:integer" use="optional"/>
+															</xs:complexType>
+														</xs:element>
+														<xs:element name="Tidskonto" minOccurs="0">
+															<xs:complexType>
+																<xs:attribute name="kode" use="required">
+																	<xs:annotation>
+																		<xs:documentation>0 = felles
+1 = kvinne
+2 = mann</xs:documentation>
+																	</xs:annotation>
+																	<xs:simpleType>
+																		<xs:restriction base="xs:nonNegativeInteger">
+																			<xs:enumeration value="0"/>
+																			<xs:enumeration value="1"/>
+																			<xs:enumeration value="2"/>
+																		</xs:restriction>
+																	</xs:simpleType>
+																</xs:attribute>
+																<xs:attribute name="stoenadstype" use="required">
+																	<xs:annotation>
+																		<xs:documentation>AP = adopsjonspenger
+FP = fødselspenger</xs:documentation>
+																	</xs:annotation>
+																	<xs:simpleType>
+																		<xs:restriction base="xs:string">
+																			<xs:enumeration value="AP"/>
+																			<xs:enumeration value="FP"/>
+																		</xs:restriction>
+																	</xs:simpleType>
+																</xs:attribute>
+																<xs:attribute name="stans" use="optional">
+																	<xs:annotation>
+																		<xs:documentation>AF = avsluttet frisk
+FL = flyttet
+AA = avsluttet
+AD = avsluttet død
+MAX = max utbetaling
+DØD = død
+MIDL = midlertidig stans
+stansdato : en dato som tekst...
+OA = opphør av arbeidsforhold
+BO = bortfall av omsorgsansvar
+GA = gravid adopsjon
+SF = spesielle forhold</xs:documentation>
+																	</xs:annotation>
+																	<xs:simpleType>
+																		<xs:restriction base="xs:string">
+																			<xs:whiteSpace value="collapse"/>
+																		</xs:restriction>
+																	</xs:simpleType>
+																</xs:attribute>
+																<xs:attribute name="frisk" use="optional">
+																	<xs:annotation>
+																		<xs:documentation>' ' = løpende (mellomrom/space)
+P = passiv
+F = friskmeldt
+H = historikk
+T = tilbakekjørt</xs:documentation>
+																	</xs:annotation>
+																	<xs:simpleType>
+																		<xs:restriction base="xs:string">
+																			<xs:whiteSpace value="preserve"/>
+																			<xs:enumeration value=" "/>
+																			<xs:enumeration value="P"/>
+																			<xs:enumeration value="F"/>
+																			<xs:enumeration value="H"/>
+																			<xs:enumeration value="T"/>
+																		</xs:restriction>
+																	</xs:simpleType>
+																</xs:attribute>
+																<xs:attribute name="stillingsandel" type="xs:nonNegativeInteger" use="required"/>
+																<xs:attribute name="arbeidstidsProsent" type="xs:nonNegativeInteger" use="required"/>
+																<xs:attribute name="tidskontoProsent" type="xs:nonNegativeInteger" use="required"/>
+																<xs:attribute name="tidskontoDager" type="xs:nonNegativeInteger" use="required"/>
+																<xs:attribute name="tidskontoDagerForbruk" type="xs:nonNegativeInteger" use="required"/>
+																<xs:attribute name="stonadsperioden" type="xs:nonNegativeInteger" use="required"/>
+																<xs:attribute name="tidligereSyk" type="xs:nonNegativeInteger" use="required"/>
+																<xs:attribute name="totalTKdager" type="xs:nonNegativeInteger" use="required"/>
+																<xs:attribute name="totalTKdagerForbruk" type="xs:nonNegativeInteger" use="required"/>
+																<xs:attribute name="totalHeleTKdagerForbruk" type="xs:nonNegativeInteger" use="required"/>
+																<xs:attribute name="totalDisponibelt" type="xs:float" use="required"/>
+																<xs:attribute name="kombi" type="xs:string" use="optional"/>
+																<xs:attribute name="fodselAdopsjonTOM" type="xs:date" use="required"/>
+															</xs:complexType>
+														</xs:element>
+													</xs:sequence>
+												</xs:complexType>
+											</xs:element>
+											<xs:element name="Pensjon">
+												<xs:complexType>
+													<xs:sequence>
+														<xs:element name="Folketrygd">
+															<xs:complexType>
+																<xs:attribute name="fktrygdFOM" type="xs:date" use="required"/>
+																<xs:attribute name="artRTV" use="optional">
+																	<xs:annotation>
+																		<xs:documentation>pensjons art - ufør/alder etc (Kodeverk) 1 char</xs:documentation>
+																	</xs:annotation>
+																	<xs:simpleType>
+																		<xs:restriction base="xs:string">
+																			<xs:length value="1"/>
+																		</xs:restriction>
+																	</xs:simpleType>
+																</xs:attribute>
+																<xs:attribute name="biart" use="optional">
+																	<xs:annotation>
+																		<xs:documentation>Kan ha en i tillegg - uføre og etterlatt</xs:documentation>
+																	</xs:annotation>
+																	<xs:simpleType>
+																		<xs:restriction base="xs:string">
+																			<xs:length value="1"/>
+																		</xs:restriction>
+																	</xs:simpleType>
+																</xs:attribute>
+																<xs:attribute name="divart" use="optional">
+																	<xs:simpleType>
+																		<xs:restriction base="xs:string">
+																			<xs:length value="2"/>
+																		</xs:restriction>
+																	</xs:simpleType>
+																</xs:attribute>
+																<xs:attribute name="institusjon" use="optional">
+																	<xs:annotation>
+																		<xs:documentation>Om pasient ligger på institusjon</xs:documentation>
+																	</xs:annotation>
+																	<xs:simpleType>
+																		<xs:restriction base="xs:string">
+																			<xs:length value="1"/>
+																		</xs:restriction>
+																	</xs:simpleType>
+																</xs:attribute>
+																<xs:attribute name="uforeGrad" type="xs:nonNegativeInteger" use="required">
+																	<xs:annotation>
+																		<xs:documentation>Ikke alle har grad - uføregrad</xs:documentation>
+																	</xs:annotation>
+																</xs:attribute>
+																<xs:attribute name="barnetilsynKode" use="optional">
+																	<xs:annotation>
+																		<xs:documentation>Enten denne eller barnetilsynBelop</xs:documentation>
+																	</xs:annotation>
+																	<xs:simpleType>
+																		<xs:restriction base="xs:string">
+																			<xs:length value="1"/>
+																		</xs:restriction>
+																	</xs:simpleType>
+																</xs:attribute>
+																<xs:attribute name="barnetilsynBelop" type="xs:nonNegativeInteger" use="optional"/>
+																<xs:attribute name="hjelpestonad" type="xs:integer" use="optional">
+																	<xs:annotation>
+																		<xs:documentation>Sats</xs:documentation>
+																	</xs:annotation>
+																</xs:attribute>
+																<xs:attribute name="grunnstonad" type="xs:integer" use="optional">
+																	<xs:annotation>
+																		<xs:documentation>En sats</xs:documentation>
+																	</xs:annotation>
+																</xs:attribute>
+																<xs:attribute name="ektefelletillegg" use="optional">
+																	<xs:annotation>
+																		<xs:documentation>Er 'J' hvis true - ingenting hvis false.</xs:documentation>
+																	</xs:annotation>
+																	<xs:simpleType>
+																		<xs:restriction base="xs:string">
+																			<xs:length value="1"/>
+																			<xs:whiteSpace value="preserve"/>
+																		</xs:restriction>
+																	</xs:simpleType>
+																</xs:attribute>
+																<xs:attribute name="attforingsGrad" type="xs:integer" use="optional">
+																	<xs:annotation>
+																		<xs:documentation>Foreløpig uførestønad - kan ha uføre fra før</xs:documentation>
+																	</xs:annotation>
+																</xs:attribute>
+																<xs:attribute name="gavepensjon" type="xs:integer" use="optional"/>
+																<xs:attribute name="frysKode" use="optional">
+																	<xs:simpleType>
+																		<xs:restriction base="xs:string">
+																			<xs:length value="1"/>
+																		</xs:restriction>
+																	</xs:simpleType>
+																</xs:attribute>
+																<xs:attribute name="frysDato" type="xs:date" use="optional"/>
+																<xs:attribute name="overgStonad" use="optional">
+																	<xs:simpleType>
+																		<xs:restriction base="xs:string">
+																			<xs:length value="1"/>
+																		</xs:restriction>
+																	</xs:simpleType>
+																</xs:attribute>
+																<xs:attribute name="utdanningsStonad" use="optional">
+																	<xs:simpleType>
+																		<xs:restriction base="xs:string">
+																			<xs:length value="1"/>
+																		</xs:restriction>
+																	</xs:simpleType>
+																</xs:attribute>
+															</xs:complexType>
+														</xs:element>
+													</xs:sequence>
+												</xs:complexType>
+											</xs:element>
+											<xs:element name="Rehabilitering">
+												<xs:complexType>
+													<xs:sequence>
+														<xs:element name="Vedtak">
+															<xs:complexType>
+																<xs:attribute name="rehabiliteringspengerFOM" type="xs:date" use="required">
+																	<xs:annotation>
+																		<xs:documentation>Når utbetalingene startet</xs:documentation>
+																	</xs:annotation>
+																</xs:attribute>
+																<xs:attribute name="ytelseFOM" type="xs:date" use="optional">
+																	<xs:annotation>
+																		<xs:documentation>Sist brukte ytelseskode?</xs:documentation>
+																	</xs:annotation>
+																</xs:attribute>
+																<xs:attribute name="innvilgetTOM" type="xs:date" use="required"/>
+																<xs:attribute name="innvilgetGrad" type="xs:integer" use="required"/>
+																<xs:attribute name="soknadsDato" type="xs:date" use="optional"/>
+																<xs:attribute name="unntak" use="optional">
+																	<xs:simpleType>
+																		<xs:restriction base="xs:string">
+																			<xs:length value="1"/>
+																			<xs:whiteSpace value="collapse"/>
+																			<xs:enumeration value="A"/>
+																			<xs:enumeration value="B"/>
+																			<xs:enumeration value="C"/>
+																			<xs:enumeration value="D"/>
+																			<xs:enumeration value="E"/>
+																		</xs:restriction>
+																	</xs:simpleType>
+																</xs:attribute>
+																<xs:attribute name="vedtak" type="xs:string" use="optional"/>
+																	<!--  <xs:simpleType>
+																		<xs:restriction base="xs:string">
+																			<xs:maxLength value="3"/>
+																			<xs:whiteSpace value="collapse"/>
+																			<xs:enumeration value="TK"/>
+																			<xs:enumeration value="FTK"/>
+																			<xs:enumeration value="FFU"/>
+																			<xs:enumeration value="RTK"/>
+																			<xs:enumeration value="NES"/>
+																			<xs:enumeration value="G 0"/>
+																			<xs:enumeration value="RY0"/>
+																		</xs:restriction>
+																	</xs:simpleType>
+																</xs:attribute> -->
+																<xs:attribute name="arbeidsKontor" use="optional">
+																	<xs:simpleType>
+																		<xs:restriction base="xs:string">
+																			<xs:length value="4"/>
+																		</xs:restriction>
+																	</xs:simpleType>
+																</xs:attribute>
+																<xs:attribute name="tjenestePensjonOrdningKode" use="optional">
+																	<xs:annotation>
+																		<xs:documentation>J eller ingenting</xs:documentation>
+																	</xs:annotation>
+																	<xs:simpleType>
+																		<xs:restriction base="xs:string">
+																			<xs:length value="1"/>
+																		</xs:restriction>
+																	</xs:simpleType>
+																</xs:attribute>
+																<xs:attribute name="refusjonsKrav" type="xs:string" use="optional"/>
+																<xs:attribute name="diagnoseGruppe" use="optional">
+																	<xs:simpleType>
+																		<xs:restriction base="xs:string">
+																			<xs:length value="1"/>
+																		</xs:restriction>
+																	</xs:simpleType>
+																</xs:attribute>
+																<xs:attribute name="diagnoseKode" type="xs:string" use="optional"/>
+																<xs:attribute name="biDiagnoseGruppe" use="optional">
+																	<xs:simpleType>
+																		<xs:restriction base="xs:string">
+																			<xs:length value="1"/>
+																		</xs:restriction>
+																	</xs:simpleType>
+																</xs:attribute>
+																<xs:attribute name="biDiagnoseKode" type="xs:string" use="optional"/>
+																<xs:attribute name="kjoepHelsetj" type="xs:string" use="optional"/>
+																<xs:attribute name="helsetjSendt" type="xs:date" use="optional"/>
+																<xs:attribute name="utredetOperert" type="xs:string" use="optional"/>
+																<xs:attribute name="utredetOperertDato" type="xs:date" use="optional"/>
+																<xs:attribute name="uforetidspunkt" type="xs:date" use="optional"/>
+																<xs:attribute name="eos" type="xs:string" use="optional">
+																	<xs:annotation>
+																		<xs:documentation>Eøs regler : J eller ingenting</xs:documentation>
+																	</xs:annotation>
+																</xs:attribute>
+																<xs:attribute name="yrkesskadeDato" type="xs:date" use="optional"/>
+																<xs:attribute name="yrkesskadeGrad" type="xs:integer" use="optional"/>
+																<xs:attribute name="garantertYtelseUngUtfoer" type="xs:string" use="optional"/>
+																<xs:attribute name="red" type="xs:boolean" use="optional"/>
+																<xs:attribute name="redFOM" type="xs:date" use="optional"/>
+																<xs:attribute name="barnetillFOM" type="xs:date" use="optional"/>
+																<xs:attribute name="samordningsFradragFOM" type="xs:date" use="optional"/>
+																<xs:attribute name="arbgivRefusjon" type="xs:string" use="optional">
+																	<xs:annotation>
+																		<xs:documentation>J eller ingenting</xs:documentation>
+																	</xs:annotation>
+																</xs:attribute>
+																<xs:attribute name="arbgivRefusjonTOM" type="xs:date" use="optional"/>
+																<xs:attribute name="refusjonsGrad" type="xs:integer" use="optional"/>
+																<xs:attribute name="orgnr1" type="xs:string" use="optional"/>
+																<xs:attribute name="orgnr2" type="xs:string" use="optional"/>
+																<xs:attribute name="utbetFOM" type="xs:date" use="optional"/>
+																<xs:attribute name="utbetTOM" type="xs:date" use="optional"/>
+																<xs:attribute name="opphorsDato" type="xs:date" use="optional"/>
+																<xs:attribute name="opphorsGrunn" use="optional">
+																	<xs:annotation>
+																		<xs:documentation>DRG: Har lagt til '00' i enumeration.
+																		TFA, 20.07.2004: Har lagt til nye verdier fra TU: HA, DA, AT, RP, UF, AP, AÅ, FL, AN, UP, FF</xs:documentation>
+																	</xs:annotation>
+																	<xs:simpleType>
+																		<xs:restriction base="xs:string">
+																			<xs:whiteSpace value="collapse"/>
+																			<xs:minLength value="1"/>
+																			<xs:maxLength value="2"/>
+																			<xs:enumeration value="00"/>
+																			<xs:enumeration value="01">
+																				<xs:annotation>
+																					<xs:documentation>Alder Ufor Pens</xs:documentation>
+																				</xs:annotation>
+																			</xs:enumeration>
+																			<xs:enumeration value="02">
+																				<xs:annotation>
+																					<xs:documentation>DOD</xs:documentation>
+																				</xs:annotation>
+																			</xs:enumeration>
+																			<xs:enumeration value="03"/>
+																			<xs:enumeration value="04"/>
+																			<xs:enumeration value="05"/>
+																			<xs:enumeration value="06"/>
+																			<xs:enumeration value="07"/>
+																			<xs:enumeration value="08"/>
+																			<xs:enumeration value="09"/>
+																			<xs:enumeration value="0"/>
+																			<xs:enumeration value="A"/>
+																			<xs:enumeration value="A0"/>
+																			<xs:enumeration value="HA">
+																				<xs:annotation>
+																					<xs:documentation>Heltidsarbeid</xs:documentation>
+																				</xs:annotation>
+																			</xs:enumeration>
+																			<xs:enumeration value="DA">
+																				<xs:annotation>
+																					<xs:documentation>Deltidsarbeid</xs:documentation>
+																				</xs:annotation>
+																			</xs:enumeration>
+																			<xs:enumeration value="AT">
+																				<xs:annotation>
+																					<xs:documentation>Attføringspenger</xs:documentation>
+																				</xs:annotation>
+																			</xs:enumeration>
+																			<xs:enumeration value="RP">
+																				<xs:annotation>
+																					<xs:documentation>Rehabiliteringspenger</xs:documentation>
+																				</xs:annotation>
+																			</xs:enumeration>
+																			<xs:enumeration value="UF">
+																				<xs:annotation>
+																					<xs:documentation>Uførepensjon</xs:documentation>
+																				</xs:annotation>
+																			</xs:enumeration>
+																			<xs:enumeration value="AP">
+																				<xs:annotation>
+																					<xs:documentation>Alderspensjon/AFP</xs:documentation>
+																				</xs:annotation>
+																			</xs:enumeration>
+																			<xs:enumeration value="AÅ">
+																				<xs:annotation>
+																					<xs:documentation>Andre årsaker</xs:documentation>
+																				</xs:annotation>
+																			</xs:enumeration>
+																			<xs:enumeration value="FL">
+																				<xs:annotation>
+																					<xs:documentation>Flyttet</xs:documentation>
+																				</xs:annotation>
+																			</xs:enumeration>
+																			<xs:enumeration value="AN">
+																				<xs:annotation>
+																					<xs:documentation>Annulert</xs:documentation>
+																				</xs:annotation>
+																			</xs:enumeration>
+																			<xs:enumeration value="UP">
+																				<xs:annotation>
+																					<xs:documentation>Ukjent</xs:documentation>
+																				</xs:annotation>
+																			</xs:enumeration>
+																			<xs:enumeration value="FF">
+																				<xs:annotation>
+																					<xs:documentation>Ukjent</xs:documentation>
+																				</xs:annotation>
+																			</xs:enumeration>
+																		</xs:restriction>
+																	</xs:simpleType>
+																</xs:attribute>
+																<xs:attribute name="ordinarUtbetalingYsEosUngufoer" use="optional">
+																	<xs:simpleType>
+																		<xs:restriction base="xs:string">
+																			<xs:length value="2"/>
+																			<xs:whiteSpace value="collapse"/>
+																			<xs:enumeration value="EØ"/>
+																			<xs:enumeration value="YS"/>
+																			<xs:enumeration value="OR"/>
+																			<xs:enumeration value="UU"/>
+																			<xs:enumeration value="FG"/>
+																		</xs:restriction>
+																	</xs:simpleType>
+																</xs:attribute>
+																<xs:attribute name="saksblokk" type="xs:string" use="optional"/>
+																<xs:attribute name="saknr" type="xs:nonNegativeInteger" use="optional"/>
+															</xs:complexType>
+														</xs:element>
+													</xs:sequence>
+												</xs:complexType>
+											</xs:element>
+											<xs:element name="Arbeidsloyse">
+												<xs:complexType>
+													<xs:sequence>
+														<xs:element name="FraAetat" type="typeFraAetat"/>
+													</xs:sequence>
+												</xs:complexType>
+											</xs:element>
+											<xs:element name="YrkesrettetAttforing">
+												<xs:complexType>
+													<xs:sequence>
+														<xs:element name="FraAetat" type="typeFraAetat"/>
+													</xs:sequence>
+												</xs:complexType>
+											</xs:element>
+											<xs:element name="TidsbegrensetUforestonad">
+												<xs:annotation>
+													<xs:documentation>Ny pr 02.07.2003</xs:documentation>
+												</xs:annotation>
+												<xs:complexType>
+													<xs:sequence>
+														<xs:element name="Vedtak">
+															<xs:complexType>
+																<xs:attribute name="stonadFOM" type="xs:date" use="required">
+																	<xs:annotation>
+																		<xs:documentation>Når utbetalingene startet (TU4_STON_DATO_START)</xs:documentation>
+																	</xs:annotation>
+																</xs:attribute>
+																<xs:attribute name="innvilgetFOM" type="xs:date" use="optional">
+																	<xs:annotation>
+																		<xs:documentation>Stonaden er innvilget fra og med. (TU4-VEDT-DATO-INNV-FOM)</xs:documentation>
+																	</xs:annotation>
+																</xs:attribute>
+																<xs:attribute name="innvilgetTOM" type="xs:date" use="optional">
+																	<xs:annotation>
+																		<xs:documentation>Stonaden er innvilget tilog med. (TU4-VEDT-DATO-INNV-TOM)</xs:documentation>
+																	</xs:annotation>
+																</xs:attribute>
+																<xs:attribute name="ysGrad" type="xs:integer" use="optional">
+																	<xs:annotation>
+																		<xs:documentation>Prosent grad YS. (TU4-GRAD-PROSENT-GRAD-YS)</xs:documentation>
+																	</xs:annotation>
+																</xs:attribute>
+																<xs:attribute name="uforeGrad" type="xs:integer" use="required">
+																	<xs:annotation>
+																		<xs:documentation>Prosentsats, grad av ufore. (TU4-GRAD-PROSENT-UFORE)</xs:documentation>
+																	</xs:annotation>
+																</xs:attribute>
+																<xs:attribute name="garantiGrad" type="xs:integer" use="optional">
+																	<xs:annotation>
+																		<xs:documentation>Prosent grad garanti. (TU4-GRAD-PROSENT-GRAD-GARANTI)</xs:documentation>
+																	</xs:annotation>
+																</xs:attribute>
+																<xs:attribute name="uforepensjonsGrad" type="xs:integer" use="optional">
+																	<xs:annotation>
+																		<xs:documentation>Prosent grad ufoerepensjon. (TU4-GRAD-PROSENT-GRAD-UFORE-PE)</xs:documentation>
+																	</xs:annotation>
+																</xs:attribute>
+																<xs:attribute name="soknadsDato" type="xs:date" use="optional">
+																	<xs:annotation>
+																		<xs:documentation>Tidspunktet vedtaket er registrert (RP_soknadsdato). (TU4-VEDT-TIDSPUNKT-REG)</xs:documentation>
+																	</xs:annotation>
+																</xs:attribute>
+																<xs:attribute name="vedtakNivaa" use="optional">
+																	<xs:annotation>
+																		<xs:documentation>Gyldige verdier: TK, FTK, FFU. (RP-vedtak). (TU4-VEDT-KODE-VEDTAKSNIVAA)</xs:documentation>
+																	</xs:annotation>
+																	<xs:simpleType>
+																		<xs:restriction base="xs:string">
+																			<xs:maxLength value="3"/>
+																			<xs:whiteSpace value="collapse"/>
+																			<xs:enumeration value="TK"/>
+																			<xs:enumeration value="TR"/>
+																			<xs:enumeration value="FTK"/>
+																			<xs:enumeration value="RTK"/>
+																			<xs:enumeration value="KA"/>
+																			<xs:enumeration value="FFU"/>
+																		</xs:restriction>
+																	</xs:simpleType>
+																</xs:attribute>
+																<xs:attribute name="diagnoseGruppe" use="optional">
+																	<xs:annotation>
+																		<xs:documentation>Diagnosekodegruppen for hoveddiagnosen, RP-diagnoseGruppe. (TU6-DIAG-TYPE-HOVED)</xs:documentation>
+																	</xs:annotation>
+																	<xs:simpleType>
+																		<xs:restriction base="xs:string">
+																			<xs:length value="1"/>
+																		</xs:restriction>
+																	</xs:simpleType>
+																</xs:attribute>
+																<xs:attribute name="diagnoseKode" type="xs:string" use="optional">
+																	<xs:annotation>
+																		<xs:documentation>Diagnosekoden for hoveddiagnosen, RP-diagnoseKode. (TU6-DIAG-KODE-HOVED)</xs:documentation>
+																	</xs:annotation>
+																</xs:attribute>
+																<xs:attribute name="biDiagnoseGruppe" use="optional">
+																	<xs:annotation>
+																		<xs:documentation>Diagnosekodegruppen for bidiagnosen, RP-biDiagnoseGruppe. (TU6-DIAG-TYPE-BI)</xs:documentation>
+																	</xs:annotation>
+																	<xs:simpleType>
+																		<xs:restriction base="xs:string">
+																			<xs:length value="1"/>
+																		</xs:restriction>
+																	</xs:simpleType>
+																</xs:attribute>
+																<xs:attribute name="biDiagnoseKode" type="xs:string" use="optional">
+																	<xs:annotation>
+																		<xs:documentation>Diagnosekoden for bidiagnosen, RP-biDiagnoseKode. (TU6-DIAG-KODE_BI)</xs:documentation>
+																	</xs:annotation>
+																</xs:attribute>
+																<xs:attribute name="kjoepHelsetj" type="xs:boolean" use="optional">
+																	<xs:annotation>
+																		<xs:documentation>RP-kjopHelseTj. Utledes av helseSendt, utredetOperert, utredetOperertDato.  (TU7-HETU-kjopHT).</xs:documentation>
+																	</xs:annotation>
+																</xs:attribute>
+																<xs:attribute name="helsetjSendtDato" type="xs:date" use="optional">
+																	<xs:annotation>
+																		<xs:documentation>RP-helsetjSendt. (TU7-HETU-DATO-SENDT)</xs:documentation>
+																	</xs:annotation>
+																</xs:attribute>
+																<xs:attribute name="utredetOperert" use="optional">
+																	<xs:annotation>
+																		<xs:documentation>Verdier: U(tredet), O(perert), H(enlagt). RP-utredetOperert. (TU7-HETU-RESULTAT)</xs:documentation>
+																	</xs:annotation>
+																	<xs:simpleType>
+																		<xs:restriction base="xs:string">
+																			<xs:length value="1"/>
+																			<xs:enumeration value="U"/>
+																			<xs:enumeration value="O"/>
+																			<xs:enumeration value="H"/>
+																		</xs:restriction>
+																	</xs:simpleType>
+																</xs:attribute>
+																<xs:attribute name="utredetOperertDato" type="xs:date" use="optional">
+																	<xs:annotation>
+																		<xs:documentation>RP-utredetOperertDato. (TU7-HETU-DATO-RESULTAT)</xs:documentation>
+																	</xs:annotation>
+																</xs:attribute>
+																<xs:attribute name="tjenestePensjonOrdning" type="xs:boolean" use="optional">
+																	<xs:annotation>
+																		<xs:documentation>RP-tjenestePensjonOrdningKode. (TU8-TUST-TP-ORDNING)</xs:documentation>
+																	</xs:annotation>
+																</xs:attribute>
+																<xs:attribute name="uforetidspunkt" type="xs:date" use="optional">
+																	<xs:annotation>
+																		<xs:documentation>RP-uforetidspunkt. (TU8-TUST-DATO-UFOR)</xs:documentation>
+																	</xs:annotation>
+																</xs:attribute>
+																<xs:attribute name="yrkesskadeDato" type="xs:date" use="optional">
+																	<xs:annotation>
+																		<xs:documentation>RP-yrkesskadedato. (TU8-TUST-DATO-UFOER)</xs:documentation>
+																	</xs:annotation>
+																</xs:attribute>
+																<xs:attribute name="garantertYtelseUngUtfoer" type="xs:string" use="optional">
+																	<xs:annotation>
+																		<xs:documentation>RP-garantertYtelseUngUfoer. (TU8-TUST-UNG-UFOR)</xs:documentation>
+																	</xs:annotation>
+																</xs:attribute>
+																<xs:attribute name="utbetFOM" type="xs:date" use="optional">
+																	<xs:annotation>
+																		<xs:documentation>Ligger ikke i utplukket i dag, så denne vil alltid vaere tom.</xs:documentation>
+																	</xs:annotation>
+																</xs:attribute>
+																<xs:attribute name="utbetTOM" type="xs:date" use="optional">
+																	<xs:annotation>
+																		<xs:documentation>Ligger ikke i utplukket i dag, så denne vil alltid vaere tom.</xs:documentation>
+																	</xs:annotation>
+																</xs:attribute>
+																<xs:attribute name="opphorsDato" type="xs:date" use="optional">
+																	<xs:annotation>
+																		<xs:documentation>Når utbetalingene opphoerer; RP-opphorsdato. (TU4-STON-DATO-OPPHOR)</xs:documentation>
+																	</xs:annotation>
+																</xs:attribute>
+																<xs:attribute name="opphorsGrunn" use="optional">
+																	<xs:annotation>
+																		<xs:documentation>Opphoerskode; RP-opphorsGrunn. (TU4-STON-KODE-OPPHOR).
+NB! Hvis kodene er forskjellige fra RP-opphorsGrunn, må de forandres i enumeration delen.</xs:documentation>
+																	</xs:annotation>
+																	<xs:simpleType>
+																		<xs:restriction base="xs:string">
+																			<xs:whiteSpace value="collapse"/>
+																			<xs:minLength value="1"/>
+																			<xs:maxLength value="2"/>
+																			<xs:enumeration value="00"/>
+																			<xs:enumeration value="01">
+																				<xs:annotation>
+																					<xs:documentation>Alder Ufor Pens</xs:documentation>
+																				</xs:annotation>
+																			</xs:enumeration>
+																			<xs:enumeration value="02">
+																				<xs:annotation>
+																					<xs:documentation>DOD</xs:documentation>
+																				</xs:annotation>
+																			</xs:enumeration>
+																			<xs:enumeration value="03"/>
+																			<xs:enumeration value="04"/>
+																			<xs:enumeration value="05"/>
+																			<xs:enumeration value="06"/>
+																			<xs:enumeration value="07"/>
+																			<xs:enumeration value="08"/>
+																			<xs:enumeration value="09"/>
+																			<xs:enumeration value="0"/>
+																			<xs:enumeration value="A"/>
+																			<xs:enumeration value="A0"/>
+																			<xs:enumeration value="HA">
+																				<xs:annotation>
+																					<xs:documentation>Heltidsarbeid</xs:documentation>
+																				</xs:annotation>
+																			</xs:enumeration>
+																			<xs:enumeration value="DA">
+																				<xs:annotation>
+																					<xs:documentation>Deltidsarbeid</xs:documentation>
+																				</xs:annotation>
+																			</xs:enumeration>
+																			<xs:enumeration value="AT">
+																				<xs:annotation>
+																					<xs:documentation>Attføringspenger</xs:documentation>
+																				</xs:annotation>
+																			</xs:enumeration>
+																			<xs:enumeration value="RP">
+																				<xs:annotation>
+																					<xs:documentation>Rehabiliteringspenger</xs:documentation>
+																				</xs:annotation>
+																			</xs:enumeration>
+																			<xs:enumeration value="UF">
+																				<xs:annotation>
+																					<xs:documentation>Uførepensjon</xs:documentation>
+																				</xs:annotation>
+																			</xs:enumeration>
+																			<xs:enumeration value="AP">
+																				<xs:annotation>
+																					<xs:documentation>Alderspensjon/AFP</xs:documentation>
+																				</xs:annotation>
+																			</xs:enumeration>
+																			<xs:enumeration value="AÅ">
+																				<xs:annotation>
+																					<xs:documentation>Andre årsaker</xs:documentation>
+																				</xs:annotation>
+																			</xs:enumeration>
+																			<xs:enumeration value="FL">
+																				<xs:annotation>
+																					<xs:documentation>Flyttet</xs:documentation>
+																				</xs:annotation>
+																			</xs:enumeration>
+																			<xs:enumeration value="AN">
+																				<xs:annotation>
+																					<xs:documentation>Annulert</xs:documentation>
+																				</xs:annotation>
+																			</xs:enumeration>
+																			<xs:enumeration value="UP">
+																				<xs:annotation>
+																					<xs:documentation>Ukjent</xs:documentation>
+																				</xs:annotation>
+																			</xs:enumeration>
+																			<xs:enumeration value="FF">
+																				<xs:annotation>
+																					<xs:documentation>Ukjent</xs:documentation>
+																				</xs:annotation>
+																			</xs:enumeration>
+																		</xs:restriction>
+																	</xs:simpleType>
+																</xs:attribute>
+																<xs:attribute name="saksblokk" type="xs:string" use="optional">
+																	<xs:annotation>
+																		<xs:documentation>Saksblokk A til Z; RP-saksblokk. (TU4-VEDT-SAKSBLOKK)</xs:documentation>
+																	</xs:annotation>
+																</xs:attribute>
+																<xs:attribute name="saknr" type="xs:nonNegativeInteger" use="optional">
+																	<xs:annotation>
+																		<xs:documentation>Saksnr; RP-saksnr. (TU4-VEDT-SAKSNR)</xs:documentation>
+																	</xs:annotation>
+																</xs:attribute>
+																<xs:attribute name="inntektsnivaaFoerUfoerhet" type="xs:float" use="optional">
+																	<xs:annotation>
+																		<xs:documentation>Inntektsnivå før uførhet. (TU4-BEGR-BELOP-IFU)</xs:documentation>
+																	</xs:annotation>
+																</xs:attribute>
+																<xs:attribute name="inntektVerv" type="xs:float" use="optional">
+																	<xs:annotation>
+																		<xs:documentation>Inntekt politiske/frivillige verv. (TU4-BEGR-BELOP-IPFV)</xs:documentation>
+																	</xs:annotation>
+																</xs:attribute>
+																<xs:attribute name="inntektOmsorgsloenn" type="xs:float" use="optional">
+																	<xs:annotation>
+																		<xs:documentation>Inntekt årlig omsorgslønn. (TU4-BEGR-BELOP-IOML)</xs:documentation>
+																	</xs:annotation>
+																</xs:attribute>
+																<xs:attribute name="inntektSkjermetAttfoering" type="xs:float" use="optional">
+																	<xs:annotation>
+																		<xs:documentation>Inntekt varig skjermet attføring. (TU4-BEGR-BELOP-IVSA)</xs:documentation>
+																	</xs:annotation>
+																</xs:attribute>
+																<xs:attribute name="inntektSkadetidspunkt" type="xs:float" use="optional">
+																	<xs:annotation>
+																		<xs:documentation>Inntekt på skadetidspunktet. (TU4-BEGR-BELOP-BISP)</xs:documentation>
+																	</xs:annotation>
+																</xs:attribute>
+																<xs:attribute name="beregnGrl" type="xs:float" use="optional">
+																	<xs:annotation>
+																		<xs:documentation>Beregningsgrunnlag. Hovedregel. (TU4-BEGR-BELOP-BHOV)</xs:documentation>
+																	</xs:annotation>
+																</xs:attribute>
+																<xs:attribute name="inntektAaretFoer" type="xs:float" use="optional">
+																	<xs:annotation>
+																		<xs:documentation>PI (personlig inntekt?) året før uføråret. (TU4-BEGR-BELOP-BPIU)</xs:documentation>
+																	</xs:annotation>
+																</xs:attribute>
+																<xs:attribute name="inntektUfoerepensjon" type="xs:float" use="optional">
+																	<xs:annotation>
+																		<xs:documentation>Inntekt ved uførepensjon. (TU4-BEGR-BELOP-BIUP)</xs:documentation>
+																	</xs:annotation>
+																</xs:attribute>
+																<xs:attribute name="eos" type="xs:float" use="optional">
+																	<xs:annotation>
+																		<xs:documentation>Beregningsrunnlag EØS, RP-eos. (TU4-BEGR-BELOP-BEOS)</xs:documentation>
+																	</xs:annotation>
+																</xs:attribute>
+																<xs:attribute name="beregnGrlUngUfoer" type="xs:float" use="optional">
+																	<xs:annotation>
+																		<xs:documentation>Beregningsrunnlag ung ufør. (TU4-BEGR-BELOP-BUU)</xs:documentation>
+																	</xs:annotation>
+																</xs:attribute>
+																<xs:attribute name="dagsats" type="xs:float" use="optional">
+																	<xs:annotation>
+																		<xs:documentation>Dagsats. (TU4-DEYT-BELOP-DS)</xs:documentation>
+																	</xs:annotation>
+																</xs:attribute>
+																<xs:attribute name="fradragDagsatsInstitusjon" type="xs:float" use="optional">
+																	<xs:annotation>
+																		<xs:documentation>Fradrag dagsats institusjon. (TU4-DEYT-BELOP-IN)</xs:documentation>
+																	</xs:annotation>
+																</xs:attribute>
+																<xs:attribute name="fradragBarnepensjon" type="xs:float" use="optional">
+																	<xs:annotation>
+																		<xs:documentation>Fradrag barnepensjon. (TU4-DEYT-BELOP-BP)</xs:documentation>
+																	</xs:annotation>
+																</xs:attribute>
+																<xs:attribute name="barnetillegg" type="xs:float" use="optional">
+																	<xs:annotation>
+																		<xs:documentation>Barnetillegg. (TU4-DEYT-BELOP-BT)</xs:documentation>
+																	</xs:annotation>
+																</xs:attribute>
+																<xs:attribute name="fradragBarnetillegg90" type="xs:float" use="optional">
+																	<xs:annotation>
+																		<xs:documentation>Fradrag barnetillegg 90 prosent. (TU4-DEYT-BELOP-BM)</xs:documentation>
+																	</xs:annotation>
+																</xs:attribute>
+																<xs:attribute name="behandlingsKode" use="required">
+																	<xs:annotation>
+																		<xs:documentation>Gjelder oppdatering av verdi knyttet til hvilken beregningsregel som er valgt:
+O = Ordinær, UU = UngUfør, YS  = YrkesSkade (hele pensjonen), YO = Yrkesskade (deler av pensjonen), EØS = beregning etter EØS regler, UFP = Inntekt ved uførepensjon er lagt til grunn.
+RP-ordinaerUtbetYsEosUngUfoer. (TU4-BEGR-BELOP-BEHANDLING)</xs:documentation>
+																	</xs:annotation>
+																	<xs:simpleType>
+																		<xs:restriction base="xs:string"/>
+																	</xs:simpleType>
+																</xs:attribute>
+															</xs:complexType>
+														</xs:element>
+													</xs:sequence>
+												</xs:complexType>
+											</xs:element>
+											<xs:element name="YrkesskadeVedtak">
+												<xs:complexType>
+													<xs:sequence>
+														<xs:element name="Vedtak" type="typeYrkesskadeVedtak"/>
+													</xs:sequence>
+												</xs:complexType>
+											</xs:element>
+										</xs:choice>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="Status" type="statusType"/>
+							</xs:sequence>
+							<xs:attribute name="tidsstempel" type="xs:dateTime" use="required"/>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="DiagnosekodeOK" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Er diagnosekoden ok? Svar på spørring nr.5 og nr.1</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="Status" type="statusType"/>
+							</xs:sequence>
+							<xs:attribute name="diagnoseOk" type="xs:boolean" use="required"/>
+							<xs:attribute name="diagnoseKode" type="xs:string" use="required"/>
+							<xs:attribute name="diagnoseKodeverk" type="xs:string" use="required"/>
+							<xs:attribute name="biDiagnoseOk" type="xs:boolean" use="optional"/>
+							<xs:attribute name="biDiagnoseKode" type="xs:string" use="optional"/>
+							<xs:attribute name="biDiagnoseKodeverk" type="xs:string" use="optional"/>
+							<xs:attribute name="diagnoseTekst" type="xs:string" use="optional"/>
+							<xs:attribute name="bidiagnoseTekst" type="xs:string" use="optional"/>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="Pasient" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>Svar på spørring nr.6 og nr.1</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="Status" type="statusType"/>
+							</xs:sequence>
+							<xs:attribute name="finnes" type="xs:boolean" use="required"/>
+							<xs:attribute name="navEnhet" type="xs:boolean" use="optional"/>
+							<xs:attribute name="sperret" type="xs:string" use="optional"/>
+							<xs:attribute name="erIA" type="xs:boolean" use="optional"/>
+							<xs:attribute name="harFrikort" type="xs:boolean" use="optional">
+								<xs:annotation>
+									<xs:documentation>Finnes det frikort på denne personen på fraDato?</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+							<xs:attribute name="frikortVedtaksDato" type="xs:date" use="optional">
+								<xs:annotation>
+									<xs:documentation>Vedtaksdato fra saken hvor frikort ble bevilget.</xs:documentation>
+								</xs:annotation>
+							</xs:attribute>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+				<xs:element name="HovedStatus" type="statusType">
+					<xs:annotation>
+						<xs:documentation>Status fra Infortrygd, gikk forespørselen bra eller ikke. Denne skal forekomme når det finnes en respons. </xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="fodselsnummer" type="typeFodselsnummer" use="optional"/>
+			<xs:attribute name="tkNummer" type="typeTKnummer" use="optional"/>
+			<xs:attribute name="forespNr" type="xs:nonNegativeInteger" use="required">
+				<xs:annotation>
+					<xs:documentation>Hva spør vi etter.: Foreløpig er denne alltid = 1 som betyr alle SMdata
+</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="forespTidsStempel" type="typeTidsStempel" use="required">
+				<xs:annotation>
+					<xs:documentation>Tidsstempel for revisjonsspor. Legges på av spørrende system. </xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="fraDato" type="xs:date" use="optional">
+				<xs:annotation>
+					<xs:documentation>Datoen skal finnes i ytelsesperioden.
+
+Denne skal ikke brukes av SMhistorikken - i stedet brukes eldsteFraDato og alt forover i tid.
+</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="eldsteFraDato" type="xs:date" use="optional">
+				<xs:annotation>
+					<xs:documentation>Brukes av Smhistorikk, denne dato og alt forover i tid.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="hovedDiagnosekode" type="xs:string" use="optional"/>
+			<xs:attribute name="hovedDiagnosekodeverk" type="xs:string" use="optional">
+				<xs:annotation>
+					<xs:documentation>Hva skal verdiene være her?</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="fodselsnrBehandler" type="typeFodselsnummer" use="optional">
+				<xs:annotation>
+					<xs:documentation>Mottakers fødselsnr</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="biDiagnoseKode" type="xs:string" use="optional"/>
+			<xs:attribute name="biDiagnosekodeverk" type="xs:string" use="optional"/>
+			<xs:attribute name="tkNrFraDato" type="xs:date" use="optional"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:simpleType name="typeForesp">
+		<xs:annotation>
+			<xs:documentation>Inneholder forespørselen : nummeret 1-5</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:minInclusive value="1"/>
+			<xs:maxInclusive value="6"/>
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>All relevant data om behandler - gi inn fødselsnummer, dato, og tknummer</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>All relevant data om denne SM, hvis den finnes fra før. Ellers ingenting og statuskode
+i status delen</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3">
+				<xs:annotation>
+					<xs:documentation>All relevant historikkdata om denne SM. Og historikk om eldre sykemeldinger.
+Input: Dnummer, Tknummer, fraogmeddato (trenger kun historikk tilbake fra denne dato, ca 2 år)</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="4">
+				<xs:annotation>
+					<xs:documentation>Relevant data om andre ytelser på personen.
+Input: Fødelsnr, dato</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="5">
+				<xs:annotation>
+					<xs:documentation>Dette er en hjelpefunksjon som implisitt betyr alle spørringer som kan forekomme.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="6"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="typeFodselsnummer">
+		<xs:restriction base="xs:string">
+			<xs:length value="11"/>
+			<xs:whiteSpace value="collapse"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="typeTKnummer">
+		<xs:restriction base="xs:string">
+			<xs:length value="4"/>
+			<xs:whiteSpace value="collapse"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="typeTidsStempel">
+		<xs:annotation>
+			<xs:documentation>Dato og tid</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:dateTime"/>
+	</xs:simpleType>
+	<xs:simpleType name="typeMottakerKode">
+		<xs:annotation>
+			<xs:documentation> Felt MOTTAKER har følgende gyldige verdier :                               
+AD       - advokat                                           
+AK       - arbeidskontor                                     
+AMI      - arbeidsmarkedsinstitutt                           
+AN       - ankenemnda for sykepenger                         
+AP       - audiopedagog                                      
+APO      - apotek                                            
+AT       - arbeidstilsynet                                   
+AU       - attføringsutvalg                                  
+BB       - begravelsesbyrå                                   
+BBE      - bobestyrer                                        
+BF       - bidragsfogden                                     
+BH       - barnehage                                         
+BHT      - bedriftshelsetjeneste                             
+BTK      - bostedstrygdekontor                               
+BU       - bilutvalget                                       
+EØS      - EØS-land                                          
+ET       - ergoterapeut                                      
+FFU      - Folketr.ktr. for utenl.s.         
+FK       - Fylkestrygdekontoret                              
+FKL      - felleskontoret LO/NHO                             
+FL       - fylkeslegen                                       
+FS       - forsikringsselskap                                
+FTK      - Fylkestrygdekontoret                              
+FYS      - fysioterapeut                                     
+GVS      - grunn- og videreg. skole                          
+HMS      - hjelpemiddelsentral                               
+HS       - hjemmesykepleien                                  
+HST      - helsestasjon                                      
+HSV      - hovedstevnevitnet                                 
+HTK      - habilitetskontor                                  
+HU       - høyskole/universitet                              
+JOR      - jordmor                                           
+KI       - kiropraktor (prøvefylker)                         
+KIR      - kiropraktor                                       
+KOM      - kommunen                                          
+KON      - konvensjonsland                                   
+LBS      - landsdekkende bilsenter           
+LE       - lege (heri bedriftslege)          
+LK       - ligningskontoret                  
+LM       - leverandør motorkjøretøy          
+LOG      - logoped                           
+LRB      - løsørereg. Brønnøysund            
+LS       - legesenter                        
+MF       - mulig far                         
+MT       - manuellterapeut                   
+NM       - namsmannen                        
+NTK      - nabotrygdekontor                  
+OM       - ombygger bil                      
+PPT      - psykologisk ped. tjeneste         
+PSY      - psykolog                          
+RFK      - r                                 
+RL       - rådgivende lege                   
+ROL      - rådgivende overlege               
+RT       - rådgivende tannlege                                                                          
+RTK      - regionstrygdekontor             
+RTV      - RTV                             
+SAD      - samleadressat                   
+SFK      - Sentralfylkestrygdekontor       
+SK       - sosialkontor                    
+SL       - spesiallege                     
+SR       - Skifteretten                    
+SUD      - Statens utlendingsdir.          
+TI       - takseringsinstanser             
+TK       - trygdekontor                    
+TL       - tannlege                        
+TOL      - tolk                            
+TR       - Trygderetten                    
+TRS      - trygdet med serviceavtale       
+TRY      - trygdet                         
+X        - andre                           
+YH       - yrkeshygieniker                 
+YM       - yrkesmedisiner    </xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="AD"/>
+			<xs:enumeration value="AK"/>
+			<xs:enumeration value="AMI"/>
+			<xs:enumeration value="AN"/>
+			<xs:enumeration value="AP"/>
+			<xs:enumeration value="APO"/>
+			<xs:enumeration value="AT"/>
+			<xs:enumeration value="AU"/>
+			<xs:enumeration value="BB"/>
+			<xs:enumeration value="BBE"/>
+			<xs:enumeration value="BF"/>
+			<xs:enumeration value="BH"/>
+			<xs:enumeration value="BHT"/>
+			<xs:enumeration value="BI"/>
+			<xs:enumeration value="BTK"/>
+			<xs:enumeration value="BU"/>
+			<xs:enumeration value="EØS"/>
+			<xs:enumeration value="ET"/>
+			<xs:enumeration value="FFU"/>
+			<xs:enumeration value="FK"/>
+			<xs:enumeration value="FKL"/>
+			<xs:enumeration value="FL"/>
+			<xs:enumeration value="FS"/>
+			<xs:enumeration value="FT"/>
+			<xs:enumeration value="FTK"/>
+			<xs:enumeration value="FYS"/>
+			<xs:enumeration value="GVS"/>
+			<xs:enumeration value="HMS"/>
+			<xs:enumeration value="HS"/>
+			<xs:enumeration value="HP"/>
+			<xs:enumeration value="HST"/>
+			<xs:enumeration value="HSV"/>
+			<xs:enumeration value="HTK"/>
+			<xs:enumeration value="HU"/>
+			<xs:enumeration value="JOR"/>
+			<xs:enumeration value="KI"/>
+			<xs:enumeration value="KIR"/>
+			<xs:enumeration value="KOM"/>
+			<xs:enumeration value="KON"/>
+			<xs:enumeration value="LBS"/>
+			<xs:enumeration value="LE"/>
+			<xs:enumeration value="LK"/>
+			<xs:enumeration value="LM"/>
+			<xs:enumeration value="LOG"/>
+			<xs:enumeration value="LRB"/>
+			<xs:enumeration value="LS"/>
+			<xs:enumeration value="MF"/>
+			<xs:enumeration value="MT"/>
+			<xs:enumeration value="NM"/>
+			<xs:enumeration value="NTK"/>
+			<xs:enumeration value="OM"/>
+			<xs:enumeration value="PPT"/>
+			<xs:enumeration value="PSY"/>
+			<xs:enumeration value="RFK"/>
+			<xs:enumeration value="RL"/>
+			<xs:enumeration value="ROL"/>
+			<xs:enumeration value="RT"/>
+			<xs:enumeration value="RTK"/>
+			<xs:enumeration value="RTV"/>
+			<xs:enumeration value="SAD"/>
+			<xs:enumeration value="SFK"/>
+			<xs:enumeration value="SK"/>
+			<xs:enumeration value="SL"/>
+			<xs:enumeration value="SR"/>
+			<xs:enumeration value="SUD"/>
+			<xs:enumeration value="TI"/>
+			<xs:enumeration value="TK"/>
+			<xs:enumeration value="TL"/>
+			<xs:enumeration value="TOL"/>
+			<xs:enumeration value="TR"/>
+			<xs:enumeration value="TRS"/>
+			<xs:enumeration value="TRY"/>
+			<xs:enumeration value="X"/>
+			<xs:enumeration value="YH"/>
+			<xs:enumeration value="YM"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="typeNavn">
+		<xs:annotation>
+			<xs:documentation>Denne strukturen er en kopi av strukturen i SMLEPO pr. mai 2002. Deretter hat de skilt lag.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Fornavn" type="xs:string"/>
+			<xs:element name="Etternavn" type="xs:string"/>
+			<xs:element name="Mellomnavn" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="typePostAdresse">
+		<xs:annotation>
+			<xs:documentation>Denne adressestrukturen er likeformet som typePostealAddress i sykmeldingssskjemaet: http://www.kith.no/xmlstds/rtv/smlepo/1/ men har norske språk i tag-navn</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="GateAdresse" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Gateadresse. Eventuell PB går også hit</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PostNummer" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Postnummer norsk</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="PostSted" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Poststed</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Land" type="xs:string" default="no" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="typeSMinfo">
+		<xs:annotation>
+			<xs:documentation>Sykmeldingsperiodedata</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Periode">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="LegeNavn" type="typeNavn">
+							<xs:annotation>
+								<xs:documentation>Legen sitt navn delt opp i navne strukturen. Hvis det er en institusjon, legges hele navnet i Navn feltet</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:sequence>
+					<xs:attribute name="arbufoerFOM" type="xs:date" use="required">
+						<xs:annotation>
+							<xs:documentation>Er inhold av feltet ARBUFOER</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="arbkat" use="required">
+						<xs:annotation>
+							<xs:documentation>00 Fisker
+01 Arbeidstaker
+02 Selvstendig
+03 Arbtaker-selvstendig
+04 Sjømenn
+05 Jordbruker
+06 Arbeidsledig
+07 Innaktiv
+08 Befal
+09 Menig-korporal
+10 Arbtaker-m-sjømenn
+11 Turnuskandidat
+12 SvaldbardArbeidere
+13 Arbtaker-jordbruker
+14 Yrkesskade
+15 Ambassadepersonell
+16 Reindrift
+17 Arbtaker-fisker
+18 Ikke-i-bruk
+19 Oppdragstaker
+20 Arbtaker-oppdragstaker
+21 FFU-21
+22 FFU-22
+23 Arbtaker-a-løyse
+24 Oppdragstaker-u-fors
+25 Arb-oppdragstaker-u-fors</xs:documentation>
+						</xs:annotation>
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:length value="2"/>
+								<xs:whiteSpace value="collapse"/>
+								<xs:enumeration value="00"/>
+								<xs:enumeration value="01"/>
+								<xs:enumeration value="02"/>
+								<xs:enumeration value="03"/>
+								<xs:enumeration value="04"/>
+								<xs:enumeration value="05"/>
+								<xs:enumeration value="06"/>
+								<xs:enumeration value="07"/>
+								<xs:enumeration value="08"/>
+								<xs:enumeration value="09"/>
+								<xs:enumeration value="10"/>
+								<xs:enumeration value="11"/>
+								<xs:enumeration value="12"/>
+								<xs:enumeration value="13"/>
+								<xs:enumeration value="14"/>
+								<xs:enumeration value="15"/>
+								<xs:enumeration value="16"/>
+								<xs:enumeration value="17"/>
+								<xs:enumeration value="18"/>
+								<xs:enumeration value="19"/>
+								<xs:enumeration value="20"/>
+								<xs:enumeration value="21"/>
+								<xs:enumeration value="22"/>
+								<xs:enumeration value="23"/>
+								<xs:enumeration value="24"/>
+								<xs:enumeration value="25"/>
+								<xs:enumeration value="26"/>
+								<xs:enumeration value="27"/>
+								<xs:enumeration value="28"/>
+								<xs:enumeration value="29"/>
+								<xs:enumeration value="30"/>
+								<xs:enumeration value="31"/>
+								<xs:enumeration value="32"/>
+								<xs:enumeration value="33"/>
+								<xs:enumeration value="34"/>
+								<xs:enumeration value="35"/>
+								<xs:enumeration value="36"/>
+								<xs:enumeration value="37"/>
+								<xs:enumeration value="38"/>
+								<xs:enumeration value="39"/>
+								<xs:enumeration value="40"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+					<xs:attribute name="arbufoerTOM" type="xs:date" use="optional">
+						<xs:annotation>
+							<xs:documentation>I enkelte tilfeller er denne tom - vi vil ikke ha den tilbake da.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="arbufoerOppr" type="xs:date" use="optional">
+						<xs:annotation>
+							<xs:documentation>I enkelte tilfeller er denne tom - vi vil ikke ha den tilbake da.</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="ufoeregrad" type="xs:integer" use="optional"/>
+					<xs:attribute name="behandlingsDato" type="xs:date" use="optional"/>
+					<xs:attribute name="kodeLegeInstitusjon" use="optional">
+						<xs:annotation>
+							<xs:documentation>L = Lege
+K = Kiropraktor
+M = Fysioterapeut
+I = Institusjon
+U = Lege eller institusjon FFU
+P = Psykolog</xs:documentation>
+						</xs:annotation>
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:length value="1"/>
+								<xs:enumeration value="L"/>
+								<xs:enumeration value="K"/>
+								<xs:enumeration value="M"/>
+								<xs:enumeration value="I"/>
+								<xs:enumeration value="U"/>
+								<xs:enumeration value="T"/>
+								<xs:enumeration value="P"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+					<xs:attribute name="legeInstNr" type="xs:integer" use="optional">
+						<xs:annotation>
+							<xs:documentation>Her legges inn legenr eller instnr</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="legeerklaringDato" type="xs:date" use="optional"/>
+					<xs:attribute name="unntak" use="optional">
+						<xs:annotation>
+							<xs:documentation>A= forventes friskmeldt innen 10. fraværsuke
+B = lidelsen er så alvorlig at en ikke kan regne med at medlemmet blir arbeidsfør igjen 
+C=  innlagt i helseinstitusjon. Gamle tilfeller som ligger med I i basen, skal fortsatt lagres slik, men I skal ikke være gyldig verdi ved registrering. Feltet skal ikke oppdateres automatisk, jf. tidligere regler.
+D= Aktivitet igangsatt på 8 ukers tidspunktet
+I Inst-opphold (gammel verdi)
+V Vurdert (gammel verdi)
+U Uforutsett-legefravær(gammel verdi)
+</xs:documentation>
+						</xs:annotation>
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:length value="1"/>
+								<xs:whiteSpace value="collapse"/>
+								<xs:enumeration value="A"/>
+								<xs:enumeration value="B"/>
+								<xs:enumeration value="C"/>
+								<xs:enumeration value="D"/>
+								<xs:enumeration value="I"/>
+								<xs:enumeration value="V"/>
+								<xs:enumeration value="U"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+					<xs:attribute name="yrke" type="xs:string" use="optional"/>
+					<xs:attribute name="avslag" type="xs:string" use="optional"/>
+					<xs:attribute name="spaTest" type="xs:date" use="optional"/>
+					<xs:attribute name="stans" use="optional">
+						<xs:annotation>
+							<xs:documentation>Avsluttet-frisk = AF 
+Flyttet = FL
+Avsluttet = AA
+Avsluttet-død = AD
+MaxUtbet = MAX
+Sm2 mangler = SM-II
+Død = DØD
+Midlertidig stans = MIDL
+Stans dato = 19870301 - 99999999
+Opphør arbeidsforhold = OA
+Bortfall omsorgsansvar = BO
+Gravid adopsjon = GA
+Spesielle forhold = SF
+SP under aktivisering = SA
+SP under akt uten fgodkj = IA
+Friskmeldt til arbfor = FA
+Reisetilskott = RT
+Yrkesrettet attføring = YA
+Bortfall omsorgsansvar = BO
+GravidAdopsjon = GA
+Manglende aktivitet = MA</xs:documentation>
+						</xs:annotation>
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:maxLength value="8"/>
+								<xs:whiteSpace value="collapse"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+					<xs:attribute name="friskKode" use="optional">
+						<xs:annotation>
+							<xs:documentation>' ' = Løpende
+A = Avvist
+B = Barn
+D =  Dødssyk
+E = Egenmelding
+F = Friskmeldt
+H = Historikk
+P = Passiv
+T = Tilbakekjørt
+
+Feltet blir maskinellt oppdatert.
+PS.: For at org.apache.dom parseren skal validere dette, må lengden ikke være satt</xs:documentation>
+						</xs:annotation>
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:whiteSpace value="preserve"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+					<xs:attribute name="utbetFOM" type="xs:date" use="optional"/>
+					<xs:attribute name="utbetTOM" type="xs:date" use="optional"/>
+					<xs:attribute name="sisteBenyttetUtbetalingsGrad" type="xs:integer" use="optional"/>
+					<xs:attribute name="maxDato" type="xs:date" use="optional"/>
+					<xs:attribute name="saksBlokk" use="optional">
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:length value="1"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+					<xs:attribute name="gruppe" type="xs:integer" use="optional"/>
+					<xs:attribute name="brukerid" type="xs:string" use="optional">
+						<xs:annotation>
+							<xs:documentation>Saksbehandlers ID</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="feriedagerPeriode" type="xs:integer" use="optional"/>
+					<xs:attribute name="feriedagerPlanlagt" type="xs:integer" use="optional"/>
+					<xs:attribute name="vedtak12uker" type="xs:date" use="optional"/>
+					<xs:attribute name="hovedDiagnosekode" type="xs:string" use="optional">
+						<xs:annotation>
+							<xs:documentation>Hoveddiagnosen i kode :eks.: X25</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="hovedDiagnoseType" type="xs:string" use="optional">
+						<xs:annotation>
+							<xs:documentation>Diagnosetype</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="biDiagnosekode" type="xs:string" use="optional">
+						<xs:annotation>
+							<xs:documentation>Bidiagnose i kode : eks : X87</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="biDiagnoseType" type="xs:string" use="optional"/>
+					<xs:attribute name="kjoepHelsetjeneste" type="xs:string" use="optional"/>
+					<xs:attribute name="helsetjenesteSendt" type="xs:date" use="optional"/>
+					<xs:attribute name="utredetEllerOperert" use="optional">
+						<xs:annotation>
+							<xs:documentation>DRG: Lagt til 'H' som også er gyldig data.</xs:documentation>
+						</xs:annotation>
+						<xs:simpleType>
+							<xs:restriction base="xs:string">
+								<xs:enumeration value="U"/>
+								<xs:enumeration value="O"/>
+								<xs:enumeration value="H"/>
+								<xs:enumeration value="P"/>
+								<xs:enumeration value="S"/>
+								<xs:enumeration value="A"/>
+								<xs:enumeration value="K"/>
+								<xs:enumeration value="R"/>
+								<xs:enumeration value="V"/>
+								<xs:enumeration value="D"/>
+							</xs:restriction>
+						</xs:simpleType>
+					</xs:attribute>
+					<xs:attribute name="utredetEllerOperertDato" type="xs:date" use="optional"/>
+					<xs:attribute name="del2Type" type="xs:string" use="optional">
+						<xs:annotation>
+							<xs:documentation>J eller U</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="del2Dato" type="xs:date" use="optional"/>
+					<xs:attribute name="friskmeldtDato" type="xs:date" use="optional"/>
+					<xs:attribute name="svangerskapSykdom" type="xs:string" use="optional">
+						<xs:annotation>
+							<xs:documentation>J eller ingenting</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="skadeart" type="xs:string" use="optional"/>
+					<xs:attribute name="skadedato" type="xs:date" use="optional"/>
+					<xs:attribute name="skademeldMottatt" type="xs:date" use="optional"/>
+					<xs:attribute name="skadeVetak" type="xs:string" use="optional"/>
+					<xs:attribute name="unntakAktivitet" type="xs:string" use="optional">
+						<xs:annotation>
+							<xs:documentation>M = Medisinske årsaker
+A = Arbeidsrelatert aktivitet på arbeidsplassen kan ikke gjennomføres</xs:documentation>
+						</xs:annotation>
+					</xs:attribute>
+					<xs:attribute name="oppfolgingsplan" type="xs:date" use="optional"/>
+					<xs:attribute name="avventendeSykmelding" type="xs:string" use="optional"/>
+					<xs:attribute name="avventendeSykmeldingTOM" type="xs:date" use="optional"/>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Historikk" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:choice minOccurs="0">
+						<xs:element name="Uforegrad">
+							<xs:complexType>
+								<xs:attribute name="fom" type="xs:date" use="optional"/>
+								<xs:attribute name="tom" type="xs:date" use="optional"/>
+								<xs:attribute name="grad" type="xs:integer" use="optional"/>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="Lege">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:choice minOccurs="0">
+										<xs:element name="Legenummer" type="xs:integer"/>
+										<xs:element name="Institusjonsnummer" type="xs:integer"/>
+									</xs:choice>
+									<xs:element name="Navn" type="typeNavn" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>Hvis institusjon, legg alt i fornavndelen av typeNavn</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+								</xs:sequence>
+								<xs:attribute name="kodeLegeInstitusjon" type="xs:string" use="optional"/>
+								<xs:attribute name="legeFodselsnummer" type="typeFodselsnummer" use="optional">
+									<xs:annotation>
+										<xs:documentation>Kan også være institusjonsnr</xs:documentation>
+									</xs:annotation>
+								</xs:attribute>
+								<xs:attribute name="fom" type="xs:date" use="optional"/>
+								<xs:attribute name="tom" type="xs:date" use="optional"/>
+								<xs:attribute name="legenrinstnr" type="xs:string" use="optional"/>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="HovedDiagnose">
+							<xs:complexType>
+								<xs:attribute name="kode" type="xs:string" use="optional"/>
+								<xs:attribute name="kodeverk" type="xs:string" use="optional"/>
+								<xs:attribute name="navn" type="xs:string" use="optional"/>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="SMDel2">
+							<xs:annotation>
+								<xs:documentation>Dette er Sm del 2 dato</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:attribute name="registreringsDato" type="xs:date" use="optional"/>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="Unntak">
+							<xs:complexType>
+								<xs:attribute name="kode" type="xs:string" use="optional"/>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="BiDiagnose">
+							<xs:complexType>
+								<xs:attribute name="kode" type="xs:string" use="optional"/>
+								<xs:attribute name="kodeverk" type="xs:string" use="optional"/>
+								<xs:attribute name="navn" type="xs:string" use="optional"/>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="Helsetjenester">
+							<xs:complexType>
+								<xs:attribute name="kjoepHelsetjeneste" type="xs:string" use="optional"/>
+								<xs:attribute name="helsetjenesteSendt" type="xs:date" use="optional"/>
+								<xs:attribute name="utredetEllerOperert" type="xs:string" use="optional"/>
+								<xs:attribute name="utredetEllerOperertDato" type="xs:date" use="optional"/>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="Tilltak">
+							<xs:annotation>
+								<xs:documentation>Er ikke historik, men det kan  være mange.</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:attribute name="type" type="xs:string" use="required"/>
+								<xs:attribute name="fom" type="xs:date" use="required"/>
+								<xs:attribute name="tom" type="xs:date" use="required"/>
+								<xs:attribute name="forlengetDato" type="xs:date" use="optional"/>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="Svangerskap">
+							<xs:annotation>
+								<xs:documentation>Er historikk</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:attribute name="kode" type="xs:string" use="required"/>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="Legeerklaring">
+							<xs:complexType>
+								<xs:attribute name="mottatDato" type="xs:date" use="required"/>
+							</xs:complexType>
+						</xs:element>
+					</xs:choice>
+					<xs:attribute name="endringsDato" type="xs:date" use="required"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="typeYtelsePeriode">
+		<xs:annotation>
+			<xs:documentation>Periode for parallelle ytelser</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="fraDato" type="xs:date" use="required"/>
+		<xs:attribute name="tilDato" type="xs:date" use="optional">
+			<xs:annotation>
+				<xs:documentation>TOM er ikke required - den finnes bl.a. ikke  for BarnSyk.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="grad" type="xs:integer" use="required"/>
+		<xs:attribute name="stoenadsType" use="required">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:whiteSpace value="preserve"/>
+					<xs:enumeration value="AP"/>
+					<xs:enumeration value="OM"/>
+					<xs:enumeration value="FP"/>
+					<xs:enumeration value="OP"/>
+					<xs:enumeration value="PP"/>
+					<xs:enumeration value="SV"/>
+					<xs:enumeration value="PB"/>
+					<xs:enumeration value="Z "/>
+					<xs:enumeration value="PI"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="stans" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Avsluttet-frisk = AF 
+Flyttet = FL
+Avsluttet = AA
+Avsluttet-død = AD
+MaxUtbet = MAX
+Sm2 mangler = SM-II
+Død = DØD
+Midlertidig stans = MIDL
+Stans dato = 19870301 - 99999999
+Opphør arbeidsforhold = OA
+Bortfall omsorgsansvar = BO
+Gravid adopsjon = GA
+Spesielle forhold = SF
+SP under aktivisering = SA
+SP under akt uten fgodkj = IA
+Friskmeldt til arbfor = FA
+Reisetilskott = RT
+Yrkesrettet attføring = YA
+Bortfall omsorgsansvar = BO
+GravidAdopsjon = GA</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="frisk" type="xs:string" use="optional"/>
+		<xs:attribute name="utbetTOM" type="xs:date" use="optional"/>
+	</xs:complexType>
+	<xs:complexType name="typeFraAetat">
+		<xs:annotation>
+			<xs:documentation>Dataene kommer fra Aetat - attføring og dagpenger</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="tkNummer" type="xs:string" use="required"/>
+		<xs:attribute name="arbeidskontorNummer" type="xs:string" use="required"/>
+		<xs:attribute name="typeYtelse" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>Verdier:
+DP - dagpenger
+AT - attføringspenger</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="datoFOM" type="xs:date" use="required"/>
+		<xs:attribute name="datoTOM" type="xs:date" use="required"/>
+		<xs:attribute name="typeData" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>F - foreløpig vedtak
+V - vedtak
+U - utbetaling
+E - etterbetaling</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="gradering" type="xs:nonNegativeInteger" use="required"/>
+	</xs:complexType>
+	<xs:complexType name="statusType">
+		<xs:attribute name="returStatus" type="xs:integer" use="required">
+			<xs:annotation>
+				<xs:documentation>Alvorlighetsgrad.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="kodeMelding" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>Meldingskode</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="beskMelding" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Meldingstekst</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="tidsStempel" type="typeTidsStempel" use="required">
+			<xs:annotation>
+				<xs:documentation>Tidsstempel når IT legger melding på returkø</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="typeYrkesskadeVedtak">
+		<xs:attribute name="vedtaksDato" type="xs:date" use="required">
+			<xs:annotation>
+				<xs:documentation>Vedtaks dato fra saken YS-vedtaket ble fattet</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="diagnoseKode" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Diagnose-kode (4 tegn)</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="diagnoseTekst" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Beskrivende tekst for diagnosen (maks. 60 tegn)</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="skadeArt" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Beskrivelse av skadeart (maks. 60 tegn)</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="tknr" type="xs:string" use="optional"/>
+	</xs:complexType>
+</xs:schema>

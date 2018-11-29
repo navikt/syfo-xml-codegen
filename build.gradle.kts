@@ -25,6 +25,7 @@ subprojects {
     val jaxbBasicAntVersion = "1.11.1"
     val jaxbVersion = "2.3.0.1"
     val jaxbApiVersion = "2.1"
+    val javaTimeAdapterVersion = "1.1.3"
 
     val xjc by configurations.creating
 
@@ -34,6 +35,8 @@ subprojects {
         xjc("com.sun.xml.bind", "jaxb-impl", jaxbVersion)
         xjc("com.sun.xml.bind", "jaxb-core", jaxbVersion)
         xjc("org.jvnet.jaxb2_commons", "jaxb2-basics-ant", jaxbBasicAntVersion)
+        xjc("com.migesok", "jaxb-java-time-adapters", javaTimeAdapterVersion)
+        implementation("com.migesok", "jaxb-java-time-adapters", javaTimeAdapterVersion)
     }
 
     configure<JavaPluginConvention> {

@@ -46,6 +46,7 @@ open class Jaxb2Task : DefaultTask() {
                         "fork" to "${it.fork}"
                 ) {
                     if (it.binding != null) {
+                        "arg"("value" to "-extension")
                         "binding"("dir" to xjbDir!!, "includes" to it.binding)
                     }
                 }

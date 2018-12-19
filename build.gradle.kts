@@ -8,11 +8,11 @@ plugins {
 }
 
 group = "no.nav.helse.xml"
-version = "1.0-SNAPSHOT"
+version = "1.0.0-SNAPSHOT"
 
 subprojects {
     group = "no.nav.helse.xml"
-    version = "1.0-SNAPSHOT"
+    version = "1.0.0-SNAPSHOT"
 
     apply(plugin = "java")
     apply(plugin = "maven-publish")

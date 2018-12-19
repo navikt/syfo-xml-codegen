@@ -1,0 +1,190 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://seres.no/xsd/NAV/Oppfølgingsplan2_M/2014"
+            xmlns:seres="http://seres.no/xsd/forvaltningsdata"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="http://seres.no/xsd/NAV/Oppfølgingsplan2_M/2014"
+            elementFormDefault="qualified"
+            attributeFormDefault="unqualified">
+   <!--xsd:annotation>
+      <xsd:documentation>
+         <xsd:attribute name="XSLT-skriptnavn" fixed="SERES_XSD_GEN"/>
+         <xsd:attribute name="XSD-generatorversjon" fixed="2.0.13"/>
+         <xsd:attribute name="XSLT-prosessor" fixed="SAXON versjon 9.1.0.7"/>
+         <xsd:attribute name="generert" fixed="2014-09-29T14:40:08.294+02:00"/>
+         <xsd:attribute name="navneromprefix" fixed="http://seres.no/xsd"/>
+         <xsd:attribute name="namespace" fixed="http://seres.no/xsd/NAV/Oppfølgingsplan2_M/2014"/>
+         <xsd:attribute name="meldingsnavn" fixed="melding"/>
+         <xsd:attribute name="domenenavn" fixed="NAV"/>
+         <xsd:attribute name="modellnavn" fixed="Oppfølgingsplan2_M"/>
+         <xsd:attribute name="metamodellversjon" fixed="1.2"/>
+         <xsd:attribute name="guid" fixed="false"/>
+         <xsd:attribute name="orid" fixed="false"/>
+         <xsd:attribute name="nillable" fixed="true"/>
+         <xsd:attribute name="tillat-gjenbruk" fixed="true"/>
+         <xsd:attribute name="elementtype" fixed="false"/>
+         <xsd:attribute name="forvaltningsdata" fixed="true"/>
+         <xsd:attribute name="forvaltningsdata-navnerom" fixed="http://seres.no/xsd/forvaltningsdata"/>
+         <xsd:attribute name="særnorske-bokstaver-i-navn" fixed="false"/>
+         <xsd:attribute name="ft_guid_som_attributt" fixed="false"/>
+         <xsd:attribute name="sem-ref" fixed="false"/>
+         <xsd:attribute name="kodebibliotek" fixed="false"/>
+         <xsd:attribute name="språk" fixed=""/>
+         <xsd:attribute name="XSD-variant" fixed="Standard"/>
+      </xsd:documentation>
+   </xsd:annotation-->
+   <!--<xsd:import namespace="http://seres.no/xsd/forvaltningsdata"
+               schemaLocation="seres.xsd"/>-->
+   <xsd:element name="melding" type="Oppfoelgingsplan2_M"/>
+   <xsd:complexType name="Oppfoelgingsplan2_M">
+      <xsd:sequence>
+         <xsd:element name="Skjemainnhold" type="Skjemainnhold"/>
+      </xsd:sequence>
+      <!--xsd:attribute ref="seres:dataFormatProvider" fixed="SERES" use="required"/>
+      <xsd:attribute ref="seres:dataFormatId" fixed="3521" use="required"/>
+      <xsd:attribute ref="seres:dataFormatVersion" fixed="37865" use="required"/-->
+      <xsd:anyAttribute/>
+   </xsd:complexType>
+   <xsd:complexType name="Skjemainnhold">
+      <xsd:sequence>
+         <xsd:element name="arbeidsgiver" minOccurs="0" nillable="true" type="Arbeidsgiver"/>
+         <xsd:element name="sykmeldtArbeidstaker" minOccurs="0" nillable="true"
+                      type="SykmeldtArbeidstaker"/>
+         <xsd:element name="sykefravaerForSykmeldtArbeidstaker" minOccurs="0" nillable="true"
+                      type="SykefravaerForSykmeldtArbeidstaker"/>
+         <xsd:element name="avsenderSystem" minOccurs="0" nillable="true" type="AvsenderSystem"/>
+         <xsd:element name="tiltak" minOccurs="0" nillable="true" type="Tiltak"/>
+         <xsd:element name="mottaksInformasjon" minOccurs="0" nillable="true"
+                      type="Mottaksinformasjon"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="Arbeidsgiver">
+      <xsd:sequence>
+         <xsd:element name="annenKontaktpersonEtternavn" minOccurs="0" nillable="true" type="Tekst"/>
+         <xsd:element name="telefonNaermesteLeder" minOccurs="0" nillable="true" type="Telefonnummer"/>
+         <xsd:element name="naermesteLederFornavn" minOccurs="0" nillable="true" type="Tekst"/>
+         <xsd:element name="orgnr" type="Organisasjonsnummer"/>
+         <xsd:element name="orgnavn" type="Tekst"/>
+         <xsd:element name="virksomhetErIABedrift" minOccurs="0" nillable="true"
+                      type="SvaralternativJaNei"/>
+         <xsd:element name="virksomhetHarBedriftshelsetjeneste" minOccurs="0" nillable="true"
+                      type="SvaralternativJaNei"/>
+         <xsd:element name="telefonKontaktperson" minOccurs="0" nillable="true" type="Telefonnummer"/>
+         <xsd:element name="naermesteLederEtternavn" minOccurs="0" nillable="true" type="Tekst"/>
+         <xsd:element name="annenKontaktpersonFornavn" minOccurs="0" nillable="true" type="Tekst"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:simpleType name="Tekst">
+      <xsd:restriction base="xsd:string"/>
+   </xsd:simpleType>
+   <xsd:simpleType name="Telefonnummer">
+      <xsd:restriction base="xsd:string"/>
+   </xsd:simpleType>
+   <xsd:simpleType name="Organisasjonsnummer">
+      <xsd:restriction base="RestriksjonOrganisasjonsnummer"/>
+   </xsd:simpleType>
+   <xsd:simpleType name="RestriksjonOrganisasjonsnummer">
+      <xsd:restriction base="xsd:string">
+         <xsd:length value="9"/>
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="SvaralternativJaNei">
+      <xsd:restriction base="xsd:boolean"/>
+   </xsd:simpleType>
+   <xsd:complexType name="SykmeldtArbeidstaker">
+      <xsd:sequence>
+         <xsd:element name="fnr" type="Foedselsnummer"/>
+         <xsd:element name="etternavn" minOccurs="0" nillable="true" type="Tekst"/>
+         <xsd:element name="stillingAvdeling" minOccurs="0" nillable="true" type="Tekst"/>
+         <xsd:element name="tlf" minOccurs="0" nillable="true" type="Telefonnummer"/>
+         <xsd:element name="ordinaereArbeidsoppgaver" minOccurs="0" nillable="true" type="Tekst"/>
+         <xsd:element name="fornavn" minOccurs="0" nillable="true" type="Tekst"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:simpleType name="Foedselsnummer">
+      <xsd:restriction base="RestriksjonFoedselsnummer"/>
+   </xsd:simpleType>
+   <xsd:simpleType name="RestriksjonFoedselsnummer">
+      <xsd:restriction base="xsd:string">
+         <xsd:length value="11"/>
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:complexType name="SykefravaerForSykmeldtArbeidstaker">
+      <xsd:sequence>
+         <xsd:element name="foersteFravaersdag" minOccurs="0" nillable="true" type="Dato"/>
+         <xsd:element name="sykmeldingsdato" minOccurs="0" nillable="true" type="Dato"/>
+         <xsd:element name="sykmeldingsprosentVedSykmeldingsDato" minOccurs="0" nillable="true"
+                      type="Tekst"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:simpleType name="Dato">
+      <xsd:restriction base="xsd:date"/>
+   </xsd:simpleType>
+   <xsd:complexType name="AvsenderSystem">
+      <xsd:sequence>
+         <xsd:element name="systemNavn" minOccurs="0" nillable="true" type="Tekst"/>
+         <xsd:element name="systemVersjon" minOccurs="0" nillable="true" type="Tekst"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="Tiltak">
+      <xsd:sequence>
+         <xsd:element name="tiltaksinformasjon" minOccurs="0" nillable="true" maxOccurs="unbounded"
+                      type="Tiltaksinformasjon"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="Tiltaksinformasjon">
+      <xsd:sequence>
+         <xsd:element name="bistandAndreBeskrivelse" minOccurs="0" nillable="true" type="Tekst"/>
+         <xsd:element name="bistandAndre" minOccurs="0" nillable="true" type="SvaralternativJaNei"/>
+         <xsd:element name="bistandHjelpemidler" minOccurs="0" nillable="true"
+                      type="SvaralternativJaNei"/>
+         <xsd:element name="tidsrom" minOccurs="0" nillable="true" type="Tidsrom"/>
+         <xsd:element name="behovForAvklaringLegeSykmelder" minOccurs="0" nillable="true"
+                      type="Tekst"/>
+         <xsd:element name="maalMedTiltaket" minOccurs="0" nillable="true" type="Tekst"/>
+         <xsd:element name="beskrivelseAvTiltaket" minOccurs="0" nillable="true" type="Tekst"/>
+         <xsd:element name="bistandRaadOgVeiledning" minOccurs="0" nillable="true"
+                      type="SvaralternativJaNei"/>
+         <xsd:element name="bistandDialogMoeteMedNav" minOccurs="0" nillable="true"
+                      type="SvaralternativJaNei"/>
+         <xsd:element name="bistandArbeidsrettedeTiltakOgVirkemidler" minOccurs="0" nillable="true"
+                      type="SvaralternativJaNei"/>
+         <xsd:element name="bistandBedriftshelsetjenesten" minOccurs="0" nillable="true"
+                      type="SvaralternativJaNei"/>
+         <xsd:element name="ordinaereArbeidsoppgaverSomIkkeKanUtfoeres" minOccurs="0" nillable="true"
+                      type="Tekst"/>
+         <xsd:element name="sykmeldingsprosentIPerioden" minOccurs="0" nillable="true" type="Tekst"/>
+         <xsd:element name="signertPapirkopiForeligger" minOccurs="0" nillable="true"
+                      type="SvaralternativJaNei"/>
+         <xsd:element name="underskriftsdato" minOccurs="0" nillable="true" type="Dato"/>
+         <xsd:element name="oppfoelgingssamtaler" minOccurs="0" nillable="true" type="Tekst"/>
+         <xsd:element name="tilrettelagtArbeidIkkeMulig" minOccurs="0" nillable="true" type="Tekst"/>
+         <xsd:element name="bistandRaadOgVeiledningBeskrivelse" minOccurs="0" nillable="true"
+                      type="Tekst"/>
+         <xsd:element name="bistandArbeidsrettedeTiltakOgVirkemidlerBeskrivelse" minOccurs="0"
+                      nillable="true"
+                      type="Tekst"/>
+         <xsd:element name="bistandDialogMoeteMedNavBeskrivelse" minOccurs="0" nillable="true"
+                      type="Tekst"/>
+         <xsd:element name="bistandHjelpemidlerBeskrivelse" minOccurs="0" nillable="true"
+                      type="Tekst"/>
+         <xsd:element name="behovForNyeTiltak" minOccurs="0" nillable="true"
+                      type="SvaralternativJaNei"/>
+         <xsd:element name="vurderingAvTiltak" minOccurs="0" nillable="true" type="Tekst"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="Tidsrom">
+      <xsd:sequence>
+         <xsd:element name="periodeFra" minOccurs="0" nillable="true" type="Dato"/>
+         <xsd:element name="periodeTil" minOccurs="0" nillable="true" type="Dato"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="Mottaksinformasjon">
+      <xsd:sequence>
+         <xsd:element name="endringsDato" type="Dato"/>
+         <xsd:element name="oppfolgingsplanSendesTiNav" minOccurs="0" nillable="true"
+                      type="SvaralternativJaNei"/>
+         <xsd:element name="oppfolgingsplanSendesTilFastlege" minOccurs="0" nillable="true"
+                      type="SvaralternativJaNei"/>
+      </xsd:sequence>
+   </xsd:complexType>
+</xsd:schema>

@@ -1,0 +1,230 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xsd:schema xmlns="http://seres.no/xsd/NAV/Oppfølgingsplan2_M/2012"
+            xmlns:seres="http://seres.no/xsd/forvaltningsdata"
+            xmlns:kodebib="http://kodebibliotek.brreg.no/xsd/kodebibliotek"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema"
+            targetNamespace="http://seres.no/xsd/NAV/Oppfølgingsplan2_M/2012"
+            elementFormDefault="qualified"
+            attributeFormDefault="unqualified">
+<!--
+  	
+	Generert av: SERESxsd-generator den 2012-08-03T09:00:43.309-04:30
+	Gjelder: SERES Metamodell versjon 1.0 (2010) og 1.1 (2011)
+	XSLT-skript: SERES_XSD_GEN versjon 1.2.0 (2011-06-07)
+	XSLT-prosessor: SAXON versjon 9.1.0.7
+	
+	Dette dokumentet skal kodes i "UTF-8" og det betyr at norske bokstaver som æøå og ÆØÅ skal kunne brukes i element- og attributtnavn, med mindre parameteren særnorske-bokstaver-i-navn = "false".
+	
+	Parametre:
+		domenenavn = "NAV"
+		modellnavn = "Oppfølgingsplan2_M"
+		modellversjon = "2012"
+		navneromprefix = "http://seres.no/xsd"
+		meldingsnavn = "melding"
+		guid = "false"
+		orid = "false"
+		elementtype = "true"
+		forvaltningsdata = "true"
+		nillable = "true"
+		tillat-gjenbruk = "true"
+		forvaltningsdata-navnerom = "http://seres.no/xsd/forvaltningsdata"
+		særnorske-bokstaver-i-navn = "false"
+		cl_dt_endpoint = "https://kodebibliotek.brreg.no/services/designtime/service"
+		cl_dt_user = "test"
+		cl_dt_password = *
+		cl_namespace = "http://kodebibliotek.brreg.no/xsd/kodebibliotek"
+		namespace = "http://seres.no/xsd/NAV/Oppfølgingsplan2_M/2012"
+		ft_guid_som_attributt = "false"
+		sem-ref = "false"
+-->
+<!--<xsd:import namespace="http://seres.no/xsd/forvaltningsdata"
+               schemaLocation="seres.xsd"/>
+   <xsd:import namespace="http://kodebibliotek.brreg.no/xsd/kodebibliotek"
+               schemaLocation="kodebibliotek.xsd"/>-->
+   <xsd:element name="melding" type="Oppfoelgingsplan2_M"/>
+   <xsd:complexType name="Oppfoelgingsplan2_M" seres:elementtype="Meldingsmodell">
+      <xsd:sequence>
+         <xsd:element name="Skjemainnhold" type="Skjemainnhold"/>
+      </xsd:sequence>
+      <!--xsd:attribute ref="seres:dataFormatProvider" fixed="SERES" use="required"/>
+      <xsd:attribute ref="seres:dataFormatId" fixed="3521" use="required"/>
+      <xsd:attribute ref="seres:dataFormatVersion" fixed="34210" use="required"/-->
+      <xsd:anyAttribute/>
+   </xsd:complexType>
+   <xsd:complexType name="Skjemainnhold" seres:elementtype="Meldingsdel">
+      <xsd:sequence>
+         <xsd:element name="arbeidsgiver" minOccurs="0" nillable="true" type="Arbeidsgiver"
+                      seres:elementtype="Relasjonsegenskap"/>
+         <xsd:element name="sykmeldtArbeidstaker" minOccurs="0" nillable="true"
+                      type="SykmeldtArbeidstaker"
+                      seres:elementtype="Relasjonsegenskap"/>
+         <xsd:element name="sykefravaerForSykmeldtArbeidstaker" minOccurs="0" nillable="true"
+                      type="SykefravaerForSykmeldtArbeidstaker"
+                      seres:elementtype="Relasjonsegenskap"/>
+         <xsd:element name="avsenderSystem" minOccurs="0" nillable="true" type="AvsenderSystem"
+                      seres:elementtype="Relasjonsegenskap"/>
+         <xsd:element name="tiltak" minOccurs="0" nillable="true" type="Tiltak"
+                      seres:elementtype="Relasjonsegenskap"/>
+         <xsd:element name="mottaksInformasjon" minOccurs="0" nillable="true"
+                      type="Mottaksinformasjon"
+                      seres:elementtype="Relasjonsegenskap"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="Arbeidsgiver" seres:elementtype="Dataobjekttype">
+      <xsd:sequence>
+         <xsd:element name="annenKontaktpersonEtternavn" minOccurs="0" nillable="true" type="Tekst"
+                      seres:elementtype="Dataegenskap"/>
+         <xsd:element name="telefonNaermesteLeder" minOccurs="0" nillable="true" type="Telefonnummer"
+                      seres:elementtype="Dataegenskap"/>
+         <xsd:element name="naermesteLederFornavn" minOccurs="0" nillable="true" type="Tekst"
+                      seres:elementtype="Dataegenskap"/>
+         <xsd:element name="orgnr" type="Organisasjonsnummer" seres:elementtype="Dataegenskap"/>
+         <xsd:element name="orgnavn" type="Tekst" seres:elementtype="Dataegenskap"/>
+         <xsd:element name="virksomhetErIABedrift" minOccurs="0" nillable="true"
+                      type="SvaralternativJaNei"
+                      seres:elementtype="Dataegenskap"/>
+         <xsd:element name="virksomhetHarBedriftshelsetjeneste" minOccurs="0" nillable="true"
+                      type="SvaralternativJaNei"
+                      seres:elementtype="Dataegenskap"/>
+         <xsd:element name="telefonKontaktperson" minOccurs="0" nillable="true" type="Telefonnummer"
+                      seres:elementtype="Dataegenskap"/>
+         <xsd:element name="naermesteLederEtternavn" minOccurs="0" nillable="true" type="Tekst"
+                      seres:elementtype="Dataegenskap"/>
+         <xsd:element name="annenKontaktpersonFornavn" minOccurs="0" nillable="true" type="Tekst"
+                      seres:elementtype="Dataegenskap"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:simpleType name="Tekst" seres:elementtype="Dataenkeltype">
+      <xsd:restriction base="xsd:string"/>
+   </xsd:simpleType>
+   <xsd:simpleType name="Telefonnummer" seres:elementtype="Dataenkeltype">
+      <xsd:restriction base="xsd:string"/>
+   </xsd:simpleType>
+   <xsd:simpleType name="Organisasjonsnummer" seres:elementtype="Dataenkeltype">
+      <xsd:restriction base="xsd:string">
+         <xsd:length value="9"/>
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:simpleType name="SvaralternativJaNei" seres:elementtype="Dataenkeltype">
+      <xsd:restriction base="xsd:boolean"/>
+   </xsd:simpleType>
+   <xsd:complexType name="SykmeldtArbeidstaker" seres:elementtype="Dataobjekttype">
+      <xsd:sequence>
+         <xsd:element name="fnr" type="Foedselsnummer" seres:elementtype="Dataegenskap"/>
+         <xsd:element name="etternavn" minOccurs="0" nillable="true" type="Tekst"
+                      seres:elementtype="Dataegenskap"/>
+         <xsd:element name="stillingAvdeling" minOccurs="0" nillable="true" type="Tekst"
+                      seres:elementtype="Dataegenskap"/>
+         <xsd:element name="tlf" minOccurs="0" nillable="true" type="Telefonnummer"
+                      seres:elementtype="Dataegenskap"/>
+         <xsd:element name="ordinaereArbeidsoppgaver" minOccurs="0" nillable="true" type="Tekst"
+                      seres:elementtype="Dataegenskap"/>
+         <xsd:element name="fornavn" minOccurs="0" nillable="true" type="Tekst"
+                      seres:elementtype="Dataegenskap"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:simpleType name="Foedselsnummer" seres:elementtype="Dataenkeltype">
+      <xsd:restriction base="xsd:string">
+         <xsd:length value="11"/>
+      </xsd:restriction>
+   </xsd:simpleType>
+   <xsd:complexType name="SykefravaerForSykmeldtArbeidstaker" seres:elementtype="Dataobjekttype">
+      <xsd:sequence>
+         <xsd:element name="foersteFravaersdag" minOccurs="0" nillable="true" type="Dato"
+                      seres:elementtype="Dataegenskap"/>
+         <xsd:element name="sykmeldingsdato" minOccurs="0" nillable="true" type="Dato"
+                      seres:elementtype="Dataegenskap"/>
+         <xsd:element name="sykmeldingsprosentVedSykmeldingsDato" minOccurs="0" nillable="true"
+                      type="Tekst"
+                      seres:elementtype="Dataegenskap"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:simpleType name="Dato" seres:elementtype="Dataenkeltype">
+      <xsd:restriction base="xsd:date"/>
+   </xsd:simpleType>
+   <xsd:complexType name="AvsenderSystem" seres:elementtype="Dataobjekttype">
+      <xsd:sequence>
+         <xsd:element name="systemNavn" minOccurs="0" nillable="true" type="Tekst"
+                      seres:elementtype="Dataegenskap"/>
+         <xsd:element name="systemVersjon" minOccurs="0" nillable="true" type="Tekst"
+                      seres:elementtype="Dataegenskap"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="Tiltak" seres:elementtype="Dataobjekttype">
+      <xsd:sequence>
+         <xsd:element name="tiltaksinformasjon" minOccurs="0" nillable="true" maxOccurs="unbounded"
+                      type="Tiltaksinformasjon"
+                      seres:elementtype="Relasjonsegenskap"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="Tiltaksinformasjon" seres:elementtype="Dataobjekttype">
+      <xsd:sequence>
+         <xsd:element name="bistandAndreBeskrivelse" minOccurs="0" nillable="true" type="Tekst"
+                      seres:elementtype="Dataegenskap"/>
+         <xsd:element name="bistandAndre" minOccurs="0" nillable="true" type="SvaralternativJaNei"
+                      seres:elementtype="Dataegenskap"/>
+         <xsd:element name="bistandHjelpemidler" minOccurs="0" nillable="true"
+                      type="SvaralternativJaNei"
+                      seres:elementtype="Dataegenskap"/>
+         <xsd:element name="tidsrom" minOccurs="0" nillable="true" type="Tidsrom"
+                      seres:elementtype="Dataegenskap"/>
+         <xsd:element name="behovForAvklaringLegeSykmelder" minOccurs="0" nillable="true"
+                      type="Tekst"
+                      seres:elementtype="Dataegenskap"/>
+         <xsd:element name="maalMedTiltaket" minOccurs="0" nillable="true" type="Tekst"
+                      seres:elementtype="Dataegenskap"/>
+         <xsd:element name="beskrivelseAvTiltaket" minOccurs="0" nillable="true" type="Tekst"
+                      seres:elementtype="Dataegenskap"/>
+         <xsd:element name="bistandRaadOgVeiledning" minOccurs="0" nillable="true"
+                      type="SvaralternativJaNei"
+                      seres:elementtype="Dataegenskap"/>
+         <xsd:element name="bistandDialogMoeteMedNav" minOccurs="0" nillable="true"
+                      type="SvaralternativJaNei"
+                      seres:elementtype="Dataegenskap"/>
+         <xsd:element name="bistandArbeidsrettedeTiltakOgVirkemidler" minOccurs="0" nillable="true"
+                      type="SvaralternativJaNei"
+                      seres:elementtype="Dataegenskap"/>
+         <xsd:element name="bistandBedriftshelsetjenesten" minOccurs="0" nillable="true"
+                      type="SvaralternativJaNei"
+                      seres:elementtype="Dataegenskap"/>
+         <xsd:element name="ordinaereArbeidsoppgaverSomIkkeKanUtfoeres" minOccurs="0" nillable="true"
+                      type="Tekst"
+                      seres:elementtype="Dataegenskap"/>
+         <xsd:element name="sykmeldingsprosentIPerioden" minOccurs="0" nillable="true" type="Tekst"
+                      seres:elementtype="Dataegenskap"/>
+         <xsd:element name="signertPapirkopiForeligger" minOccurs="0" nillable="true"
+                      type="SvaralternativJaNei"
+                      seres:elementtype="Dataegenskap"/>
+         <xsd:element name="underskriftsdato" minOccurs="0" nillable="true" type="Dato"
+                      seres:elementtype="Dataegenskap"/>
+         <xsd:element name="oppfoelgingssamtaler" minOccurs="0" nillable="true" type="Tekst"
+                      seres:elementtype="Dataegenskap"/>
+         <xsd:element name="behovForNyeTiltak" minOccurs="0" nillable="true"
+                      type="SvaralternativJaNei"
+                      seres:elementtype="Dataegenskap"/>
+         <xsd:element name="tilrettelagtArbeidIkkeMulig" minOccurs="0" nillable="true" type="Tekst"
+                      seres:elementtype="Dataegenskap"/>
+         <xsd:element name="vurderingAvTiltak" minOccurs="0" nillable="true" type="Tekst"
+                      seres:elementtype="Dataegenskap"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="Tidsrom" seres:elementtype="Datakomplekstype">
+      <xsd:sequence>
+         <xsd:element name="periodeFra" type="Dato" minOccurs="0" nillable="true"
+                      seres:elementtype="DataTypeegenskap"/>
+         <xsd:element name="periodeTil" type="Dato" minOccurs="0" nillable="true"
+                      seres:elementtype="DataTypeegenskap"/>
+      </xsd:sequence>
+   </xsd:complexType>
+   <xsd:complexType name="Mottaksinformasjon" seres:elementtype="Dataobjekttype">
+      <xsd:sequence>
+         <xsd:element name="endringsDato" type="Dato" seres:elementtype="Dataegenskap"/>
+         <xsd:element name="oppfolgingsplanSendesTiNav" minOccurs="0" nillable="true"
+                      type="SvaralternativJaNei"
+                      seres:elementtype="Dataegenskap"/>
+         <xsd:element name="oppfolgingsplanSendesTilFastlege" minOccurs="0" nillable="true"
+                      type="SvaralternativJaNei"
+                      seres:elementtype="Dataegenskap"/>
+      </xsd:sequence>
+   </xsd:complexType>
+</xsd:schema>

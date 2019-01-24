@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<!-- edited with XMLSpy v2010 rel. 3 sp1 (x64) (http://www.altova.com) by XMLSpy 2009 Enterprise Ed., Installed for 30 users (with SMP from 2009-06-19 to 2010-06-20) (NAV ØKONOMITJENESTER) -->
+<!-- edited with XMLSPY v5 rel. 3 U (http://www.xmlspy.com) by Trygdeetaten (Rikstrygdeverket) -->
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:eia="http://www.nav.no/xml/EiaDokumentInfo/1/" xmlns="http://www.nav.no/xml/ArenaSykmelding/1/" targetNamespace="http://www.nav.no/xml/ArenaSykmelding/1/" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:import namespace="http://www.nav.no/xml/EiaDokumentInfo/1/" schemaLocation="EiaDokumentInfo1-0.xsd"/>
+	<xs:element name="ArenaSykmelding">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="eia:EiaDokumentInfo"/>
+				<xs:element name="ArenaHendelse" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="Hendelse" type="HendelseType" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation>Erstatter /ArenaEiaInfo@hendelseStatus</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="PasientData" type="eia:PasientDataType"/>
+				<xs:element name="FoersteFravaersdag" type="xs:date" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Foerste fravaersdag i sykmeldingen</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="IdentDato" type="xs:date" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation>Identdato fra Infotrygd = Startdato for fravaerstilfelle</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="Sykmeldingsgrad" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="FraDato" type="xs:date"/>
+							<xs:element name="TilDato" type="xs:date"/>
+							<xs:element name="Grad" type="xs:decimal"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="HendelseType">
+		<xs:sequence>
+			<xs:element name="HendelsesTypeKode" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Hendelsestypekode til Arena</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="MeldingFraLege" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Melding fra lege fra sykmeldingen.  Vises i Arena i et tilgangskontrollert felt.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="HendelseStatus" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Hendelsesstatus til Arena PLANLAGT(Registrert) eller UTFORT(Ferdig behandlet)</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="HendelseTekst" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Merknader fra behandling i Ei@.  Ei@ setter sammen flere merknader til en tekst.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

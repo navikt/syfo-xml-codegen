@@ -1,0 +1,184 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2010 rel. 3 sp1 (x64) (http://www.altova.com) by XMLSpy 2009 Enterprise Ed., Installed for 30 users (with SMP from 2009-06-19 to 2010-06-20) (NAV ØKONOMITJENESTER) -->
+<!-- edited with XMLSPY v5 rel. 3 U (http://www.xmlspy.com) by Trygdeetaten (Rikstrygdeverket) -->
+<xs:schema xmlns="http://www.nav.no/xml/EiaDokumentInfo/1/" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.nav.no/xml/EiaDokumentInfo/1/" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="EiaDokumentInfo" type="EiaDokumentInfoType"/>
+	<xs:complexType name="NavnType">
+		<xs:sequence>
+			<xs:element name="Fornavn" type="xs:string" minOccurs="0"/>
+			<xs:element name="Mellomnavn" type="xs:string" minOccurs="0"/>
+			<xs:element name="Etternavn" type="xs:string"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EiaDokumentInfoType">
+		<xs:sequence>
+			<xs:element name="DokumentInfo" type="DokumentInfoType"/>
+			<xs:element name="Gjelder" minOccurs="0">
+				<xs:complexType>
+					<xs:choice>
+						<xs:element name="GjelderPerson" type="PersonType"/>
+						<xs:element name="GjelderArbeidsgiver" type="ArbeidsgiverType"/>
+					</xs:choice>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="BehandlingInfo" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Merknad" type="MerknadType" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>Merknader fra automatisk behandling i Eia. /ArenaEiaInfo/EiaData/SystemSvar</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="Oppgave" type="OppgaveType" minOccurs="0" maxOccurs="unbounded">
+							<xs:annotation>
+								<xs:documentation>Erstatter /ArenaEiaInfo@hendelseStatus</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+						<xs:element name="Status" minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="StatusKode" type="xs:string">
+										<xs:annotation>
+											<xs:documentation>AVVIST,MANUELL_BEHANDLING,OPPFOLGING,GODKJENT</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="StatusBeskrivelse" type="xs:string" minOccurs="0"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="StartBehandlingTid" type="xs:dateTime" minOccurs="0"/>
+						<xs:element name="FerdigBehandlingTid" type="xs:dateTime" minOccurs="0"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="Avsender">
+				<xs:complexType>
+					<xs:choice>
+						<xs:element name="Lege" type="LegeType"/>
+						<xs:element name="Arbeidsgiver" type="ArbeidsgiverType"/>
+					</xs:choice>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="AvsenderSystem" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="SystemNavn" type="xs:string" nillable="true" minOccurs="0"/>
+						<xs:element name="SystemVersjon" type="xs:string" nillable="true" minOccurs="0"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DokumentInfoType">
+		<xs:sequence>
+			<xs:element name="SakType" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>/ArenaEiaInfo/@mappeType</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DokumentType" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>/ArenaEiaInfo/@skjemaType</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DokumentTypeVersjon" type="xs:string" minOccurs="0"/>
+			<xs:element name="DokumentNavn" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Tekstlig beskrivelse av dokumentet - kan avledes av dokument type</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Dokumentreferanse" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Avsenders unike referanse på dokumentet</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="EdiLoggId" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>NAV's unike referanse på dokumentet.  /ArenaEiaInfo/@ediloggId</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="JournalReferanse" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Referanse til journalpost i JOARK</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DokumentDato" type="xs:dateTime" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Signaturdato. /ArenaEiaInfo/LegeData/@signaturDato</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MerknadType">
+		<xs:sequence>
+			<xs:element name="MerknadNr" type="xs:string"/>
+			<xs:element name="MerknadType" type="xs:string"/>
+			<xs:element name="MerknadBeskrivelse" type="xs:string"/>
+			<xs:element name="MerknadPrioritet" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OppgaveType">
+		<xs:sequence>
+			<xs:element name="OppgaveType" type="xs:string"/>
+			<xs:element name="OppgaveBeskrivelse" type="xs:string" minOccurs="0"/>
+			<xs:element name="OppgavePrioritet" type="xs:positiveInteger" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ArbeidsgiverType">
+		<xs:sequence>
+			<xs:element name="ArbeidsgiverOrgNr" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Orgnr fra virksomhetssertifikat</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ArbeidsgiverNavn" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PersonType">
+		<xs:sequence>
+			<xs:element name="PersonFnr" type="xs:string"/>
+			<xs:element name="PersonNavn" type="NavnType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="LegeType">
+		<xs:sequence>
+			<xs:element name="LegeFnr" type="xs:string">
+				<xs:annotation>
+					<xs:documentation>Fnr  fra personligsertifikat</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="TssId" type="xs:positiveInteger" minOccurs="0"/>
+			<xs:element name="LegeNavn" type="NavnType" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>/ArenaEiaInfo/LegeData/@navn</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PasientDataType">
+		<xs:sequence>
+			<xs:element name="Person" type="PersonType"/>
+			<xs:element name="NavKontor" type="xs:string" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>/ArenaEiaInfo/PasientData/@tkNummer</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Kommunenr" type="xs:string" minOccurs="0"/>
+			<xs:element name="AnsattNav" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="Skjermingskode" type="xs:string" minOccurs="0"/>
+<!-- 
+			<xs:element name="Arbeidsforhold" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="OrgNr"/>
+						<xs:element name="OrgNavn" type="xs:string" minOccurs="0"/>
+						<xs:element name="Stillingsandel" minOccurs="0"/>
+						<xs:element name="ErIAVirksomhet" minOccurs="0"/>
+						<xs:element name="ErHovedArbeidsgiver" minOccurs="0"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>			
+ -->
+		</xs:sequence>
+	</xs:complexType>
+</xs:schema>

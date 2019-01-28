@@ -2,7 +2,7 @@
           xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
           xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
-    <globalBindings>
+    <globalBindings generateElementProperty="false">
         <xjc:javaType name="java.time.LocalDate" xmlType="xs:date"
                       adapter="com.migesok.jaxb.adapter.javatime.LocalDateXmlAdapter" />
         <xjc:javaType name="java.time.LocalDateTime" xmlType="xs:dateTime"

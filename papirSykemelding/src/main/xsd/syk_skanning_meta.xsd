@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xsd:schema attributeFormDefault="unqualified" elementFormDefault="qualified" version="1.0"
+            xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+    <xsd:element name="skanningmetadata" type="skanningmetadataType"/>
+    <xsd:complexType name="skanningmetadataType">
+        <xsd:sequence>
+            <xsd:element name="sykemeldinger" type="sykemeldingerType"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="sykemeldingerType">
+        <xsd:sequence>
+            <xsd:element name="syketilfelleStartDato" type="xsd:date" minOccurs="0"/>
+            <xsd:element name="pasient" type="pasientType" minOccurs="0"/>
+            <xsd:element name="arbeidsgiver" type="arbeidsgiverType" minOccurs="0"/>
+            <xsd:element name="medisinskVurdering" type="medisinskVurderingType" minOccurs="0"/>
+            <xsd:element name="aktivitet" type="aktivitetType" minOccurs="0"/>
+            <xsd:element name="prognose" type="prognoseType" minOccurs="0"/>
+            <xsd:element name="utdypendeOpplysninger" type="utdypendeOpplysningerType" minOccurs="0"/>
+            <xsd:element name="tiltak" type="tiltakType" minOccurs="0"/>
+            <xsd:element name="meldingTilNAV" type="meldingTilNAVType" minOccurs="0"/>
+            <xsd:element name="meldingTilArbeidsgiver" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="tilbakedatering" type="tilbakedateringType" minOccurs="0"/>
+            <xsd:element name="kontaktMedPasient" type="kontaktMedPasientType" minOccurs="0"/>
+            <xsd:element name="behandler" type="behandlerType" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="pasientType">
+        <xsd:sequence>
+            <xsd:element name="fnr" type="xsd:string" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="arbeidsgiverType">
+        <xsd:sequence>
+            <xsd:element name="harArbeidsgiver" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="navnArbeidsgiver" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="yrkesbetegnelse" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="stillingsprosent" minOccurs="0">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:integer">
+                        <xsd:pattern value="\d{3}"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="medisinskVurderingType">
+        <xsd:sequence>
+            <xsd:element name="hovedDiagnose" type="hovedDiagnoseType" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element name="bidiagnose" type="bidiagnoseType" minOccurs="0" maxOccurs="unbounded"/>
+            <xsd:element name="annenFraversArsak" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="fraversBeskrivelse" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="svangerskap" minOccurs="0">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:integer">
+                        <xsd:pattern value="(0|1)"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:element>
+            <xsd:element name="yrkesskade" minOccurs="0">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:integer">
+                        <xsd:pattern value="(0|1)"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:element>
+            <xsd:element name="yrkesskadedato" type="xsd:date" minOccurs="0"/>
+            <xsd:element name="skjermesForPasient" minOccurs="0">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:integer">
+                        <xsd:pattern value="(0|1)"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="hovedDiagnoseType">
+        <xsd:sequence>
+            <xsd:element name="diagnosekodeSystem" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="diagnosekode" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="diagnose" type="xsd:string" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="bidiagnoseType">
+        <xsd:sequence>
+            <xsd:element name="diagnosekodeSystem" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="diagnosekode" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="diagnose" type="xsd:string" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="aktivitetType">
+        <xsd:sequence>
+            <xsd:element name="avventendeSykmelding" type="avventendeSykmeldingType" minOccurs="0"/>
+            <xsd:element name="innspillTilArbeidsgiver" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="gradertSykmelding" type="gradertSykmeldingType" minOccurs="0"/>
+            <xsd:element name="aktivitetIkkeMulig" type="aktivitetIkkeMuligType" minOccurs="0"/>
+            <xsd:element name="behandlingsdager" type="behandlingsdagerType" minOccurs="0"/>
+            <xsd:element name="reisetilskudd" type="reisetilskuddType" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="avventendeSykmeldingType">
+        <xsd:sequence>
+            <xsd:element name="periodeFOMDato" type="xsd:date" minOccurs="0"/>
+            <xsd:element name="periodeTOMDato" type="xsd:date" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="gradertSykmeldingType">
+        <xsd:sequence>
+            <xsd:element name="periodeFOMDato" type="xsd:date" minOccurs="0"/>
+            <xsd:element name="periodeTOMDato" type="xsd:date" minOccurs="0"/>
+            <xsd:element name="sykmeldingsgrad" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="reisetilskudd" minOccurs="0">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:integer">
+                        <xsd:pattern value="(0|1)"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="aktivitetIkkeMuligType">
+        <xsd:sequence>
+            <xsd:element name="periodeFOMDato" type="xsd:date" minOccurs="0"/>
+            <xsd:element name="periodeTOMDato" type="xsd:date" minOccurs="0"/>
+            <xsd:element name="medisinskeArsaker" type="medisinskeArsakerType" minOccurs="0"/>
+            <xsd:element name="arbeidsplassen" type="arbeidsplassenType" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="medisinskeArsakerType">
+        <xsd:sequence>
+            <xsd:element name="medArsakerHindrer" minOccurs="0">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:integer">
+                        <xsd:pattern value="(0|1)"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:element>
+            <xsd:element name="medArsakerBesk" type="xsd:string" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="arbeidsplassenType">
+        <xsd:sequence>
+            <xsd:element name="arbeidsplassenHindrer" minOccurs="0">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:integer">
+                        <xsd:pattern value="(0|1)"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:element>
+            <xsd:element name="arbeidsplassenBesk" type="xsd:string" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="behandlingsdagerType">
+        <xsd:sequence>
+            <xsd:element name="periodeFOMDato" type="xsd:date" minOccurs="0"/>
+            <xsd:element name="periodeTOMDato" type="xsd:date" minOccurs="0"/>
+            <xsd:element name="antallBehandlingsdager" minOccurs="0">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:integer">
+                        <xsd:pattern value="\d{3}"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:element>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="reisetilskuddType">
+        <xsd:sequence>
+            <xsd:element name="periodeFOMDato" type="xsd:date" minOccurs="0"/>
+            <xsd:element name="periodeTOMDato" type="xsd:date" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="prognoseType">
+        <xsd:sequence>
+            <xsd:element name="friskmelding" type="friskmeldingType" minOccurs="0"/>
+            <xsd:element name="medArbeidsgiver" type="medArbeidsgiverType" minOccurs="0"/>
+            <xsd:element name="utenArbeidsgiver" type="utenArbeidsgiverType" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="friskmeldingType">
+        <xsd:sequence>
+            <xsd:element name="arbeidsforEtterEndtPeriode" minOccurs="0">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:integer">
+                        <xsd:pattern value="(0|1)"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:element>
+            <xsd:element name="beskrivHensynArbeidsplassen" type="xsd:string" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="medArbeidsgiverType">
+        <xsd:sequence>
+            <xsd:element name="tilbakeSammeArbeidsgiver" minOccurs="0">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:integer">
+                        <xsd:pattern value="(0|1)"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:element>
+            <xsd:element name="tilbakeDato" type="xsd:date" minOccurs="0"/>
+            <xsd:element name="tilbakeAnnenArbeidsgiver" minOccurs="0">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:integer">
+                        <xsd:pattern value="(0|1)"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:element>
+            <xsd:element name="datoNyTilbakemelding" type="xsd:date" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="utenArbeidsgiverType">
+        <xsd:sequence>
+            <xsd:element name="tilbakeArbeid" minOccurs="0">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:integer">
+                        <xsd:pattern value="(0|1)"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:element>
+            <xsd:element name="tilbakeDato" type="xsd:date" minOccurs="0"/>
+            <xsd:element name="datoNyTilbakemelding" type="xsd:date" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="utdypendeOpplysningerType">
+        <xsd:sequence>
+            <xsd:element name="sykehistorie" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="arbeidsevne" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="behandlingsresultat" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="planlagtBehandling" type="xsd:string" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="tiltakType">
+        <xsd:sequence>
+            <xsd:element name="tiltakArbeidsplassen" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="tiltakNAV" type="xsd:string" minOccurs="0"/>
+            <xsd:element name="andreTiltak" type="xsd:string" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="meldingTilNAVType">
+        <xsd:sequence>
+            <xsd:element name="bistandNAVUmiddelbart" minOccurs="0">
+                <xsd:simpleType>
+                    <xsd:restriction base="xsd:integer">
+                        <xsd:pattern value="(0|1)"/>
+                    </xsd:restriction>
+                </xsd:simpleType>
+            </xsd:element>
+            <xsd:element name="beskrivBistandNAV" type="xsd:string" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="tilbakedateringType">
+        <xsd:sequence>
+            <xsd:element name="tilbakeDato" type="xsd:date" minOccurs="0"/>
+            <xsd:element name="tilbakebegrunnelse" type="xsd:string" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="kontaktMedPasientType">
+        <xsd:sequence>
+            <xsd:element name="behandletDato" type="xsd:date" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+    <xsd:complexType name="behandlerType">
+        <xsd:sequence>
+            <xsd:element name="HPR" type="xsd:integer" minOccurs="0"/>
+            <xsd:element name="telefon" type="xsd:integer" minOccurs="0"/>
+            <xsd:element name="adresse" type="xsd:string" minOccurs="0"/>
+        </xsd:sequence>
+    </xsd:complexType>
+</xsd:schema>

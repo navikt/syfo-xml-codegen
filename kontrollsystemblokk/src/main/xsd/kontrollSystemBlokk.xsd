@@ -1,71 +1,55 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
 	<xs:element name="KontrollSystemBlokk">
-		<xs:annotation>
-			<xs:documentation>Dette elementet inneholder informasjon og data om/fra sykmeldingen/legeerklæringen som genereres i kontrollsystemet  </xs:documentation>
-		</xs:annotation>
 		<xs:complexType>
-			<xs:complexContent>
-				<xs:extension base="KontrollsystemBlokk_type"/>
-			</xs:complexContent>
+			<xs:annotation>
+				<xs:documentation>Denne blokken inneholder resultater fra kontrollsystemets regelbehandling av den motatte meldingen og annen informasjon som er innhentet gjennom prosesseringen av en melding</xs:documentation>
+			</xs:annotation>
+			<xs:sequence>
+				<xs:element name="InfotrygdBlokk" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:annotation>
+							<xs:documentation>Denne blokken samler all informasjon som er lest ut av SM/LE og som er hentet fra omkringliggende systemer og som skal sende til Infotrygd.</xs:documentation>
+						</xs:annotation>
+						<xs:attribute name="fodselsnummer" type="xs:string" use="required"/>
+						<xs:attribute name="tkNummer" type="xs:string" use="required"/>
+						<xs:attribute name="forsteFravaersDag" type="xs:date" use="optional">
+							<xs:annotation>
+								<xs:documentation>Dette er arbufør FOM</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="mottakerKode" type="xs:string" use="optional"/>
+						<xs:attribute name="operasjonstype" type="xs:integer" use="required">
+							<xs:annotation>
+								<xs:documentation>Forklaring på hva slags oppdatering dette er (hvis det trengs).
+									1 = Ny SM
+									2 = Endring
+									3 = Forlengelse</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
+						<xs:attribute name="behandlingsDato" type="xs:date" use="optional"/>
+						<xs:attribute name="arbeidsKategori" type="xs:string" use="optional"/>
+						<xs:attribute name="gruppe" type="xs:string" use="optional"/>
+						<xs:attribute name="saksbehandler" type="xs:string" use="optional"/>
+						<xs:attribute name="legeEllerInstitusjon" type="xs:string" use="optional"/>
+						<xs:attribute name="legeEllerInstitusjonsNummer" type="xs:integer" use="optional"/>
+						<xs:attribute name="hovedDiagnose" type="xs:string" use="optional"/>
+						<xs:attribute name="hovedDiagnoseGruppe" type="xs:integer" use="optional"/>
+						<xs:attribute name="hovedDiagnoseTekst" type="xs:string" use="optional"/>
+						<xs:attribute name="biDiagnose" type="xs:string" use="optional"/>
+						<xs:attribute name="biDiagnoseGruppe" type="xs:integer" use="optional"/>
+						<xs:attribute name="biDiagnoseTekst" type="xs:string" use="optional"/>
+						<xs:attribute name="arbeidsufoerTOM" type="xs:date" use="optional"/>
+						<xs:attribute name="ufoeregrad" type="xs:integer" use="optional"/>
+						<xs:attribute name="friskmeldtDato" type="xs:date" use="optional"/>
+						<xs:attribute name="erSvangerskapsrelatert" type="xs:boolean" use="optional"/>
+						<xs:attribute name="smDel2Dato" type="xs:date" use="optional"/>
+						<xs:attribute name="legeerklaringDato" type="xs:date" use="optional"/>
+						<xs:attribute name="erAvventendeSykmelding" type="xs:boolean" use="optional"/>
+						<xs:attribute name="avventendeSykmeldingTOM" type="xs:date" use="optional"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
 		</xs:complexType>
 	</xs:element>
-	<xs:complexType name="KontrollsystemBlokk_type">
-		<xs:annotation>
-			<xs:documentation>Denne blokken inneholder resultater fra kontrollsystemets regelbehandling av den motatte meldingen og annen informasjon som er innhentet gjennom prosesseringen av en melding</xs:documentation>
-		</xs:annotation>
-		<xs:sequence>
-			<xs:element name="InfotrygdBlokk" minOccurs="0" maxOccurs="unbounded">
-				<xs:annotation>
-					<xs:documentation>Elementet inneholder alle feltverdier som kontrollsystemet fant. Ved ny SM vil alle relevante felt bli sent med selv om de er kopier av SM. Ved endring (som også inneholder forlengelse) blir kun de endrede data lagt inn. Må kryssjekkes av motakende system. </xs:documentation>
-				</xs:annotation>
-				<xs:complexType>
-					<xs:complexContent>
-						<xs:extension base="typeInfotrygdBlokk"/>
-					</xs:complexContent>
-				</xs:complexType>
-			</xs:element>
-		</xs:sequence>
-	</xs:complexType>
-	<xs:complexType name="typeInfotrygdBlokk">
-		<xs:annotation>
-			<xs:documentation>Denne blokken samler all informasjon som er lest ut av SM/LE og som er hentet fra omkringliggende systemer og som skal sende til Infotrygd.</xs:documentation>
-		</xs:annotation>
-		<xs:attribute name="fodselsnummer" type="xs:string" use="required"/>
-		<xs:attribute name="tkNummer" type="xs:string" use="required"/>
-		<xs:attribute name="forsteFravaersDag" type="xs:date" use="optional">
-			<xs:annotation>
-				<xs:documentation>Dette er arbufør FOM</xs:documentation>
-			</xs:annotation>
-		</xs:attribute>
-		<xs:attribute name="mottakerKode" type="xs:string" use="optional"/>
-		<xs:attribute name="operasjonstype" type="xs:integer" use="required">
-			<xs:annotation>
-				<xs:documentation>Forklaring på hva slags oppdatering dette er (hvis det trengs).
-					1 = Ny SM
-					2 = Endring
-					3 = Forlengelse</xs:documentation>
-			</xs:annotation>
-		</xs:attribute>
-		<xs:attribute name="behandlingsDato" type="xs:date" use="optional"/>
-		<xs:attribute name="arbeidsKategori" type="xs:string" use="optional"/>
-		<xs:attribute name="gruppe" type="xs:string" use="optional"/>
-		<xs:attribute name="saksbehandler" type="xs:string" use="optional"/>
-		<xs:attribute name="legeEllerInstitusjon" type="xs:string" use="optional"/>
-		<xs:attribute name="legeEllerInstitusjonsNummer" type="xs:integer" use="optional"/>
-		<xs:attribute name="hovedDiagnose" type="xs:string" use="optional"/>
-		<xs:attribute name="hovedDiagnoseGruppe" type="xs:integer" use="optional"/>
-		<xs:attribute name="hovedDiagnoseTekst" type="xs:string" use="optional"/>
-		<xs:attribute name="biDiagnose" type="xs:string" use="optional"/>
-		<xs:attribute name="biDiagnoseGruppe" type="xs:integer" use="optional"/>
-		<xs:attribute name="biDiagnoseTekst" type="xs:string" use="optional"/>
-		<xs:attribute name="arbeidsufoerTOM" type="xs:date" use="optional"/>
-		<xs:attribute name="ufoeregrad" type="xs:integer" use="optional"/>
-		<xs:attribute name="friskmeldtDato" type="xs:date" use="optional"/>
-		<xs:attribute name="erSvangerskapsrelatert" type="xs:boolean" use="optional"/>
-		<xs:attribute name="smDel2Dato" type="xs:date" use="optional"/>
-		<xs:attribute name="legeerklaringDato" type="xs:date" use="optional"/>
-		<xs:attribute name="erAvventendeSykmelding" type="xs:boolean" use="optional"/>
-		<xs:attribute name="avventendeSykmeldingTOM" type="xs:date" use="optional"/>
-	</xs:complexType>
 </xs:schema>

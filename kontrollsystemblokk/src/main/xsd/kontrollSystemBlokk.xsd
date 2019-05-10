@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
 	<xs:element name="KontrollSystemBlokk">
 		<xs:annotation>
 			<xs:documentation>Dette elementet inneholder informasjon og data om/fra sykmeldingen/legeerklæringen som genereres i kontrollsystemet  </xs:documentation>

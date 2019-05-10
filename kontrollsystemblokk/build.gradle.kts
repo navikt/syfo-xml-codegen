@@ -1,4 +1,4 @@
-version = "1.0-SNAPSHOT"
+version = "1.0.0-SNAPSHOT"
 
 tasks {
     val generateJaxb2 by tasks.creating(Jaxb2Task::class) {

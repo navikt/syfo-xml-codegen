@@ -1,15 +1,16 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
-<xs:schema xmlns="http://www.trygdeetaten.no/xml/eiff/1/" xmlns:xs="http://www.w3.org/2001/XMLSchema"  elementFormDefault="qualified" attributeFormDefault="unqualified">
-				<xs:element name="KontrollSystemBlokk">
-					<xs:annotation>
-						<xs:documentation>Dette elementet inneholder informasjon og data om/fra sykmeldingen/legeerklæringen som genereres i kontrollsystemet  </xs:documentation>
-					</xs:annotation>
-					<xs:complexType>
-						<xs:complexContent>
-							<xs:extension base="KontrollsystemBlokk_type"/>
-						</xs:complexContent>
-					</xs:complexType>
-				</xs:element>
+<xs:schema xmlns="http://www.trygdeetaten.no/xml/eiff/1/"
+		   xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.trygdeetaten.no/xml/eiff/1/" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="KontrollSystemBlokk">
+		<xs:annotation>
+			<xs:documentation>Dette elementet inneholder informasjon og data om/fra sykmeldingen/legeerklæringen som genereres i kontrollsystemet  </xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="KontrollsystemBlokk_type"/>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
 	<xs:complexType name="KontrollsystemBlokk_type">
 		<xs:annotation>
 			<xs:documentation>Denne blokken inneholder resultater fra kontrollsystemets regelbehandling av den motatte meldingen og annen informasjon som er innhentet gjennom prosesseringen av en melding</xs:documentation>
@@ -68,6 +69,4 @@
 		<xs:attribute name="erAvventendeSykmelding" type="xs:boolean" use="optional"/>
 		<xs:attribute name="avventendeSykmeldingTOM" type="xs:date" use="optional"/>
 	</xs:complexType>
-
-
 </xs:schema>

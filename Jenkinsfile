@@ -31,11 +31,11 @@ pipeline {
                 slackStatus status: 'passed'
             }
         }
-        stage('deploy to preprod') {
+        /*stage('deploy to preprod') {
             steps {
                 sh './gradlew publish'
             }
-        }
+        }*/
     }
     post {
         always {

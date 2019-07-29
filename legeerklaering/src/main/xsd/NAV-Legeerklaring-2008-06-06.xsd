@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-legeerklæring ved arbeidsuførhet, versjon 1.0 2008-06-06,
+legeerkleering ved arbeidsuforhet, versjon 1.0 2008-06-06,
 tilrettelagt for bruk med Hodemelding.
-Produsert av KITH på oppdrag fra NAV - www.kith.no - www.nav.no
+Produsert av KITH paa oppdrag fra NAV - www.kith.no - www.nav.no
 -->
 <!--
 Endret 2008-06-06
@@ -12,7 +12,7 @@ NyeLegeopplysninger endret fra int til string
     <import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="http://www.w3.org/TR/xmldsig-core/xmldsig-core-schema.xsd"/>
     <element name="Legeerklaring">
         <annotation>
-            <documentation>Spesialisering av den abstrakte klassen Melding, til  klassen Legeerklæring ved arbeidsuførhet.</documentation>
+            <documentation>Spesialisering av den abstrakte klassen Melding, til  klassen Legeerkleering ved arbeidsuforhet.</documentation>
         </annotation>
         <complexType>
             <sequence>
@@ -32,7 +32,7 @@ NyeLegeopplysninger endret fra int til string
     </element>
     <element name="VurderingFunksjonsevne">
         <annotation>
-            <documentation>For å beskrive hvordan pasientens generelle funksjonsevne er nedsatt.</documentation>
+            <documentation>For aa beskrive hvordan pasientens generelle funksjonsevne er nedsatt.</documentation>
         </annotation>
         <complexType>
             <sequence>
@@ -45,12 +45,12 @@ NyeLegeopplysninger endret fra int til string
     </element>
     <element name="ArsakssammenhengLegeerklaring" type="le:typeTekst">
         <annotation>
-            <documentation>For å angi hvor stor betydning funksjonsnedsettelsen har for at arbeidsevnen er nedsatt.</documentation>
+            <documentation>For aa angi hvor stor betydning funksjonsnedsettelsen har for at arbeidsevnen er nedsatt.</documentation>
         </annotation>
     </element>
     <element name="ForbeholdLegeerklaring">
         <annotation>
-            <documentation>For å angi om det er noe i legeerklæringen som pasienten ikke bør få vite av medisinske grunner.</documentation>
+            <documentation>For aa angi om det er noe i legeerkleeringen som pasienten ikke bor faa vite av medisinske grunner.</documentation>
         </annotation>
         <complexType>
             <sequence>
@@ -61,7 +61,7 @@ NyeLegeopplysninger endret fra int til string
     </element>
     <element name="AndreOpplysninger">
         <annotation>
-            <documentation>For å angi andre opplysninger.</documentation>
+            <documentation>For aa angi andre opplysninger.</documentation>
         </annotation>
         <complexType>
             <sequence>
@@ -72,7 +72,7 @@ NyeLegeopplysninger endret fra int til string
     </element>
     <element name="Kontakt">
         <annotation>
-            <documentation>For å angi hvem legen ønsker at trygdekontoret skal ta kontakt med.</documentation>
+            <documentation>For aa angi hvem legen onsker at trygdekontoret skal ta kontakt med.</documentation>
         </annotation>
         <complexType>
             <attribute name="kontakt" type="le:typeKontakt" use="required"/>
@@ -81,7 +81,7 @@ NyeLegeopplysninger endret fra int til string
     </element>
     <element name="LegeerklaringGjelder">
         <annotation>
-            <documentation>For å angi om legeerklæringen gjelder sykefravær i mer enn 8 uker, rehabiliteringspenger, yrkesrettet attføring eller uførepensjon.  Det benyttes en forekomst av klassen for hver valgmulighet (tilsvarer et kryss på skjemaet). Hvis både felt 0.1 og felt 0.3 er avkrysset må meldingen inneholde to forekomster av klassen.'</documentation>
+            <documentation>For aa angi om legeerkleeringen gjelder sykefraveer i mer enn 8 uker, rehabiliteringspenger, yrkesrettet attforing eller uforepensjon.  Det benyttes en forekomst av klassen for hver valgmulighet (tilsvarer et kryss paa skjemaet). Hvis baade felt 0.1 og felt 0.3 er avkrysset maa meldingen inneholde to forekomster av klassen.'</documentation>
         </annotation>
         <complexType>
             <attribute name="typeLegeerklaring" type="le:typeLegeerklaring"/>
@@ -89,7 +89,7 @@ NyeLegeopplysninger endret fra int til string
     </element>
     <element name="Prognose">
         <annotation>
-            <documentation>For å angi prognose for bedring av arbeidsevnen, varighet av sykdom/skade, varighet av funksjonsnedsettelse, varighet av nedsatt arbeidsevne.</documentation>
+            <documentation>For aa angi prognose for bedring av arbeidsevnen, varighet av sykdom/skade, varighet av funksjonsnedsettelse, varighet av nedsatt arbeidsevne.</documentation>
         </annotation>
         <complexType>
             <sequence>
@@ -102,7 +102,7 @@ NyeLegeopplysninger endret fra int til string
     </element>
     <element name="VurderingArbeidsevne">
         <annotation>
-            <documentation>For å angi vurdering av arbeidsevne, begrensninger i forhold til arbeidet pasienten er sykmeldt fra og begrensninger ved vurdering av alternativt arbeid eller yrke.</documentation>
+            <documentation>For aa angi vurdering av arbeidsevne, begrensninger i forhold til arbeidet pasienten er sykmeldt fra og begrensninger ved vurdering av alternativt arbeid eller yrke.</documentation>
         </annotation>
         <complexType>
             <sequence>
@@ -117,7 +117,7 @@ NyeLegeopplysninger endret fra int til string
     </element>
     <element name="Arbeidssituasjon">
         <annotation>
-            <documentation>For å angi type arbeid og hvilke krav som stilles.</documentation>
+            <documentation>For aa angi type arbeid og hvilke krav som stilles.</documentation>
         </annotation>
         <complexType>
             <attribute name="arbeidssituasjon" type="le:typeArbeidssituasjon"/>
@@ -126,7 +126,7 @@ NyeLegeopplysninger endret fra int til string
     </element>
     <element name="DiagnoseArbeidsuforhet">
         <annotation>
-            <documentation>For å angi dato for når sykmeldingsperioden begynte i dette sykmeldingstilfellet.</documentation>
+            <documentation>For aa angi dato for naar sykmeldingsperioden begynte i dette sykmeldingstilfellet.</documentation>
         </annotation>
         <complexType>
             <sequence>
@@ -156,7 +156,7 @@ NyeLegeopplysninger endret fra int til string
     </element>
     <element name="HenvistUtredning">
         <annotation>
-            <documentation>For å angi type utredning, hvor denne skal foregå, henvisningsdato og antatt ventetid.</documentation>
+            <documentation>For aa angi type utredning, hvor denne skal foregaa, henvisningsdato og antatt ventetid.</documentation>
         </annotation>
         <complexType>
             <sequence>
@@ -168,7 +168,7 @@ NyeLegeopplysninger endret fra int til string
     </element>
     <element name="HenvistBehandling">
         <annotation>
-            <documentation>For å angi type behandling, hvor denne skal foregå, henvisningsdato og antatt ventetid.</documentation>
+            <documentation>For aa angi type behandling, hvor denne skal foregaa, henvisningsdato og antatt ventetid.</documentation>
         </annotation>
         <complexType>
             <sequence>
@@ -181,7 +181,7 @@ NyeLegeopplysninger endret fra int til string
     <element name="Spesifikasjon" type="le:typeTekst"/>
     <element name="AktueltTiltak">
         <annotation>
-            <documentation>For å angi ett aktuelt tiltak. En forekomst av klassen inneholder et tiltak. Flere tiltak forutsetter flere forkomster av klassen.</documentation>
+            <documentation>For aa angi ett aktuelt tiltak. En forekomst av klassen inneholder et tiltak. Flere tiltak forutsetter flere forkomster av klassen.</documentation>
         </annotation>
         <complexType>
             <sequence>
@@ -192,7 +192,7 @@ NyeLegeopplysninger endret fra int til string
     </element>
     <element name="VurderingYrkesskade">
         <annotation>
-            <documentation>For angi om trygdekontoret bør vurdere om det er en yrkesskade/yrkessykdom.</documentation>
+            <documentation>For angi om trygdekontoret bor vurdere om det er en yrkesskade/yrkessykdom.</documentation>
         </annotation>
         <complexType>
             <attribute name="borVurderes" type="le:typeJaNei"/>
@@ -201,7 +201,7 @@ NyeLegeopplysninger endret fra int til string
     </element>
     <element name="ForslagTiltak">
         <annotation>
-            <documentation>For å angi aktuelle tiltak ut fra medisinsk vurdering, nærmere opplysninger om disse tiltakene, evt. begrensninger i forhold til tiltakene eller begrunnelse for at det ikke er aktuelt med tiltak.</documentation>
+            <documentation>For aa angi aktuelle tiltak ut fra medisinsk vurdering, neermere opplysninger om disse tiltakene, evt. begrensninger i forhold til tiltakene eller begrunnelse for at det ikke er aktuelt med tiltak.</documentation>
         </annotation>
         <complexType>
             <sequence>
@@ -222,7 +222,7 @@ NyeLegeopplysninger endret fra int til string
         <restriction base="nonNegativeInteger">
             <enumeration value="1">
                 <annotation>
-                    <documentation>Sykefravær mer enn 8 uker</documentation>
+                    <documentation>Sykefraveer mer enn 8 uker</documentation>
                 </annotation>
             </enumeration>
             <enumeration value="2">
@@ -232,12 +232,12 @@ NyeLegeopplysninger endret fra int til string
             </enumeration>
             <enumeration value="3">
                 <annotation>
-                    <documentation>Yrkesrette attføring</documentation>
+                    <documentation>Yrkesrette attforing</documentation>
                 </annotation>
             </enumeration>
             <enumeration value="4">
                 <annotation>
-                    <documentation>Uførepensjon</documentation>
+                    <documentation>Uforepensjon</documentation>
                 </annotation>
             </enumeration>
         </restriction>
@@ -308,7 +308,7 @@ NyeLegeopplysninger endret fra int til string
         <restriction base="nonNegativeInteger">
             <enumeration value="1">
                 <annotation>
-                    <documentation>Kjøp av helsetjenester</documentation>
+                    <documentation>Kjop av helsetjenester</documentation>
                 </annotation>
             </enumeration>
             <enumeration value="2">
@@ -323,12 +323,12 @@ NyeLegeopplysninger endret fra int til string
             </enumeration>
             <enumeration value="4">
                 <annotation>
-                    <documentation>Hjelpemidler på arbeidsplassen</documentation>
+                    <documentation>Hjelpemidler paa arbeidsplassen</documentation>
                 </annotation>
             </enumeration>
             <enumeration value="5">
                 <annotation>
-                    <documentation>Yrkesrettet attføring</documentation>
+                    <documentation>Yrkesrettet attforing</documentation>
                 </annotation>
             </enumeration>
             <enumeration value="6">
@@ -350,7 +350,7 @@ FELLES ELEMENTER og TYPER
 -->
     <element name="DiagnoseKodesystem">
         <annotation>
-            <documentation>For å angi benyttet diagnosekodesystem.</documentation>
+            <documentation>For aa angi benyttet diagnosekodesystem.</documentation>
         </annotation>
         <complexType>
             <sequence>
@@ -365,7 +365,7 @@ FELLES ELEMENTER og TYPER
     </element>
     <element name="Enkeltdiagnose">
         <annotation>
-            <documentation>For å angi kodeverdi, tekstlig beskrivelse av kodeverdi og sorteringsrekkefølge for enkeltdiagnoser (en pasient kan ha flere diagnoser). En hoveddiagnose må alltid oppgis.</documentation>
+            <documentation>For aa angi kodeverdi, tekstlig beskrivelse av kodeverdi og sorteringsrekkefolge for enkeltdiagnoser (en pasient kan ha flere diagnoser). En hoveddiagnose maa alltid oppgis.</documentation>
         </annotation>
         <complexType>
             <attribute name="diagnose" type="string" use="optional"/>
@@ -375,7 +375,7 @@ FELLES ELEMENTER og TYPER
     </element>
     <simpleType name="typeTekst">
         <annotation>
-            <documentation>Type for utførende beskrivelser</documentation>
+            <documentation>Type for utforende beskrivelser</documentation>
         </annotation>
         <restriction base="string">
             <whiteSpace value="preserve"/>
@@ -388,7 +388,7 @@ FELLES ELEMENTER og TYPER
         <restriction base="nonNegativeInteger">
             <enumeration value="1">
                 <annotation>
-                    <documentation>Bokmål</documentation>
+                    <documentation>Bokmaal</documentation>
                 </annotation>
             </enumeration>
             <enumeration value="2">
@@ -476,7 +476,7 @@ FELLES ELEMENTER og TYPER
         <restriction base="nonNegativeInteger">
             <enumeration value="1">
                 <annotation>
-                    <documentation>Nå</documentation>
+                    <documentation>Naa</documentation>
                 </annotation>
             </enumeration>
             <enumeration value="2">
@@ -521,7 +521,7 @@ PERSONOPPLYSNINGER
     </element>
     <element name="Arbeidsforhold">
         <annotation>
-            <documentation>For å angi informasjon om personens arbeidsforhold.</documentation>
+            <documentation>For aa angi informasjon om personens arbeidsforhold.</documentation>
         </annotation>
         <complexType>
             <sequence>
@@ -534,7 +534,7 @@ PERSONOPPLYSNINGER
     </element>
     <element name="Virksomhet">
         <annotation>
-            <documentation>Denne klassen benyttes til å beskrive de virksomheter som direkte eller indirekte skal kunne refereres fra en eller flere EPJ. Dette kan f.eks. være pasienters arbeidsgivere, virksomheter som det overføres journalinformasjon til, eller som har vært kilde til informasjon i EPJ, f.eks. et eksternt laboratorium.</documentation>
+            <documentation>Denne klassen benyttes til aa beskrive de virksomheter som direkte eller indirekte skal kunne refereres fra en eller flere EPJ. Dette kan f.eks. veere pasienters arbeidsgivere, virksomheter som det overfores journalinformasjon til, eller som har veert kilde til informasjon i EPJ, f.eks. et eksternt laboratorium.</documentation>
         </annotation>
         <complexType>
             <sequence>
@@ -551,7 +551,7 @@ PERSONOPPLYSNINGER
     </element>
     <element name="Teleinformasjon">
         <annotation>
-            <documentation>Telekommunikasjonsadresse, inklusive kommunikasjonstype. Denne klassen benyttes for å registrere telefonnummer, telefaks, personsøker etc., knyttes opp mot de registrerte adressene.</documentation>
+            <documentation>Telekommunikasjonsadresse, inklusive kommunikasjonstype. Denne klassen benyttes for aa registrere telefonnummer, telefaks, personsoker etc., knyttes opp mot de registrerte adressene.</documentation>
         </annotation>
         <complexType>
             <simpleContent>
@@ -563,7 +563,7 @@ PERSONOPPLYSNINGER
     </element>
     <element name="PostalAddress" type="le:typePostalAddress">
         <annotation>
-            <documentation>Inneholder adresseopplysinger. Full adresse bestående av f.eks. gatenavn, husnummer, postnummer, poststed etc. Bør registreres ferdig linjedelt for utskrift.</documentation>
+            <documentation>Inneholder adresseopplysinger. Full adresse bestaaende av f.eks. gatenavn, husnummer, postnummer, poststed etc. Bor registreres ferdig linjedelt for utskrift.</documentation>
         </annotation>
     </element>
     <element name="Navn" type="le:typeNavn"/>
@@ -596,7 +596,7 @@ PERSONOPPLYSNINGER
         <restriction base="string">
             <enumeration value="BI">
                 <annotation>
-                    <documentation>Bioingeniør</documentation>
+                    <documentation>Bioingenior</documentation>
                 </annotation>
             </enumeration>
             <enumeration value="ET">
@@ -606,7 +606,7 @@ PERSONOPPLYSNINGER
             </enumeration>
             <enumeration value="FA">
                 <annotation>
-                    <documentation>Farmasøyt</documentation>
+                    <documentation>Farmasoyt</documentation>
                 </annotation>
             </enumeration>
             <enumeration value="FO">
@@ -626,7 +626,7 @@ PERSONOPPLYSNINGER
             </enumeration>
             <enumeration value="HS">
                 <annotation>
-                    <documentation>Helsesøster</documentation>
+                    <documentation>Helsesoster</documentation>
                 </annotation>
             </enumeration>
             <enumeration value="JO">
@@ -646,7 +646,7 @@ PERSONOPPLYSNINGER
             </enumeration>
             <enumeration value="OI">
                 <annotation>
-                    <documentation>Ortopediingeniør</documentation>
+                    <documentation>Ortopediingenior</documentation>
                 </annotation>
             </enumeration>
             <enumeration value="OP">
@@ -681,7 +681,7 @@ PERSONOPPLYSNINGER
             </enumeration>
             <enumeration value="VE">
                 <annotation>
-                    <documentation>Veterinær</documentation>
+                    <documentation>Veterineer</documentation>
                 </annotation>
             </enumeration>
             <enumeration value="VP">
@@ -706,12 +706,12 @@ PERSONOPPLYSNINGER
             </enumeration>
             <enumeration value="HE">
                 <annotation>
-                    <documentation>Helsesekretær</documentation>
+                    <documentation>Helsesekreteer</documentation>
                 </annotation>
             </enumeration>
             <enumeration value="KE">
                 <annotation>
-                    <documentation>Klinisk ernæringsfysiolog</documentation>
+                    <documentation>Klinisk erneeringsfysiolog</documentation>
                 </annotation>
             </enumeration>
             <enumeration value="OA">
@@ -731,7 +731,7 @@ PERSONOPPLYSNINGER
             </enumeration>
             <enumeration value="TH">
                 <annotation>
-                    <documentation>Tannhelsesekretær</documentation>
+                    <documentation>Tannhelsesekreteer</documentation>
                 </annotation>
             </enumeration>
             <enumeration value="TT">
@@ -758,7 +758,7 @@ PERSONOPPLYSNINGER
         <restriction base="string">
             <enumeration value="RES">
                 <annotation>
-                    <documentation>Besøksadresse</documentation>
+                    <documentation>Besoksadresse</documentation>
                 </annotation>
             </enumeration>
             <enumeration value="PST">
@@ -860,12 +860,12 @@ PERSONOPPLYSNINGER
             </enumeration>
             <enumeration value="EC">
                 <annotation>
-                    <documentation>Nødnummer</documentation>
+                    <documentation>Nodnummer</documentation>
                 </annotation>
             </enumeration>
             <enumeration value="PG">
                 <annotation>
-                    <documentation>Personsøker</documentation>
+                    <documentation>Personsoker</documentation>
                 </annotation>
             </enumeration>
             <enumeration value="MC">

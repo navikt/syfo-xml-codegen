@@ -55,7 +55,7 @@ subprojects {
     publishing {
         repositories {
             maven {
-                url = uri("https://maven.pkg.github.com/navikt")
+                url = uri("https://oss.sonatype.org/service/local/staging/deploy/maven2")
                 this.credentials {
                     username = System.getenv("GH_PACKAGES_USERNAME")
                     password = System.getenv("GH_PACKAGES_PASSWORD")

@@ -76,6 +76,11 @@ subprojects {
         archiveClassifier.set("sources")
     }
 
+    tasks.register<Jar>("javadocJar") {
+        from(tasks.javadoc)
+        archiveClassifier.set("javadoc")
+    }
+
     publishing {
         repositories {
             maven {
@@ -90,6 +95,7 @@ subprojects {
             create<MavenPublication>("mavenJava") {
                 from(components["java"])
                 artifact(tasks.getByName("sourcesJar"))
+                artifact(tasks.getByName("javadocJar"))
                 pom {
                     name.set("SYFO XML beans")
                     description.set("A collection of XML beans")

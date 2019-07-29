@@ -12,7 +12,7 @@ plugins {
 
 allprojects {
     group = "no.nav.helse.xml"
-    version = "1.0.22"
+    version = "1.0.0"
 
     repositories {
         mavenCentral()
@@ -23,15 +23,12 @@ allprojects {
 
 
 nexusStaging {
-    packageGroup = "no.nav.helse.xml"
+    packageGroup = "no.nav"
     username = System.getenv("SONATYPE_USERNAME")
     password = System.getenv("SONATYPE_PASSWORD")
 }
 
 subprojects {
-    group = "no.nav"
-    version = "1.0.3"
-
     apply(plugin = "java")
     apply(plugin = "maven-publish")
     apply(plugin = "signing")

@@ -1,26 +1,45 @@
 import java.util.Date
-import java.net.URI
-import org.gradle.api.plugins.JavaBasePlugin
 import org.gradle.api.tasks.bundling.Jar
+import de.marcphilipp.gradle.nexus.NexusPublishExtension
 
 plugins {
     java
     `maven-publish`
+    signing
+    id("io.codearte.nexus-staging") version "0.21.0"
+    id("de.marcphilipp.nexus-publish") version "0.2.0" apply false
 }
 
-group = "no.nav.helse.xml"
-version = "1.0.2"
-
-subprojects {
+allprojects {
     group = "no.nav.helse.xml"
-    version = "1.0.2-13"
-
-    apply(plugin = "java")
-    apply(plugin = "maven-publish")
+    version = "1.0.22"
 
     repositories {
         mavenCentral()
         jcenter()
+    }
+
+}
+
+
+nexusStaging {
+    packageGroup = "no.nav.helse.xml"
+    username = System.getenv("SONATYPE_USERNAME")
+    password = System.getenv("SONATYPE_PASSWORD")
+}
+
+subprojects {
+    group = "no.nav"
+    version = "1.0.3"
+
+    apply(plugin = "java")
+    apply(plugin = "maven-publish")
+    apply(plugin = "signing")
+    apply(plugin = "de.marcphilipp.nexus-publish")
+
+    configure<NexusPublishExtension> {
+        username.set(System.getenv("SONATYPE_USERNAME"))
+        password.set(System.getenv("SONATYPE_PASSWORD"))
     }
 
     val jaxbBasicAntVersion = "1.11.1"
@@ -52,25 +71,47 @@ subprojects {
         srcDirs(ext["xjbOutputDir"] as File)
     }
 
+    tasks.register<Jar>("sourcesJar") {
+        from(sourceSets.main.get().allJava)
+        archiveClassifier.set("sources")
+    }
+
+    tasks.register<Jar>("javadocJar") {
+        from(tasks.javadoc)
+        archiveClassifier.set("javadoc")
+    }
+
     publishing {
         repositories {
             maven {
                 url = uri("https://maven.pkg.github.com/navikt")
                 this.credentials {
-                    username = System.getenv("GH_PACKAGES_USERNAME")
-                    password = System.getenv("GH_PACKAGES_PASSWORD")
+                    username = System.getenv("SONATYPE_USERNAME")
+                    password = System.getenv("SONATYPE_PASSWORD")
                 }
             }
         }
         publications {
             create<MavenPublication>("mavenJava") {
                 from(components["java"])
-                //artifact(tasks.getByName("sourcesJar"))
+                artifact(tasks.getByName("sourcesJar"))
+                artifact(tasks.getByName("javadocJar"))
                 pom {
-
                     name.set("SYFO XML beans")
                     description.set("A collection of XML beans")
                     url.set("https://github.com/navikt/syfo-xml-codegen")
+
+                    organization {
+                        name.set("NAV (Arbeids- og velferdsdirektoratet) - The Norwegian Labour and Welfare Administration")
+                        url.set("https://www.nav.no/")
+                    }
+
+                    developers {
+                        developer {
+                            organization.set("NAV (Arbeids- og velferdsdirektoratet) - The Norwegian Labour and Welfare Administration")
+                            organizationUrl.set("https://www.nav.no/")
+                        }
+                    }
 
                     licenses {
                         license {
@@ -87,6 +128,11 @@ subprojects {
                 }
             }
         }
+    }
+
+    signing {
+        useGpgCmd()
+        sign(publishing.publications["mavenJava"])
     }
 
     tasks {
@@ -108,20 +154,6 @@ artifactId=${project.name}
 version=${project.version}
 """.trimIndent())
             outputs.file(outputFile)
-        }
-
-        val sourcesJar by registering(Jar::class) {
-            classifier = "sources"
-            from(sourceSets["main"].allSource)
-            val generatePomFileForMavenJavaPublication = getByName("generatePomFileForMavenJavaPublication")
-            dependsOn(generatePomPropertiesForJar, generatePomFileForMavenJavaPublication)
-
-            into("META-INF/maven/${project.group}/${project.name}") {
-                from(generatePomPropertiesForJar)
-                from(generatePomFileForMavenJavaPublication) {
-                    rename(".+", "pom.xml")
-                }
-            }
         }
 
         withType<Jar> {

@@ -71,6 +71,11 @@ subprojects {
         srcDirs(ext["xjbOutputDir"] as File)
     }
 
+    tasks.register<Jar>("sourcesJar") {
+        from(sourceSets.main.get().allJava)
+        archiveClassifier.set("sources")
+    }
+
     publishing {
         repositories {
             maven {
@@ -84,6 +89,7 @@ subprojects {
         publications {
             create<MavenPublication>("mavenJava") {
                 from(components["java"])
+                artifact(tasks.getByName("sourcesJar"))
                 pom {
                     name.set("SYFO XML beans")
                     description.set("A collection of XML beans")

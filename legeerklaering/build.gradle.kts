@@ -2,13 +2,11 @@ tasks {
     val generateJaxb2 by creating(Jaxb2Task::class) {
         outputDir = ext["xjbOutputDir"] as File
         sourceDir = file("$projectDir/src/main/xsd")
-        xjbDir = file("$projectDir/src/main/xjb")
         config = listOf(
                 Jaxb2Config(
                         targetPackage = "no.nav.helse.legeerklaering",
                         schema = "NAV-Legeerklaring-2008-06-06.xsd",
-                        encoding = "UTF-8",
-                        binding = "binding.xml"
+                        encoding = "UTF-8"
                 )
         )
     }

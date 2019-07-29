@@ -8,8 +8,7 @@ Produsert av KITH paa oppdrag fra NAV - www.kith.no - www.nav.no
 Endret 2008-06-06
 NyeLegeopplysninger endret fra int til string
 -->
-<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:xsd="schemaLocation for xmlns:xsd http://www.w3.org/2001/XMLSchema.xsd" xmlns:le="http://www.kith.no/xmlstds/legeerklaring/2008-06-06" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" targetNamespace="http://www.kith.no/xmlstds/legeerklaring/2008-06-06" elementFormDefault="qualified" attributeFormDefault="unqualified">
-    <import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="http://www.w3.org/TR/xmldsig-core/xmldsig-core-schema.xsd"/>
+<schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:le="http://www.kith.no/xmlstds/legeerklaring/2008-06-06" targetNamespace="http://www.kith.no/xmlstds/legeerklaring/2008-06-06" elementFormDefault="qualified" attributeFormDefault="unqualified">
     <element name="Legeerklaring">
         <annotation>
             <documentation>Spesialisering av den abstrakte klassen Melding, til  klassen Legeerkleering ved arbeidsuforhet.</documentation>

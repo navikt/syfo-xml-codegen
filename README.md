@@ -2,6 +2,9 @@
 Since multiple projects reuse the same xml files we have this gradle based project for generating java sources from xsds
 and publishing them to our internal nexus server. This project by itself doesn't do much.
 
+### Build status
+[![CircleCI](https://circleci.com/gh/navikt/syfo-xml-codegen/tree/master.svg?style=svg)](https://circleci.com/gh/navikt/syfo-xml-codegen/tree/master)
+
 ### Contact us
 #### Code/project related questions can be sent to 
 * Kevin Sillerud, `kevin.sillerud@nav.no`

@@ -1,6 +1,9 @@
 import java.util.Date
 import org.gradle.api.tasks.bundling.Jar
 import de.marcphilipp.gradle.nexus.NexusPublishExtension
+import java.time.ZoneId
+import java.text.SimpleDateFormat
+import java.util.TimeZone
 
 plugins {
     java
@@ -11,8 +14,11 @@ plugins {
 }
 
 allprojects {
+    val dateFormat = SimpleDateFormat("yyyy.MM.dd-hh-mm")
+    dateFormat.timeZone = TimeZone.getTimeZone(ZoneId.of("Europe/Oslo"))
+    val gitHash = System.getenv("CIRCLE_SHA1") ?: "local-build"
     group = "no.nav.helse.xml"
-    version = "1.0.0"
+    version = "${dateFormat.format(Date())}-$gitHash"
 
     repositories {
         mavenCentral()

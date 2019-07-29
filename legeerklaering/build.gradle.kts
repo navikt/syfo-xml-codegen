@@ -13,5 +13,6 @@ tasks {
 
     withType<JavaCompile> {
         dependsOn(generateJaxb2)
+        options.encoding = "UTF-8"
     }
 }

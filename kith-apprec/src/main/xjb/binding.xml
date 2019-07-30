@@ -11,7 +11,7 @@
 
     </globalBindings>
 
-    <bindings schemaLocation="../xsd/AppRec-v1.1.xsd">
+    <bindings schemaLocation="../xsd/AppRec-v1.0.xsd">
         <schemaBindings>
             <nameXmlTransform>
                 <typeName prefix="XML"/>

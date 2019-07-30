@@ -47,6 +47,8 @@ open class Jaxb2Task : DefaultTask() {
                 ) {
                     if (it.binding != null) {
                         "arg"("value" to "-extension")
+                        "jvmarg"("value" to "-Djavax.xml.accessExternalSchema=all")
+                        "jvmarg"("value" to "-Djavax.xml.accessExternalDTD=all")
                         "binding"("dir" to xjbDir!!, "includes" to it.binding)
                     }
                 }

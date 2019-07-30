@@ -7,5 +7,25 @@
                       adapter="com.migesok.jaxb.adapter.javatime.LocalDateXmlAdapter" />
         <xjc:javaType name="java.time.LocalDateTime" xmlType="xs:dateTime"
                       adapter="com.migesok.jaxb.adapter.javatime.LocalDateTimeXmlAdapter" />
+
     </globalBindings>
+
+    <bindings schemaLocation="../xsd/MsgHead-v1_2.xsd">
+        <schemaBindings>
+            <nameXmlTransform>
+                <typeName prefix="XML"/>
+                <elementName prefix="XML"/>
+            </nameXmlTransform>
+        </schemaBindings>
+    </bindings>
+
+    <bindings schemaLocation="../xsd/xmldsig-core-schema.xsd">
+        <schemaBindings>
+            <nameXmlTransform>
+                <typeName prefix="XML"/>
+                <elementName prefix="XML"/>
+            </nameXmlTransform>
+        </schemaBindings>
+    </bindings>
+
 </bindings>

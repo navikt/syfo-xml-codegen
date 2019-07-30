@@ -4,7 +4,7 @@ tasks {
         sourceDir = file("$projectDir/src/main/xsd")
         config = listOf(
                 Jaxb2Config(
-                        targetPackage = "no.nav.helse.xmlEIFellesformat",
+                        targetPackage = "no.nav.helse.eiFellesformat",
                         schema = "Fellesformat_any.xsd",
                         encoding = "UTF-8"
                 )

@@ -6,7 +6,7 @@ tasks {
         xjbDir = file("$projectDir/src/main/xjb")
         config = listOf(
                 Jaxb2Config(
-                        targetPackage = "no.nav.helse.xmlMsgHead",
+                        targetPackage = "no.nav.helse.msgHead",
                         schema = "xsd/MsgHead-v1_2.xsd",
                         encoding = "UTF-8",
                         binding = "binding.xml"

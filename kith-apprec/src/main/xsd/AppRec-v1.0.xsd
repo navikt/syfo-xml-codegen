@@ -2,7 +2,7 @@
 <!-- edited with XMLSPY v2004 rel. 4 U (http://www.xmlspy.com) by Espen Stranger Seland (private) -->
 <!-- Edited by Espen Stranger Seland (KITH) -->
 <!-- Version 1.0 2004-11-21 -->
-<schema targetNamespace="http://www.kith.no/xmlstds/apprec/2004-11-21" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns:ar="http://www.kith.no/xmlstds/apprec/2004-11-21" xmlns="http://www.w3.org/2001/XMLSchema">
+<schema targetNamespace="http://www.kith.no/xmlstds/apprec/2004-11-21" elementFormDefault="qualified" attributeFormDefault="unqualified" xmlns:ar="http://www.kith.no/xmlstds/apprec/2004-11-21" xmlns:xsd="http://www.w3.org/2001/XMLSchema.xsd" xmlns="http://www.w3.org/2001/XMLSchema">
     <annotation>
         <documentation>Applikasjonsmelding</documentation>
     </annotation>

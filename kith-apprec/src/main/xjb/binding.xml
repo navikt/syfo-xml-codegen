@@ -1,6 +1,5 @@
 <bindings xmlns="http://java.sun.com/xml/ns/jaxb" version="2.1"
           xmlns:xjc="http://java.sun.com/xml/ns/jaxb/xjc"
-          xmlns:xsd="http://www.w3.org/2001/XMLSchema"
           xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
     <globalBindings>
@@ -12,6 +11,15 @@
     </globalBindings>
 
     <bindings schemaLocation="../xsd/AppRec-v1.0.xsd">
+        <schemaBindings>
+            <nameXmlTransform>
+                <typeName prefix="XML"/>
+                <elementName prefix="XML"/>
+            </nameXmlTransform>
+        </schemaBindings>
+    </bindings>
+
+    <bindings schemaLocation="../xsd/AppRec-v1.1.xsd">
         <schemaBindings>
             <nameXmlTransform>
                 <typeName prefix="XML"/>

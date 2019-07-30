@@ -5,7 +5,7 @@ tasks {
         xjbDir = file("$projectDir/src/main/xjb")
         config = listOf(
                 Jaxb2Config(
-                        targetPackage = "no.nav.helse.apprecV1-0",
+                        targetPackage = "no.nav.helse.apprecV1",
                         schema = "AppRec-v1.0.xsd",
                         encoding = "UTF-8",
                         binding = "binding.xml"

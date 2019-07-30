@@ -24,10 +24,6 @@
                 <choice>
                     <element ref="mh:Document" maxOccurs="unbounded"/>
                     <element ref="mh:PatientReport" maxOccurs="unbounded">
-                        <annotation>
-                            <documentation>
-                                Benyttes ved innrapportering av data til helseregistre.</documentation>
-                        </annotation>
                     </element>
                 </choice>
                 <element ref="ds:Signature" minOccurs="0"/>
@@ -37,11 +33,6 @@
     <!-- LEVEL 2 -->
     <!-- Class: Meldingsinformasjon (MsgInfo) -->
     <element name="MsgInfo">
-        <annotation>
-            <documentation>
-                Inneholder meldingsteksnisk informasjon relatert til meldingshodet.
-            </documentation>
-        </annotation>
         <complexType>
             <sequence>
                 <element name="Type" type="mh:CS"/>
@@ -61,11 +52,6 @@
     </element>
     <!-- Class: Pasientrapport (PatientReport) -->
     <element name="PatientReport">
-        <annotation>
-            <documentation>
-                Denne klassen benyttes ved innrapportering avdata til helseregistre.
-            </documentation>
-        </annotation>
         <complexType>
             <sequence>
                 <element name="DocumentConnection" type="mh:CS" minOccurs="0"/>
@@ -105,11 +91,6 @@
     </element>
     <!-- Class: Dokument (Document) -->
     <element name="Document">
-        <annotation>
-            <documentation>
-                Denne klassen benyttes ved overforing av dokumenter. Fagspesifikk informasjoner overfores fortrinnsvis i henhold til en gjeldende standard som regel spesifisert via et eget XML schema, og inkludert i meldingsinstansen i elementet Innhold (Content) under Referanse (RefDoc).
-            </documentation>
-        </annotation>
         <complexType>
             <sequence>
                 <element name="DocumentConnection" type="mh:CS" minOccurs="0"/>
@@ -123,22 +104,12 @@
                 <element name="OidRef" type="mh:oid" minOccurs="0"/>
                 <element name="EnquiryRefId" type="string" minOccurs="0"/>
                 <element ref="mh:RefDoc">
-                    <annotation>
-                        <documentation>
-                            Referanse/peker til det evt. vedlagte dokumentet. Dokumentet kan ligge direkte inkludert i innhold (Content), som et annet vedlegg i samme sending, eller finnes eksternt.  Naar tilsvarende informasjon ligger i eksisterende dokumentet, skal verdiene hentes fra (samsvare med) tilsvarende verdier i dokumentet.
-                        </documentation>
-                    </annotation>
                 </element>
             </sequence>
         </complexType>
     </element>
     <!-- Class: Referanse (RefDoc) -->
     <element name="RefDoc">
-        <annotation>
-            <documentation>
-                Referanse/peker til det evt. vedlagte dokumentet. Dokumentet kan ligge direkte inkludert i innhold (Content), som et annet vedlegg i samme sending, eller finnes eksternt.  Naar tilsvarende informasjon ligger i eksisterende dokumentet, skal verdiene hentes fra (samsvare med) tilsvarende verdier i dokumentet.
-            </documentation>
-        </annotation>
         <complexType>
             <sequence>
                 <element name="IssueDate" type="mh:TS" minOccurs="0"/>
@@ -166,11 +137,6 @@
     </element>
     <!-- Class: Dialogreferanse (ConversationRef) -->
     <element name="ConversationRef">
-        <annotation>
-            <documentation>
-                Referanse til tidligere meldinger som utgjor en konkret dialog eller konversasjon.   Klassen skal ikke benyttes for den forste meldingen i en konversasjon eller dialog.
-            </documentation>
-        </annotation>
         <complexType>
             <sequence>
                 <element name="RefToParent" type="string"/>
@@ -190,11 +156,6 @@
     <!-- LEVEL 4 -->
     <!-- Class: Pasient (Patient) -->
     <element name="Patient">
-        <annotation>
-            <documentation>
-                Informasjon som er knyttet til rollen som pasient.   Alle elementer er frivilige, men navn eller Id (Ident) maa alltid oppgis. Vanligvis oppgis baade navn og Id.
-            </documentation>
-        </annotation>
         <complexType>
             <sequence>
                 <element name="FamilyName" type="string" minOccurs="0"/>
@@ -228,11 +189,6 @@
     <!-- LEVEL 5 -->
     <!-- Class: Organisatorisk enhet (Organisation) -->
     <element name="Organisation">
-        <annotation>
-            <documentation>
-                Denne klassen benyttes til aa beskrive de organisatoriske enhetene som direkte eller indirekte er involvert i korrespondansen.   Hvis organisasjon oppgis som en hierarkisk struktur, skal hoyste nivaa av klassen tilsvare hoyeste nivaa i organisasjonen.
-            </documentation>
-        </annotation>
         <complexType>
             <sequence minOccurs="0">
                 <element name="OrganisationName" type="string"/>
@@ -247,11 +203,6 @@
     </element>
     <!-- Class: Helsepersonell (HealthcareProfessional) -->
     <element name="HealthcareProfessional">
-        <annotation>
-            <documentation>
-                For aa beskrive egenskaper ved personen som helsepersonell.
-            </documentation>
-        </annotation>
         <complexType>
             <sequence>
                 <element name="TypeHealthcareProfessional" type="mh:CS" minOccurs="0"/>
@@ -270,11 +221,6 @@
     </element>
     <!-- Felleskomponenter-->
     <complexType name="Address">
-        <annotation>
-            <documentation>
-                Adresseopplysninger.
-            </documentation>
-        </annotation>
         <sequence>
             <element name="Type" type="mh:CS" minOccurs="0"/>
             <element name="StreetAdr" type="string" minOccurs="0"/>
@@ -286,11 +232,6 @@
         </sequence>
     </complexType>
     <complexType name="TeleCom">
-        <annotation>
-            <documentation>
-                Inneholder opplysninger om telekommunikasjonsadresse, inklusive kommunikasjonstype. Denne klassen benyttes for aa registrere telefonnummer, telefaks, personsoker etc., knyttes opp mot de registrerte adressene.
-            </documentation>
-        </annotation>
         <sequence>
             <element name="TypeTelecom" type="mh:CS" minOccurs="0"/>
             <element name="TeleAddress" type="mh:URL"/>

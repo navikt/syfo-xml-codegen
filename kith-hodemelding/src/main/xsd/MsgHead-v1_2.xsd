@@ -13,7 +13,7 @@
 <!-- Patient/Ident minOccurs=1 endret til minOccurs=0 -->
 <!-- Lagt til stotte for XML Digital Signature -->
 <!-- www.kith.no -->
-<schema xmlns:mh="http://www.kith.no/xmlstds/msghead/2006-05-24" xmlns:xsd="http://www.w3.org/2001/XMLSchema.xsd" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" targetNamespace="http://www.kith.no/xmlstds/msghead/2006-05-24" elementFormDefault="qualified" attributeFormDefault="unqualified">
+<schema xmlns:mh="http://www.kith.no/xmlstds/msghead/2006-05-24" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" targetNamespace="http://www.kith.no/xmlstds/msghead/2006-05-24" elementFormDefault="qualified" attributeFormDefault="unqualified">
     <import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema.xsd"/>
     <!-- LEVEL 1 -->
     <!-- Class: Hodemelding (MsgHead) -->

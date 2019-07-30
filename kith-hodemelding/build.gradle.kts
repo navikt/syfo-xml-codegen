@@ -8,7 +8,7 @@ tasks {
                 Jaxb2Config(
                         targetPackage = "no.nav.helse.xmlMsgHead",
                         schema = "xsd/MsgHead-v1_2.xsd",
-                        encoding = "UTF-8",
+                        encoding = "ISO-8859-1",
                         binding = "binding.xml"
                 )
         )

@@ -7,11 +7,11 @@
 <!-- Lagt til RefDoc/FileReference -->
 <!-- Lagt til RefDoc/Compression -->
 <!-- Lagt inn choise mellom FileReference og Content -->
-<!-- Rettet feil på RefDoc/Content, processContent=strict -->
-<!-- Endret kardinalitet på Document/ContentDescription  fra 1..1 til 0..1 -->
+<!-- Rettet feil paa RefDoc/Content, processContent=strict -->
+<!-- Endret kardinalitet paa Document/ContentDescription  fra 1..1 til 0..1 -->
 <!-- Endringer siden versjon 1.0 2005-11-22: -->
 <!-- Patient/Ident minOccurs=1 endret til minOccurs=0 -->
-<!-- Lagt til støtte for XML Digital Signature -->
+<!-- Lagt til stotte for XML Digital Signature -->
 <!-- www.kith.no -->
 <schema xmlns:mh="http://www.kith.no/xmlstds/msghead/2006-05-24" xmlns:xsd="http://www.w3.org/2001/XMLSchema.xsd" xmlns="http://www.w3.org/2001/XMLSchema" xmlns:ds="http://www.w3.org/2000/09/xmldsig#" targetNamespace="http://www.kith.no/xmlstds/msghead/2006-05-24" elementFormDefault="qualified" attributeFormDefault="unqualified">
     <import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema.xsd"/>
@@ -107,7 +107,7 @@
     <element name="Document">
         <annotation>
             <documentation>
-                Denne klassen benyttes ved overføring av dokumenter. Fagspesifikk informasjoner overføres fortrinnsvis i henhold til en gjeldende standard som regel spesifisert via et eget XML schema, og inkludert i meldingsinstansen i elementet Innhold (Content) under Referanse (RefDoc).
+                Denne klassen benyttes ved overforing av dokumenter. Fagspesifikk informasjoner overfores fortrinnsvis i henhold til en gjeldende standard som regel spesifisert via et eget XML schema, og inkludert i meldingsinstansen i elementet Innhold (Content) under Referanse (RefDoc).
             </documentation>
         </annotation>
         <complexType>
@@ -125,7 +125,7 @@
                 <element ref="mh:RefDoc">
                     <annotation>
                         <documentation>
-                            Referanse/peker til det evt. vedlagte dokumentet. Dokumentet kan ligge direkte inkludert i innhold (Content), som et annet vedlegg i samme sending, eller finnes eksternt.  Når tilsvarende informasjon ligger i eksisterende dokumentet, skal verdiene hentes fra (samsvare med) tilsvarende verdier i dokumentet.
+                            Referanse/peker til det evt. vedlagte dokumentet. Dokumentet kan ligge direkte inkludert i innhold (Content), som et annet vedlegg i samme sending, eller finnes eksternt.  Naar tilsvarende informasjon ligger i eksisterende dokumentet, skal verdiene hentes fra (samsvare med) tilsvarende verdier i dokumentet.
                         </documentation>
                     </annotation>
                 </element>
@@ -136,7 +136,7 @@
     <element name="RefDoc">
         <annotation>
             <documentation>
-                Referanse/peker til det evt. vedlagte dokumentet. Dokumentet kan ligge direkte inkludert i innhold (Content), som et annet vedlegg i samme sending, eller finnes eksternt.  Når tilsvarende informasjon ligger i eksisterende dokumentet, skal verdiene hentes fra (samsvare med) tilsvarende verdier i dokumentet.
+                Referanse/peker til det evt. vedlagte dokumentet. Dokumentet kan ligge direkte inkludert i innhold (Content), som et annet vedlegg i samme sending, eller finnes eksternt.  Naar tilsvarende informasjon ligger i eksisterende dokumentet, skal verdiene hentes fra (samsvare med) tilsvarende verdier i dokumentet.
             </documentation>
         </annotation>
         <complexType>
@@ -168,7 +168,7 @@
     <element name="ConversationRef">
         <annotation>
             <documentation>
-                Referanse til tidligere meldinger som utgjør en konkret dialog eller konversasjon.   Klassen skal ikke benyttes for den første meldingen i en konversasjon eller dialog.
+                Referanse til tidligere meldinger som utgjor en konkret dialog eller konversasjon.   Klassen skal ikke benyttes for den forste meldingen i en konversasjon eller dialog.
             </documentation>
         </annotation>
         <complexType>
@@ -192,7 +192,7 @@
     <element name="Patient">
         <annotation>
             <documentation>
-                Informasjon som er knyttet til rollen som pasient.   Alle elementer er frivilige, men navn eller Id (Ident) må alltid oppgis. Vanligvis oppgis både navn og Id.
+                Informasjon som er knyttet til rollen som pasient.   Alle elementer er frivilige, men navn eller Id (Ident) maa alltid oppgis. Vanligvis oppgis baade navn og Id.
             </documentation>
         </annotation>
         <complexType>
@@ -230,7 +230,7 @@
     <element name="Organisation">
         <annotation>
             <documentation>
-                Denne klassen benyttes til å beskrive de organisatoriske enhetene som direkte eller indirekte er involvert i korrespondansen.   Hvis organisasjon oppgis som en hierarkisk struktur, skal høyste nivå av klassen tilsvare høyeste nivå i organisasjonen.
+                Denne klassen benyttes til aa beskrive de organisatoriske enhetene som direkte eller indirekte er involvert i korrespondansen.   Hvis organisasjon oppgis som en hierarkisk struktur, skal hoyste nivaa av klassen tilsvare hoyeste nivaa i organisasjonen.
             </documentation>
         </annotation>
         <complexType>
@@ -249,7 +249,7 @@
     <element name="HealthcareProfessional">
         <annotation>
             <documentation>
-                For å beskrive egenskaper ved personen som helsepersonell.
+                For aa beskrive egenskaper ved personen som helsepersonell.
             </documentation>
         </annotation>
         <complexType>
@@ -288,7 +288,7 @@
     <complexType name="TeleCom">
         <annotation>
             <documentation>
-                Inneholder opplysninger om telekommunikasjonsadresse, inklusive kommunikasjonstype. Denne klassen benyttes for å registrere telefonnummer, telefaks, personsøker etc., knyttes opp mot de registrerte adressene.
+                Inneholder opplysninger om telekommunikasjonsadresse, inklusive kommunikasjonstype. Denne klassen benyttes for aa registrere telefonnummer, telefaks, personsoker etc., knyttes opp mot de registrerte adressene.
             </documentation>
         </annotation>
         <sequence>

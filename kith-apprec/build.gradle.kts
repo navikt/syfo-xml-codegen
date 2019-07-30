@@ -7,7 +7,7 @@ tasks {
         config = listOf(
                 Jaxb2Config(
                         targetPackage = "no.nav.helse.apprec",
-                        schema = "AppRec-v1.1.xsd",
+                        schema = "AppRec-v1.0.xsd",
                         encoding = "UTF-8",
                         binding = "binding.xml"
                 )

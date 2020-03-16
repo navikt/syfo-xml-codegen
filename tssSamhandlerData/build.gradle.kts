@@ -5,8 +5,8 @@ tasks {
         xjbDir = file("$projectDir/src/main/xjb")
         config = listOf(
                 Jaxb2Config(
-                        targetPackage = "no.nav.helse.dialogmeldinger",
-                        schema = "dialogmelding.xsd",
+                        targetPackage = "no.nav.helse.tssSamhandlerData",
+                        schema = "TSSskjema_31-05-10.xsd",
                         encoding = "UTF-8",
                         binding = "binding.xml"
                 )

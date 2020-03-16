@@ -97,25 +97,26 @@ subprojects {
         publications {
             create<MavenPublication>("mavenJava") {
 
-                from(components["java"])
-                artifact(tasks.getByName("sourcesJar"))
-                artifact(tasks.getByName("javadocJar"))
+                //artifact(tasks.getByName("sourcesJar"))
+                //artifact(tasks.getByName("javadocJar"))
                 pom {
                     name.set("SYFO XML beans")
                     description.set("A collection of XML beans")
                     url.set("https://github.com/navikt/syfo-xml-codegen")
 
+                    /*
                     organization {
                         name.set("NAV (Arbeids- og velferdsdirektoratet) - The Norwegian Labour and Welfare Administration")
                         url.set("https://www.nav.no/")
-                    }
+                    }*/
 
+                    /*
                     developers {
                         developer {
                             organization.set("NAV (Arbeids- og velferdsdirektoratet) - The Norwegian Labour and Welfare Administration")
                             organizationUrl.set("https://www.nav.no/")
                         }
-                    }
+                    }*/
 
                     licenses {
                         license {
@@ -130,6 +131,7 @@ subprojects {
                         url.set("https://github.com/navikt/syfo-xml-codegen")
                     }
                 }
+                from(components["java"])
             }
         }
     }

@@ -8,7 +8,6 @@ import java.util.TimeZone
 plugins {
     java
     `maven-publish`
-    signing
     id("io.codearte.nexus-staging") version "0.21.0"
     id("de.marcphilipp.nexus-publish") version "0.2.0" apply false
 }
@@ -37,7 +36,6 @@ nexusStaging {
 subprojects {
     apply(plugin = "java")
     apply(plugin = "maven-publish")
-    apply(plugin = "signing")
     apply(plugin = "de.marcphilipp.nexus-publish")
 
     configure<NexusPublishExtension> {
@@ -134,11 +132,6 @@ subprojects {
                 from(components["java"])
             }
         }
-    }
-
-    signing {
-        useGpgCmd()
-        sign(publishing.publications["mavenJava"])
     }
 
     tasks {

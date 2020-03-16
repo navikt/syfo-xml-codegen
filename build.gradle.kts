@@ -1,8 +1,5 @@
 import java.util.Date
 import org.gradle.api.tasks.bundling.Jar
-import java.time.ZoneId
-import java.text.SimpleDateFormat
-import java.util.TimeZone
 
 plugins {
     java

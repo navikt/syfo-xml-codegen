@@ -87,15 +87,16 @@ subprojects {
     publishing {
         repositories {
             maven {
-                url = uri("https://oss.sonatype.org/service/local/staging/deploy/maven2")
-                this.credentials {
-                    username = System.getenv("SONATYPE_USERNAME")
-                    password = System.getenv("SONATYPE_PASSWORD")
+                url = uri("https://maven.pkg.github.com/navikt/syfo-xml-codegen")
+                credentials {
+                    username = System.getenv("GITHUB_USERNAME")
+                    password = System.getenv("GITHUB_PASSWORD")
                 }
             }
         }
         publications {
             create<MavenPublication>("mavenJava") {
+
                 from(components["java"])
                 artifact(tasks.getByName("sourcesJar"))
                 artifact(tasks.getByName("javadocJar"))

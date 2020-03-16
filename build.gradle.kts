@@ -13,11 +13,8 @@ plugins {
 }
 
 allprojects {
-    val dateFormat = SimpleDateFormat("yyyy.MM.dd-hh-mm")
-    dateFormat.timeZone = TimeZone.getTimeZone(ZoneId.of("Europe/Oslo"))
-    val gitHash = System.getenv("CIRCLE_SHA1") ?: "local-build"
     group = "no.nav.helse.xml"
-    version = "${dateFormat.format(Date())}-$gitHash"
+    version = properties["version"] ?: "local-build"
 
     repositories {
         mavenCentral()

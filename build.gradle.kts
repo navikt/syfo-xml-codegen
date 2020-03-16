@@ -1,6 +1,5 @@
 import java.util.Date
 import org.gradle.api.tasks.bundling.Jar
-import de.marcphilipp.gradle.nexus.NexusPublishExtension
 import java.time.ZoneId
 import java.text.SimpleDateFormat
 import java.util.TimeZone
@@ -10,6 +9,7 @@ plugins {
     `maven-publish`
     id("io.codearte.nexus-staging") version "0.21.0"
     id("de.marcphilipp.nexus-publish") version "0.2.0" apply false
+    id("org.sonarqube") version "2.7"
 }
 
 allprojects {
@@ -26,22 +26,9 @@ allprojects {
 
 }
 
-
-nexusStaging {
-    packageGroup = "no.nav"
-    username = System.getenv("SONATYPE_USERNAME")
-    password = System.getenv("SONATYPE_PASSWORD")
-}
-
 subprojects {
     apply(plugin = "java")
     apply(plugin = "maven-publish")
-    apply(plugin = "de.marcphilipp.nexus-publish")
-
-    configure<NexusPublishExtension> {
-        username.set(System.getenv("SONATYPE_USERNAME"))
-        password.set(System.getenv("SONATYPE_PASSWORD"))
-    }
 
     val jaxbBasicAntVersion = "1.11.1"
     val jaxbVersion = "2.3.0.1"
@@ -60,6 +47,15 @@ subprojects {
         implementation("javax.xml.bind:jaxb-api:2.3.0")
         implementation("org.glassfish.jaxb:jaxb-runtime:2.3.2")
         implementation("com.migesok", "jaxb-java-time-adapters", javaTimeAdapterVersion)
+    }
+
+    properties["sonarHost"]?.let { host ->
+        sonarqube {
+            properties {
+                property("sonar.sourceEncoding", "UTF-8")
+                property("sonar.host.url", host)
+            }
+        }
     }
 
     configure<JavaPluginConvention> {
@@ -95,26 +91,10 @@ subprojects {
         publications {
             create<MavenPublication>("mavenJava") {
 
-                //artifact(tasks.getByName("sourcesJar"))
-                //artifact(tasks.getByName("javadocJar"))
                 pom {
                     name.set("SYFO XML beans")
                     description.set("A collection of XML beans")
                     url.set("https://github.com/navikt/syfo-xml-codegen")
-
-                    /*
-                    organization {
-                        name.set("NAV (Arbeids- og velferdsdirektoratet) - The Norwegian Labour and Welfare Administration")
-                        url.set("https://www.nav.no/")
-                    }*/
-
-                    /*
-                    developers {
-                        developer {
-                            organization.set("NAV (Arbeids- og velferdsdirektoratet) - The Norwegian Labour and Welfare Administration")
-                            organizationUrl.set("https://www.nav.no/")
-                        }
-                    }*/
 
                     licenses {
                         license {

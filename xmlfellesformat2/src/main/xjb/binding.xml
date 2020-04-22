@@ -1,0 +1,10 @@
+<bindings xmlns="http://java.sun.com/xml/ns/jaxb" version="2.1">
+    <bindings schemaLocation="../xsd/Fellesformat2_any.xsd">
+        <schemaBindings>
+            <nameXmlTransform>
+                <typeName prefix="XML"/>
+                <elementName prefix="XML"/>
+            </nameXmlTransform>
+        </schemaBindings>
+    </bindings>
+</bindings>

@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?><xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://nav.no/melding/virksomhet/sykmeldingArbeidsgiver/v1/sykmeldingArbeidsgiver" xmlns:sykmeldingArbeidsgiver="http://nav.no/melding/virksomhet/sykmeldingArbeidsgiver/v1/sykmeldingArbeidsgiver">
+  <xsd:simpleType name="Identifikator">
+    <xsd:annotation>
+      <xsd:documentation>Felles identifikator</xsd:documentation>
+    </xsd:annotation>
+    <xsd:restriction base="xsd:string"/>
+  </xsd:simpleType>
+  <xsd:complexType name="Navn">
+    <xsd:annotation>
+      <xsd:documentation>Fornavn, mellomnavn og etternavn</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="etternavn" type="xsd:string">
+        <xsd:annotation>
+          <xsd:documentation>Etternavn</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="mellomnavn" type="xsd:string">
+        <xsd:annotation>
+          <xsd:documentation>Mellomnavn</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="fornavn" type="xsd:string">
+        <xsd:annotation>
+          <xsd:documentation>Fornavn</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="KontaktMedPasient">
+    <xsd:annotation>
+      <xsd:documentation>Kontakt med pasient</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="behandlet" type="xsd:dateTime">
+        <xsd:annotation>
+          <xsd:documentation>Ved å oppgi informasjonen nedenfor bekreftes at personen er kjent eller har vist legitimasjon</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="Prognose">
+    <xsd:annotation>
+      <xsd:documentation>Prognose</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element minOccurs="0" name="erArbeidsfoerEtterEndtPeriode" type="xsd:boolean">
+        <xsd:annotation>
+          <xsd:documentation>Arbeidsfør etter denne perioden?</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="beskrivHensynArbeidsplassen" type="xsd:string">
+        <xsd:annotation>
+          <xsd:documentation>Hvis arbeidsfør etter denne perioden: Beskriv eventuelle hensyn som må tas på arbeidsplassen.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="arbeidsutsikter" type="sykmeldingArbeidsgiver:Arbeidsutsikter">
+        <xsd:annotation>
+          <xsd:documentation>Utsikter for arbeid</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="Arbeidsutsikter">
+    <xsd:annotation>
+      <xsd:documentation>Brukers arbeidsutsikter</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element minOccurs="0" name="harEgetArbeidPaaSikt" type="xsd:boolean">
+        <xsd:annotation>
+          <xsd:documentation>Gjelder de MED arbeidsgiver</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="arbeidFom" type="xsd:date">
+        <xsd:annotation>
+          <xsd:documentation>Gjelder de UTEN arbeidsgiver</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="harAnnetArbeidPaaSikt" type="xsd:boolean"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="Tiltak">
+    <xsd:annotation>
+      <xsd:documentation>Innspill til tiltak som kan bedre arbeidsevnen</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element minOccurs="0" name="tiltakArbeidsplassen" type="xsd:string"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="Periode">
+    <xsd:annotation>
+      <xsd:documentation>Perioder for denne sykmeldingen.
+
+Sammenhengende perioder
+
+Ikke overlappende perioder</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="fom" type="xsd:date">
+        <xsd:annotation>
+          <xsd:documentation>Sykmeldingsperiodens fra og med dato</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="tom" type="xsd:date">
+        <xsd:annotation>
+          <xsd:documentation>Sykmeldingsperiodens til og med dato</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="aktivitet" type="sykmeldingArbeidsgiver:Aktivitet">
+        <xsd:annotation>
+          <xsd:documentation>Om arbeidsrelatert aktivitet er mulig i perioden</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="Pasient">
+    <xsd:annotation>
+      <xsd:documentation>Pasient</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="navn" type="sykmeldingArbeidsgiver:Navn">
+        <xsd:annotation>
+          <xsd:documentation>Pasientens navn</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="ident" type="sykmeldingArbeidsgiver:Identifikator">
+        <xsd:annotation>
+          <xsd:documentation>Pasientens fnr/dnr</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="Behandler">
+    <xsd:annotation>
+      <xsd:documentation>Behandler</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="navn" type="sykmeldingArbeidsgiver:Navn">
+        <xsd:annotation>
+          <xsd:documentation>Behandlers navn</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="telefonnummer" type="xsd:string">
+        <xsd:annotation>
+          <xsd:documentation>Behandlers kontaktinformasjon</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="Arbeidsgiver">
+    <xsd:annotation>
+      <xsd:documentation>Arbeidsgiver</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element minOccurs="0" name="navn" type="xsd:string">
+        <xsd:annotation>
+          <xsd:documentation>Navn på arbeidsgiver slik det fremkommer av sykmeldingen. Dette navnet fylles ut av lege.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="GradertSykmelding">
+    <xsd:annotation>
+      <xsd:documentation>Pasienten kan være delvis i arbeid (gradert sykmelding)</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="sykmeldingsgrad" type="xsd:int">
+        <xsd:annotation>
+          <xsd:documentation>Angitt sykemeldingsgrad</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="harReisetilskudd" type="xsd:boolean">
+        <xsd:annotation>
+          <xsd:documentation>Reisetilskudd ved gradert sykmelding</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:complexType name="AktivitetIkkeMulig">
+    <xsd:annotation>
+      <xsd:documentation>Pasienten kan ikke være i arbeid (100% Sykmelding)</xsd:documentation>
+    </xsd:annotation>
+    <xsd:all>
+      <xsd:element minOccurs="0" name="manglendeTilretteleggingPaaArbeidsplassen" type="xsd:boolean">
+        <xsd:annotation>
+          <xsd:documentation>Settes til true dersom arbeidsplassen mangler tilrettelegging</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="beskrivelse" type="xsd:string">
+        <xsd:annotation>
+          <xsd:documentation>Eventuell beskrivelse på hvorfor aktivitet ikke er mulig</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:all>
+  </xsd:complexType>
+  <xsd:complexType name="Aktivitet">
+    <xsd:annotation>
+      <xsd:documentation>Mulighet for aktivitet /arbeidsevne (A)</xsd:documentation>
+    </xsd:annotation>
+    <xsd:choice>
+      <xsd:element name="avventendeSykmelding" type="xsd:string">
+        <xsd:annotation>
+          <xsd:documentation>Pasienten kan benytte avventende sykmelding Legg inn innspill til arbeidsgiver</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="gradertSykmelding" type="sykmeldingArbeidsgiver:GradertSykmelding">
+        <xsd:annotation>
+          <xsd:documentation>Pasienten kan være delvis i arbeid (gradert sykmelding) Angi grad (mulighet for aktivitet)</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="aktivitetIkkeMulig" type="sykmeldingArbeidsgiver:AktivitetIkkeMulig">
+        <xsd:annotation>
+          <xsd:documentation>Pasienten kan ikke være i arbeid (100% Sykmelding)</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="antallBehandlingsdagerUke" type="xsd:int">
+        <xsd:annotation>
+          <xsd:documentation>Pasienten kan ikke være i arbeid på behandlingsdager Angi antall dager i uken</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="harReisetilskudd" type="xsd:boolean">
+        <xsd:annotation>
+          <xsd:documentation>Pasientenen kan være i fullt arbeid ved bruk av reisetilskudd</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:choice>
+  </xsd:complexType>
+  <xsd:complexType name="Sykmelding">
+    <xsd:annotation>
+      <xsd:documentation>Sykmeldingen</xsd:documentation>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="syketilfelleFom" type="xsd:date">
+        <xsd:annotation>
+          <xsd:documentation>Når Startet syketilfellet</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="pasient" type="sykmeldingArbeidsgiver:Pasient">
+        <xsd:annotation>
+          <xsd:documentation>Pasient</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="arbeidsgiver" type="sykmeldingArbeidsgiver:Arbeidsgiver">
+        <xsd:annotation>
+          <xsd:documentation>Arbeidsgiver oppgitt av behandler</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="perioder" type="sykmeldingArbeidsgiver:Periode">
+        <xsd:annotation>
+          <xsd:documentation>Mulighet for aktivitet /arbeidsevne (A)
+
+Sammenhengende, ikke overlappende perioder for denne sykmeldingen.</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="prognose" type="sykmeldingArbeidsgiver:Prognose">
+        <xsd:annotation>
+          <xsd:documentation>Prognose</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="tiltak" type="sykmeldingArbeidsgiver:Tiltak">
+        <xsd:annotation>
+          <xsd:documentation>Innspill til tiltak som kan bedre arbeidsevnen</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element minOccurs="0" name="meldingTilArbeidsgiver" type="xsd:string">
+        <xsd:annotation>
+          <xsd:documentation>Øvrige kommentarer: kontakt mellom lege/arbeidsgiver - melding fra behandler</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="kontaktMedPasient" type="sykmeldingArbeidsgiver:KontaktMedPasient"/>
+      <xsd:element name="behandler" type="sykmeldingArbeidsgiver:Behandler"/>
+    </xsd:sequence>
+  </xsd:complexType>
+  <xsd:element name="sykmeldingArbeidsgiver" type="sykmeldingArbeidsgiver:SykmeldingArbeidsgiver"/>
+  <xsd:complexType name="SykmeldingArbeidsgiver">
+    <xsd:annotation>
+      <xsd:documentation/>
+    </xsd:annotation>
+    <xsd:sequence>
+      <xsd:element name="sykmelding" type="sykmeldingArbeidsgiver:Sykmelding">
+        <xsd:annotation>
+          <xsd:documentation>Sykmeldingen</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="juridiskOrganisasjonsnummer" type="sykmeldingArbeidsgiver:Identifikator">
+        <xsd:annotation>
+          <xsd:documentation>Juridisk organisasjonsnummer for den bedriften den sykmeldte er knyttet til</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="virksomhetsnummer" type="sykmeldingArbeidsgiver:Identifikator">
+        <xsd:annotation>
+          <xsd:documentation>Virksomhetsnummer (undernummer/bedriftsnummer) for den bedriften den sykmeldte er knyttet til</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="sykmeldingId" type="sykmeldingArbeidsgiver:Identifikator">
+        <xsd:annotation>
+          <xsd:documentation>Sykmeldingens unike id</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+      <xsd:element name="mottattidspunkt" type="xsd:dateTime">
+        <xsd:annotation>
+          <xsd:documentation>Dato og tid for når sykmeldingen ble mottatt hos NAV</xsd:documentation>
+        </xsd:annotation>
+      </xsd:element>
+    </xsd:sequence>
+  </xsd:complexType>
+</xsd:schema>

@@ -1,0 +1,669 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<xs:schema xmlns="http://www.nav.no/xml/eiff/2/" xmlns:xs="http://www.w3.org/2001/XMLSchema"
+		   targetNamespace="http://www.nav.no/xml/eiff/2/" elementFormDefault="qualified" attributeFormDefault="unqualified">
+	<xs:element name="EI_fellesformat">
+		<xs:annotation>
+			<xs:documentation>Dette er rotnoden i fellesformatet som inneholder nyttedata, mottaksblokk, sporingsinfo og eventuelt apprec </xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:restriction base="xs:anyType">
+					<xs:sequence>
+						<xs:any minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:restriction>
+			</xs:complexContent>
+		</xs:complexType>
+		</xs:element>
+					<xs:element name="Content">
+						<xs:complexType>
+							<xs:complexContent>
+								<xs:restriction base="xs:anyType">
+									<xs:sequence>
+										<xs:any processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+									</xs:sequence>
+								</xs:restriction>
+							</xs:complexContent>
+						</xs:complexType>
+					</xs:element>
+
+				<xs:element name="MottakenhetBlokk">
+					<xs:annotation>
+						<xs:documentation>Dette elementet innholder den informasjon og de data som genereres i mottaket og som sendes med sykmelding/legeerklæringen for videre behandling innnover i systemet.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="MottakenhetBlokk_type"/>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="SporinformasjonBlokk" type="SporinformasjonBlokk_type">
+					<xs:annotation>
+						<xs:documentation>Dette elementet innholder data fra kjøringen av kontrollsystemet.
+							Denne blokken kan også legges ut av andre programmer som prosesserer meldingen gjennom systemet.</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+				<xs:element name="KontrollSystemBlokk">
+					<xs:annotation>
+						<xs:documentation>Dette elementet inneholder informasjon og data om/fra sykmeldingen/legeerklæringen som genereres i kontrollsystemet  </xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="KontrollsystemBlokk_type"/>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+
+	<xs:complexType name="SporinformasjonBlokk_type">
+		<xs:annotation>
+			<xs:documentation>Denne blokken inneholder informasjon som dokumenterer hvilket kontrollprogram, i hvilken versjon som ble kjørt når og hva resultatet av kjøringen var. Dette for å kunne gjøre sporing siden.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="programID" type="xs:string" use="required"/>
+		<xs:attribute name="programVersjonID" type="xs:string" use="required"/>
+		<xs:attribute name="programResultatKoder" type="xs:integer" use="required"/>
+		<xs:attribute name="tidsstempel" type="xs:dateTime" use="required">
+			<xs:annotation>
+				<xs:documentation>tidsstempelet skal være fra fra behandling av denne spesifikke meldingen, ikke et felles tidspunkt for behandling av en serie meldinger i en batch.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="ProsessdataElement_type">
+		<xs:annotation>
+			<xs:documentation>Generisk struktur for å lagre data som beregnes/avledes av regelmotor og prosess slik at disse kan brukes i etterfølgende deler av prosessen og også lagres i databasen.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="keyName" type="xs:string" use="required"/>
+		<xs:attribute name="stringValue" type="xs:string" use="required"/>
+		<xs:attribute name="valueType" type="xs:string" use="required"/>
+		<xs:attribute name="dateValue" type="xs:date" use="optional"/>
+		<xs:attribute name="intValue" type="xs:int" use="optional"/>
+		<xs:attribute name="floatValue" type="xs:double" use="optional"/>
+		<xs:attribute name="datetimeValue" type="xs:dateTime" use="optional"/>
+		<xs:attribute name="booleanValue" type="xs:boolean" use="optional"/>
+	</xs:complexType>
+	<xs:complexType name="KontrollsystemBlokk_type">
+		<xs:annotation>
+			<xs:documentation>Denne blokken inneholder resultater fra kontrollsystemets regelbehandling av den motatte meldingen og annen informasjon som er innhentet gjennom prosesseringen av en melding</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="NavnFraFolkeregister" type="typeNavnFF" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Navnet for personen angitt av personnummeret i sykmeldingen/legerklæringen slik det fremkommer i Folkeregisteret på kontrollstidspunktet.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="AvsenderNavn" type="typeNavnFF" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation> For fremtidig bruk mellom kontrollsysem og Infortrygd.
+						Navnet for avsender (legen) angitt av personnummeret i sykmeldingen/legerklæringen slik det fremkommer i Infotrygds mottagerregister på kontrolltidspunktet. For fremtidig bruk mellom kontrollsystem og Infotrygd. </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="InfotrygdBlokk" minOccurs="0" maxOccurs="unbounded">
+				<xs:annotation>
+					<xs:documentation>Elementet inneholder alle feltverdier som kontrollsystemet fant. Ved ny SM vil alle relevante felt bli sent med selv om de er kopier av SM. Ved endring (som også inneholder forlengelse) blir kun de endrede data lagt inn. Må kryssjekkes av motakende system. </xs:documentation>
+				</xs:annotation>
+				<xs:complexType>
+					<xs:complexContent>
+						<xs:extension base="typeInfotrygdBlokk"/>
+					</xs:complexContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="KontrollsystemSvarBlokk" type="typeSystemSvarBlokkFF" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Denne blokken inneholder alle svar/utfall fra kontrollsystemet.</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="ArkivBlokk" type="typeArkivBlokk" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>ArkivBlokk for Sykmelding og Legeerklæring</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Prosessdata" type="ProsessdataElement_type" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MottakenhetBlokk_type">
+		<xs:annotation>
+			<xs:documentation>Denne blokken samler informasjon generert i mottaket. Det er ikke beregnet at denne informasjonen skal endres etter at SM/LE har kommet ut av mottaket.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="ediLoggId" use="required">
+			<xs:annotation>
+				<xs:documentation>En identifikator til en logg i mottaket som er slik at med denne nøkkelen kan man spore denne meldingen tilbake til avsender.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:whiteSpace value="preserve"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="avsender" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Dette er mottakets nøkkel som mottaket setter for å senere kunne finne tilbake til rett avsender av denne SM/LE for å kunne sende kvittering. Data blir satt av mottaket og skal ikke endres etter at de er satt.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="ebXMLSamtaleId" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Dette er ebXML meldingens correlation id (samtale id) som er unik for alle xml meldinger og svar som tilhører samme opprinnelige melding.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="mottaksId" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Dette er ebXML-konvoluttens mottaksid.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="meldingsType" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Denne attributten viser den opprinnelige meldingens meldingstype.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="avsenderRef" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Dette er mottakets nøkkel som mottaket setter for å senere  kunne referere til rett kildemelding når mottaket skal sende kvittering. Data blir satt av mottaket og skal ikke endres etter at de er satt.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="avsenderFnrFraDigSignatur" use="optional">
+			<xs:annotation>
+				<xs:documentation>Dette feltet inneholder fødselsnr. til avsender av meldingen slik avsender er identifisert gjennom sin digitale signatur.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:whiteSpace value="collapse"/>
+					<xs:minLength value="11"/>
+					<xs:maxLength value="11"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="mottattDatotid" type="xs:dateTime" use="optional">
+			<xs:annotation>
+				<xs:documentation>Når meldingen ble tatt imot av mottaket (når den ble tatt til behandling av mottaket).</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="orgNummer" use="optional">
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:minLength value="9"/>
+					<xs:maxLength value="9"/>
+					<xs:whiteSpace value="collapse"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="avsenderOrgNrFraDigSignatur" use="optional">
+			<xs:annotation>
+				<xs:documentation>I inneholder orgnummer hentet fra DN i virksomhetsertifikat brukt for signering av melding.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:whiteSpace value="collapse"/>
+					<xs:minLength value="9"/>
+					<xs:maxLength value="9"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="partnerReferanse" use="optional">
+			<xs:annotation>
+				<xs:documentation>I inneholder referranse til partner som ikke er helseforetak.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:whiteSpace value="collapse"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="herIdentifikator" use="optional">
+			<xs:annotation>
+				<xs:documentation>I inneholder referranse til helseforetak.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:whiteSpace value="collapse"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="ebRole" use="optional">
+			<xs:annotation>
+				<xs:documentation>I inneholder ebXML Role parameter ( Fra_Role ).</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:whiteSpace value="collapse"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="ebService" use="optional">
+			<xs:annotation>
+				<xs:documentation>I inneholder ebXML Service parameter.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:whiteSpace value="collapse"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="ebAction" use="optional">
+			<xs:annotation>
+				<xs:documentation>I inneholder ebXML Action parameter.</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:whiteSpace value="collapse"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="typeSystemSvarFF">
+		<xs:annotation>
+			<xs:documentation>Dette elementet inneholder ett svar/utfall fra kontrollsystemet.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="meldingsNr" type="xs:integer" use="required">
+			<xs:annotation>
+				<xs:documentation>Et tall som identifisererer dette utfallet av kontrollsystem.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="meldingsTekst" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Tekst som beskriver utfallet av kontrollsystemet.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="meldingsPrioritet" type="xs:nonNegativeInteger" use="optional">
+			<xs:annotation>
+				<xs:documentation>Dette er et ordningstall som sorterer svarene etter viktighet. Lavt tall er først/viktigst.
+
+					1 - 4 </xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="meldingsHjelpURL" type="xs:anyURI" use="optional">
+			<xs:annotation>
+				<xs:documentation>Relevant i de tilfeller hvor meldingstype angir at det er en feil og hvor applikasjonssvaret skal sendes til bake til avsender.
+
+					Dette skal være en URL som peker på en webside hvor en avsender kan få mer informasjon om feilkoden og hva som må gjøres for å korrigere feilsituasjonen.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="meldingsType" type="typeSystemMeldingsTypeFF" use="required">
+			<xs:annotation>
+				<xs:documentation>Verdien angir om dette utfallet er en avvisningsgrunn, en opplysning til ved arkiver eller om det krever oppfølging.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="typeSystemSvarBlokkFF">
+		<xs:annotation>
+			<xs:documentation>Denne blokken inneholder ett sett svar/utfall fra kontrollsystemet.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="SystemSvar" type="typeSystemSvarFF" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="formOfLanguage" type="typeFormOfLanguageFF" use="required">
+			<xs:annotation>
+				<xs:documentation>Dette attributtet skal matche det inngående SM/LE formOfLanguage. Nå finnes ikke utfallene  fra kontrollsystemet på flere målføre, så det har p.t. ikke stor mening.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="sendersId" use="optional">
+			<xs:annotation>
+				<xs:documentation>Denne stringen skal være en tekst streng nøkkel som kontrollsystemet genererer for å kunne matche et mulig svar på eller referanse til kvitteringen som ble sendt. Nøkkelen skal ikke inneholde fødselsnummer eller informasjon som kan brukes til å spore pasienten om noen får tak i nøkkelen.
+
+					Husk at ved overføring av kvitteringen blir sender og receiver byttet om i forhold til den innsendte SM/LE. </xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:whiteSpace value="preserve"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="receiversId" use="optional">
+			<xs:annotation>
+				<xs:documentation>Denne stringen skal være den eksakt samme (string, whitespace preserved) som den innkommende SM/LEs sendersID. Husk at ved overføring av kvitteringen blir sender og receiver byttet om i forhold til den innsendte SM/LE.
+
+					Hvis innkommende SM/LE sendersID ikke er satt, så skal dette attributtet heller ikke settes. </xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:whiteSpace value="preserve"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="messageId" type="xs:string" use="required"/>
+		<xs:attribute name="tidsstempel" type="xs:dateTime" use="required">
+			<xs:annotation>
+				<xs:documentation>Tidsstempel som viser når disse svarende ble generert.
+				</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+	<xs:complexType name="typeInfotrygdBlokk">
+		<xs:annotation>
+			<xs:documentation>Denne blokken samler all informasjon som er lest ut av SM/LE og som er hentet fra omkringliggende systemer og som skal sende til Infotrygd.</xs:documentation>
+		</xs:annotation>
+		<xs:attribute name="fodselsnummer" type="xs:string" use="required"/>
+		<xs:attribute name="tkNummer" type="xs:string" use="required"/>
+		<xs:attribute name="forsteFravaersDag" type="xs:date" use="optional">
+			<xs:annotation>
+				<xs:documentation>Dette er arbufør FOM</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="mottakerKode" type="xs:string" use="optional"/>
+		<xs:attribute name="operasjonstype" type="xs:integer" use="required">
+			<xs:annotation>
+				<xs:documentation>Forklaring på hva slags oppdatering dette er (hvis det trengs).
+					1 = Ny SM
+					2 = Endring
+					3 = Forlengelse</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="behandlingsDato" type="xs:date" use="optional"/>
+		<xs:attribute name="arbeidsKategori" type="xs:string" use="optional"/>
+		<xs:attribute name="gruppe" type="xs:string" use="optional"/>
+		<xs:attribute name="saksbehandler" type="xs:string" use="optional"/>
+		<xs:attribute name="legeEllerInstitusjon" type="xs:string" use="optional"/>
+		<xs:attribute name="legeEllerInstitusjonsNummer" type="xs:integer" use="optional"/>
+		<xs:attribute name="hovedDiagnose" type="xs:string" use="optional"/>
+		<xs:attribute name="hovedDiagnoseGruppe" type="xs:integer" use="optional"/>
+		<xs:attribute name="hovedDiagnoseTekst" type="xs:string" use="optional"/>
+		<xs:attribute name="biDiagnose" type="xs:string" use="optional"/>
+		<xs:attribute name="biDiagnoseGruppe" type="xs:integer" use="optional"/>
+		<xs:attribute name="biDiagnoseTekst" type="xs:string" use="optional"/>
+		<xs:attribute name="arbeidsufoerTOM" type="xs:date" use="optional"/>
+		<xs:attribute name="ufoeregrad" type="xs:integer" use="optional"/>
+		<xs:attribute name="friskmeldtDato" type="xs:date" use="optional"/>
+		<xs:attribute name="erSvangerskapsrelatert" type="xs:boolean" use="optional"/>
+		<xs:attribute name="smDel2Dato" type="xs:date" use="optional"/>
+		<xs:attribute name="legeerklaringDato" type="xs:date" use="optional"/>
+		<xs:attribute name="erAvventendeSykmelding" type="xs:boolean" use="optional"/>
+		<xs:attribute name="avventendeSykmeldingTOM" type="xs:date" use="optional"/>
+	</xs:complexType>
+	<xs:simpleType name="typeSystemMeldingsTypeFF">
+		<xs:annotation>
+			<xs:documentation>Feil eller opplysning</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:appinfo source="Feil"/>
+					<xs:documentation>Dette indikerer at det er en sak som har feil i inputdata. Denne informasjonen kan sendes tilbake til avsender.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:appinfo>Opplysning
+					</xs:appinfo>
+					<xs:documentation>Dette indikerer at dette er en opplysning. Denne informasjonen er intern.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="3">
+				<xs:annotation>
+					<xs:appinfo>Oppfølging</xs:appinfo>
+					<xs:documentation>Dette indikerer at det er en sak som bør følges opp. Denne informasjonen er intern.</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="typeFormOfLanguageFF">
+		<xs:annotation>
+			<xs:documentation>Kodeverdier 1-2</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:nonNegativeInteger">
+			<xs:enumeration value="1">
+				<xs:annotation>
+					<xs:documentation>Bokmål</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="2">
+				<xs:annotation>
+					<xs:documentation>Nynorsk</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="typeAdressetypeFF">
+		<xs:annotation>
+			<xs:documentation>HL7-verdier</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="RES">
+				<xs:annotation>
+					<xs:documentation>Besøksadresse</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="PST">
+				<xs:annotation>
+					<xs:documentation>Postadresse</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="INV">
+				<xs:annotation>
+					<xs:documentation>Faktureringsadresse</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="TMP">
+				<xs:annotation>
+					<xs:documentation>Midlertidig adresse</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="BAD">
+				<xs:annotation>
+					<xs:documentation>Ubrukelig adresse</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="H">
+				<xs:annotation>
+					<xs:documentation>Bostedsadresse</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="HP">
+				<xs:annotation>
+					<xs:documentation>Folkeregistrert adresse</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="HV">
+				<xs:annotation>
+					<xs:documentation>Ferieadresse</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="WP">
+				<xs:annotation>
+					<xs:documentation>Arbeidsplass</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="ABC">
+				<xs:annotation>
+					<xs:documentation>Alfabetisk</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="SYL">
+				<xs:annotation>
+					<xs:documentation>Stavet</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+			<xs:enumeration value="IDE">
+				<xs:annotation>
+					<xs:documentation>Ideografisk</xs:documentation>
+				</xs:annotation>
+			</xs:enumeration>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="typeArkivBlokk">
+		<xs:annotation>
+			<xs:documentation>SMLE arkivblokk - alle dataene til arkivet</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="adresse" type="typeAdresseFF"/>
+			<xs:element name="Arbeidsforhold" type="typeArbeidsforhold" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="operasjonstype" use="required">
+			<xs:annotation>
+				<xs:documentation>1 = Automatisk oppdatert i Infotrygd
+					2 = Skal til saksbehandling
+					3 = Skal til oppfølging av saksbehandler
+					4 = Skal bare lagres
+					5 = Opplysninger til saksbehandler finnes i resultatene, men ingen oppfølging</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:integer">
+					<xs:enumeration value="1"/>
+					<xs:enumeration value="2"/>
+					<xs:enumeration value="3"/>
+					<xs:enumeration value="4"/>
+					<xs:enumeration value="5"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="nySak" type="xs:boolean" use="optional">
+			<xs:annotation>
+				<xs:documentation>Om kontrollsystemet finner at denne sykmeldingen IKKE skal høre inn under en ny sak, så skal under en eksisterende sak i infotrygd, så skal nySak = true. Default oppførsel om attributtet ikke er tilstede er som om nySak = false.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="mappetype" use="optional">
+			<xs:annotation>
+				<xs:documentation>Ref "Systemdokumentasjon automatisk import av XML-meldinger til Ephorte" kap 4.2.1
+					SP = Sykmelding, eller typeLegeerklaring = 1
+					RP = typeLegeerklaring = 2 el. 3
+					UP = typeLegeerklaring = 4
+				</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="SP"/>
+					<xs:enumeration value="RP"/>
+					<xs:enumeration value="UP"/>
+					<xs:enumeration value="YA"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="foersteFravaersdag" type="xs:date" use="optional"/>
+		<xs:attribute name="tkNummer" type="xs:string" use="optional"/>
+		<xs:attribute name="sperret" type="xs:boolean" use="optional"/>
+		<xs:attribute name="fodselsnummer" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>Pasientens fødselsnummer (lovlig og pasienten finnes i folkeregisteret). Er alltid med.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="hoveddiagnose" type="xs:string" use="optional"/>
+		<xs:attribute name="hoveddiagnoseGruppe" use="optional">
+			<xs:annotation>
+				<xs:documentation>1 = ICPC
+					2 = ICD-9
+					3 = ICD-10
+					4 = ICPC-1
+					5 = ICPC-2</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:integer">
+					<xs:enumeration value="1"/>
+					<xs:enumeration value="2"/>
+					<xs:enumeration value="3"/>
+					<xs:enumeration value="4"/>
+					<xs:enumeration value="5"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="hoveddiagnoseTekst" type="xs:string" use="optional"/>
+		<xs:attribute name="signaturDato" type="xs:date" use="optional">
+			<xs:annotation>
+				<xs:documentation>Legeunderskrift.signaturDato</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="ediLoggId" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>Entydig meldingsid opprettet i mottak (sporingsident) denne går tilbake til Sender. Må være søkbart i Arkivet</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="skjemaType" use="optional">
+			<xs:annotation>
+				<xs:documentation>SM eller LE</xs:documentation>
+			</xs:annotation>
+			<xs:simpleType>
+				<xs:restriction base="xs:string">
+					<xs:enumeration value="SM"/>
+					<xs:enumeration value="LE"/>
+					<xs:enumeration value="SMN"/>
+					<xs:enumeration value="LEN"/>
+					<xs:enumeration value="SM2011"/>
+					<xs:enumeration value="SM2013"/>
+				</xs:restriction>
+			</xs:simpleType>
+		</xs:attribute>
+		<xs:attribute name="smDel2" type="xs:boolean" use="optional"/>
+		<xs:attribute name="virksomhetsBeskrivelse" type="xs:string" use="optional"/>
+		<xs:attribute name="avsenderId" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Id på avsender . behandlers fnr i første omgang.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="avsenderIdType" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Type id som ligger i avsenderId attributtet (FNR, ORGNR etc)</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="diskresjonsKode" type="xs:integer" use="optional"/>
+	</xs:complexType>
+	<xs:element name="Etternavn" type="xs:string"/>
+	<xs:element name="Fornavn" type="xs:string"/>
+	<xs:element name="Mellomnavn" type="xs:string"/>
+	<xs:complexType name="typeNavnFF">
+		<xs:sequence>
+			<xs:element ref="Etternavn"/>
+			<xs:element ref="Fornavn"/>
+			<xs:element ref="Mellomnavn" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Teleinformasjon">
+		<xs:annotation>
+			<xs:documentation>Telekommunikasjonsadresse, inklusive kommunikasjonstype. Denne klassen benyttes for å registrere telefonnummer, telefaks, personsøker etc., knyttes opp mot de registrerte adressene.</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:string">
+					<xs:attribute name="typeTelekom" type="xs:string"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PostalAddress" type="typePostalAddressFF">
+		<xs:annotation>
+			<xs:documentation>Inneholder adresseopplysinger. Full adresse bestående av f.eks. gatenavn, husnummer, postnummer, poststed etc. Bør registreres ferdig linjedelt for utskrift.</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="typeAdresseFF">
+		<xs:sequence>
+			<xs:element ref="PostalAddress" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element ref="Teleinformasjon" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="adressetype" type="typeAdressetypeFF"/>
+	</xs:complexType>
+	<xs:complexType name="typePostalAddressFF">
+		<xs:sequence>
+			<xs:element name="StreetAddress" type="xs:string" minOccurs="0"/>
+			<xs:element name="PostalCode" type="xs:string" minOccurs="0"/>
+			<xs:element name="City" type="xs:string" minOccurs="0"/>
+			<xs:element name="Country" type="xs:string" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="typeArbeidsforhold">
+		<xs:annotation>
+			<xs:documentation>Data fra aaregisteret pr person.  Brukes ofte om pasient.</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Adresse" type="typeAdresseFF" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute name="organisasjonsNr" type="xs:string" use="required">
+			<xs:annotation>
+				<xs:documentation>Organisasjonsnr, eller fødselsnr for forenklet innrapportering.</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="organisasjonsNavn" type="xs:string" use="optional">
+			<xs:annotation>
+				<xs:documentation>Redigert navn som skal vises i arkivet</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="stillingsandel" type="xs:float" use="optional">
+			<xs:annotation>
+				<xs:documentation>antall timer i uken</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="erIAvirksomhet" type="xs:boolean" use="required">
+			<xs:annotation>
+				<xs:documentation>Er organisasjonen en IA bedrift?</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+		<xs:attribute name="erHovedarbeidsgiver" type="xs:boolean" use="required">
+			<xs:annotation>
+				<xs:documentation>Er dette hovedarbeidsforholdet (unik arbeidsgiver IKKE unik arbeidsforhold)</xs:documentation>
+			</xs:annotation>
+		</xs:attribute>
+	</xs:complexType>
+</xs:schema>

@@ -5,7 +5,7 @@ tasks {
         xjbDir = file("$projectDir/src/main/xjb")
         config = listOf(
                 Jaxb2Config(
-                        targetPackage = "no.nav.helse.arenaSykemelding",
+                        targetPackage = "no.nav.helse.arenadialognotat",
                         schema = "ArenaDialogNotat_1.xsd",
                         encoding = "UTF-8",
                         binding = "binding.xml"

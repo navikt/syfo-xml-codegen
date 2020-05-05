@@ -43,7 +43,7 @@
             <sequence>
                 <element name="TemaKodet" type="kith:CV"/>
                 <element name="Tema" type="string" minOccurs="0"/>
-                <element name="TekstNotatInnhold" type="anyType" minOccurs="0"/>
+                <element name="TekstNotatInnhold" type="string" minOccurs="0"/>
                 <element name="Merknad" type="string" minOccurs="0"/>
                 <element name="DokIdNotat" type="string" minOccurs="0"/>
                 <element name="DatoNotat" type="date" minOccurs="0"/>

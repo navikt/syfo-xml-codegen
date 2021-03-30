@@ -3,6 +3,13 @@
           xmlns:xsd="http://www.w3.org/2001/XMLSchema"
           xmlns:xs="http://www.w3.org/2001/XMLSchema">
 
+    <globalBindings>
+        <xjc:javaType name="java.time.LocalDate" xmlType="xs:date"
+                      adapter="com.migesok.jaxb.adapter.javatime.LocalDateXmlAdapter" />
+        <xjc:javaType name="java.lang.String" xmlType="xs:dateTime"
+                      adapter="javax.xml.bind.annotation.adapters.NormalizedStringAdapter" />
+    </globalBindings>
+
     <bindings schemaLocation="../xsd/AppRec-v1.0.xsd">
         <schemaBindings>
             <nameXmlTransform>

@@ -5,15 +5,15 @@ tasks {
         xjbDir = file("$projectDir/src/main/xjb")
         config = listOf(
                 Jaxb2Config(
-                        targetPackage = "no.nav.helse.sykSkanningMeta",
-                        schema = "syk_skanning_meta.xsd",
+                        targetPackage = "no.nav.helse.xml.sykmelding.arbeidsgiver",
+                        schema = "sykmeldingArbeidsgiver.xsd",
                         encoding = "UTF-8",
-                        binding = "binding.xml"
+                        binding = "binding.xjb"
                 )
         )
     }
-
     withType<JavaCompile> {
         dependsOn(generateJaxb2)
     }
 }
+

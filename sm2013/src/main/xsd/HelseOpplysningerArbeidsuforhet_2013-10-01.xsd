@@ -36,21 +36,6 @@
 									<documentation>Pasientens fødseslnummer</documentation>
 								</annotation>
 							</element>
-							<element name="KontaktInfo" type="fk1:TeleCom" minOccurs="0" maxOccurs="unbounded">
-								<annotation>
-									<documentation>tlf nr</documentation>
-								</annotation>
-							</element>
-							<element name="NavnFastlege" type="string" minOccurs="0">
-								<annotation>
-									<documentation>Navn på fastlege</documentation>
-								</annotation>
-							</element>
-							<element name="NAVKontor" type="string" minOccurs="0">
-								<annotation>
-									<documentation>NAV-kontor</documentation>
-								</annotation>
-							</element>
 						</sequence>
 					</complexType>
 				</element>
@@ -120,8 +105,7 @@ o Ingen arbeidsgiver"
 							</element>
 							<element name="AnnenFraversArsak" type="ho:ArsakType" minOccurs="0">
 								<annotation>
-									<documentation>Andre årsaker - lovfestet fraværsgrunn § 8-4, 3. ledd
-</documentation>
+									<documentation>Annen lovfestet fraværsgrunn § 8-4, 2. ledd - oppgis hvis relevant</documentation>
 								</annotation>
 							</element>
 							<element name="Svangerskap" type="boolean" minOccurs="0">
@@ -270,64 +254,6 @@ Ikke synlig for arbeidsgiver</documentation>
 Beskriv eventuelle hensyn som må tas på arbeidsplassen.</documentation>
 								</annotation>
 							</element>
-							<choice minOccurs="0">
-								<element name="ErIArbeid">
-									<annotation>
-										<documentation>Gjelder de MED arbeidsgiver</documentation>
-									</annotation>
-									<complexType>
-										<sequence>
-											<element name="EgetArbeidPaSikt" type="boolean" minOccurs="0">
-												<annotation>
-													<documentation>Antar du at pasienten på sikt kan komme tilbake i eget/arbeid/på egen arbeidsplass (helt/deltvis) oppgi dato</documentation>
-												</annotation>
-											</element>
-											<element name="ArbeidFraDato" type="date" minOccurs="0">
-												<annotation>
-													<documentation>Fra når
-</documentation>
-												</annotation>
-											</element>
-											<element name="AnnetArbeidPaSikt" type="boolean" minOccurs="0">
-												<annotation>
-													<documentation>Antar du at pasienten på sikt kan komme i annet arbeid?</documentation>
-												</annotation>
-											</element>
-											<element name="VurderingDato" type="date" minOccurs="0">
-												<annotation>
-													<documentation>Hvis usikker: Når antar du å kunne gi tilbakemelding på dette?
-</documentation>
-												</annotation>
-											</element>
-										</sequence>
-									</complexType>
-								</element>
-								<element name="ErIkkeIArbeid">
-									<annotation>
-										<documentation>Gjelder de UTEN arbeidsgiver</documentation>
-									</annotation>
-									<complexType>
-										<sequence>
-											<element name="ArbeidsforPaSikt" type="boolean" minOccurs="0">
-												<annotation>
-													<documentation>Antar du at pasienten på sikt kan bli arbeidsfør? </documentation>
-												</annotation>
-											</element>
-											<element name="ArbeidsforFraDato" type="date" minOccurs="0">
-												<annotation>
-													<documentation>Hvis arbeidsfør på sikt,  fra når
-</documentation>
-												</annotation>
-											</element>
-											<element name="VurderingDato" type="date" minOccurs="0">
-												<annotation>
-													<documentation>Hvis uavklart: Når antar du å kunne gi tilbakemelding på dette?</documentation>
-												</annotation>
-											</element>
-										</sequence>
-									</complexType>
-								</element>
-							</choice>
 						</sequence>
 					</complexType>
 				</element>
@@ -362,62 +288,13 @@ Beskriv eventuelle hensyn som må tas på arbeidsplassen.</documentation>
 						</sequence>
 					</complexType>
 				</element>
-				<element name="Tiltak" minOccurs="0">
-					<annotation>
-						<documentation>Innspill til tiltak som kan bedre arbeidsevnen 
-</documentation>
-					</annotation>
-					<complexType>
-						<sequence>
-							<element name="TiltakArbeidsplassen" type="string" minOccurs="0"/>
-							<element name="TiltakNAV" type="string" minOccurs="0"/>
-							<element name="AndreTiltak" type="string" minOccurs="0"/>
-						</sequence>
-					</complexType>
-				</element>
-				<element name="Oppfolgingsplan" minOccurs="0">
-					<annotation>
-						<documentation>Ooppfølgingsplan og dialog med arbeidsgiver</documentation>
-					</annotation>
-					<complexType>
-						<sequence>
-							<element name="MottattOppfolgingsplan" type="boolean" minOccurs="0">
-								<annotation>
-									<documentation>Mottatt oppfølgingsplan
-før vurdering av
-aktivitetskravet ved 8
-uker?</documentation>
-								</annotation>
-							</element>
-							<element name="InnkaltDialogmote1" type="boolean" minOccurs="0">
-								<annotation>
-									<documentation>Innkalt til dialogmote 1</documentation>
-								</annotation>
-							</element>
-							<element name="DeltattDialogmote1" type="boolean" minOccurs="0">
-								<annotation>
-									<documentation>Hvis Ja, deltok du?</documentation>
-								</annotation>
-							</element>
-							<element name="ArsakIkkeDeltatt" type="string" minOccurs="0">
-								<annotation>
-									<documentation>Hvis Nei, angi årsak:</documentation>
-								</annotation>
-							</element>
-						</sequence>
-					</complexType>
-				</element>
 				<element name="MeldingTilNav" minOccurs="0">
 					<complexType>
 						<sequence>
-							<element name="BistandNAVUmiddelbart" type="boolean">
-								<annotation>
-									<documentation>Bør NAV ta fatt i saken umiddelbart?</documentation>
-								</annotation>
-							</element>
 							<element name="BeskrivBistandNAV" type="string" minOccurs="0">
 								<annotation>
-									<documentation>Utdype/begrunne hvorfor NAV skal ta opp saken</documentation>
+									<documentation>Beskriv ønsket bistand fra NAV. For eksempel om det er behov for tiltak, dialogmøte eller oppfølging fra NAV. Her kan du også gi andre opplysninger til NAV, for eksempel vurdering av prognose.
+									</documentation>
 								</annotation>
 							</element>
 						</sequence>
@@ -425,7 +302,7 @@ uker?</documentation>
 				</element>
 				<element name="MeldingTilArbeidsgiver" type="string" minOccurs="0">
 					<annotation>
-						<documentation>Øvrige kommentarer: kontakt mellom lege/arbeidsgiver - melding fra behandler
+						<documentation>Innspill til arbeidsgiver, for eksempel tilrettelegging som bør tas på arbeidsplassen.
 </documentation>
 					</annotation>
 				</element>
@@ -445,7 +322,7 @@ Ved å oppgi informasjonen nedenfor bekreftes at personen er kjent eller har vis
 							</element>
 							<element name="BegrunnIkkeKontakt" type="string" minOccurs="0">
 								<annotation>
-									<documentation>Dokumentere hvorfor det ev. ikke er samsvar (eks kontakt tidligere) dersom sykmelding starter tidligere enn dato den skrives ut.</documentation>
+									<documentation>Begrunn årsaken til tilbakedateringen.</documentation>
 								</annotation>
 							</element>
 						</sequence>

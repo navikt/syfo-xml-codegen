@@ -1,6 +1,7 @@
 rootProject.name = "syfo-xml-codegen"
 include ("arenainfo-2")
 include ("sm2013")
+include ("sm2022")
 include ("legeerklaering")
 include ("fellesformat")
 include ("infotrygd-foresp")

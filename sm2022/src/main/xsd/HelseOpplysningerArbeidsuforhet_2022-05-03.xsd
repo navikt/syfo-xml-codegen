@@ -5,9 +5,9 @@
 -->
 <schema xmlns="http://www.w3.org/2001/XMLSchema" xmlns:xsd="http://www.w3.org/2001/XMLSchema.xsd"
         xmlns:kith="http://www.kith.no/xmlstds" xmlns:fk1="http://www.kith.no/xmlstds/felleskomponent1"
-        xmlns:ho="http://www.kith.no/xmlstds/HelseOpplysningerArbeidsuforhet/2013-10-01"
-        xmlns:ns1="http://www.kith.no/xmlstds/HelseOpplysningerArbeidsuforhet/2013-10-01"
-        targetNamespace="http://www.kith.no/xmlstds/HelseOpplysningerArbeidsuforhet/2013-10-01"
+        xmlns:ho="http://www.kith.no/xmlstds/HelseOpplysningerArbeidsuforhet/2022-05-03"
+        xmlns:ns1="http://www.kith.no/xmlstds/HelseOpplysningerArbeidsuforhet/2022-05-03"
+        targetNamespace="http://www.kith.no/xmlstds/HelseOpplysningerArbeidsuforhet/2022-05-03"
         elementFormDefault="qualified" attributeFormDefault="unqualified">
     <import namespace="http://www.kith.no/xmlstds" schemaLocation="./kith.xsd"/>
     <import namespace="http://www.kith.no/xmlstds/felleskomponent1" schemaLocation="./felleskomponent1.xsd"/>

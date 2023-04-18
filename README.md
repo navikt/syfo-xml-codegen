@@ -4,3 +4,13 @@ and publishing them to our internal nexus server. This project by itself doesn't
 
 ### Build status
 [![Build status](https://github.com/navikt/syfo-xml-codegen/workflows/Publish%20artifacts/badge.svg)](https://github.com/navikt/syfo-xml-codegen/workflows/Publish%20artifacts/badge.svg)
+
+### Contact
+
+This project is maintained by [navikt/teamsykmelding](CODEOWNERS)
+
+Questions and/or feature requests?
+Please create an [issue](https://github.com/navikt/syfo-xml-codegen/issues)
+
+If you work in [@navikt](https://github.com/navikt) you can reach us at the Slack
+channel [#team-sykmelding](https://nav-it.slack.com/archives/CMA3XV997)

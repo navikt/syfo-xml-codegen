@@ -6,7 +6,7 @@ tasks {
         config = listOf(
                 Jaxb2Config(
                         targetPackage = "no.nav.helse.tss.samhandler.data",
-                        schema = "TSSskjema_31-05-10.xsd",
+                        schema = "TSSskjema_22-03-18.xsd",
                         encoding = "UTF-8",
                         binding = "binding.xml"
                 )

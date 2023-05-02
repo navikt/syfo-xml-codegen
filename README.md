@@ -2,6 +2,9 @@
 Since multiple projects reuse the same xml files we have this gradle based project for generating java sources from xsds
 and publishing them to our internal nexus server. This project by itself doesn't do much. 
 
+Check GitHub releases to find the latest release version Check Github releases
+to find the latest release version
+
 ### Build status
 [![Build status](https://github.com/navikt/syfo-xml-codegen/workflows/Publish%20artifacts/badge.svg)](https://github.com/navikt/syfo-xml-codegen/workflows/Publish%20artifacts/badge.svg)
 

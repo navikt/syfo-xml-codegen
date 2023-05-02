@@ -1,4 +1,4 @@
-name: Publish artifacts
+name: Build artifacts
 on:
   push:
     branches:
@@ -21,10 +21,8 @@ jobs:
           key: ${{ runner.os }}-gradle-${{ hashFiles('**/.*gradle*') }}
           restore-keys: |
             ${{ runner.os }}-gradle-
-      - name: test and build
-        run: ./gradlew -Pversion="1.$(echo $GITHUB_SHA | cut -c1-7)-SNAPSHOT" build
-      - name: upload artifact
-        run: ./gradlew -Pversion="1.$(echo $GITHUB_SHA | cut -c1-7)-SNAPSHOT" publish
+      - name: build
+        run: ./gradlew build
         env:
           GITHUB_USERNAME: x-access-token
           GITHUB_PASSWORD: ${{ secrets.GITHUB_TOKEN }}

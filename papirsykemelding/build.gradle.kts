@@ -5,7 +5,7 @@ tasks {
         xjbDir = file("$projectDir/src/main/xjb")
         config = listOf(
                 Jaxb2Config(
-                        targetPackage = "no.nav.helse.sykskanningmeta",
+                        targetPackage = "no.nav.helse.papirsykemelding",
                         schema = "syk_skanning_meta.xsd",
                         encoding = "UTF-8",
                         binding = "binding.xml"

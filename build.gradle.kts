@@ -52,7 +52,7 @@ subprojects {
     }
 
     configure<JavaPluginConvention> {
-        sourceCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_11
     }
 
     ext["xjbOutputDir"] = file("$buildDir/generated-sources/jaxb2")

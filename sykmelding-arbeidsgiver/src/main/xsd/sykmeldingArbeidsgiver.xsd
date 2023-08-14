@@ -225,12 +225,12 @@ Ikke overlappende perioder</xsd:documentation>
       </xsd:element>
     </xsd:choice>
   </xsd:complexType>
-  <xsd:complexType name="EgenMeldingsdager">
+  <xsd:complexType name="Egenmeldingsdager">
     <xsd:annotation>
       <xsd:documentation>egenmeldingsdager</xsd:documentation>
     </xsd:annotation>
     <xsd:sequence>
-      <xsd:element minOccurs="0" name="dager" type="Dager">
+      <xsd:element name="dager" type="Dager">
       </xsd:element>
     </xsd:sequence>
   </xsd:complexType>
@@ -286,7 +286,7 @@ Sammenhengende, ikke overlappende perioder for denne sykmeldingen.</xsd:document
       </xsd:element>
       <xsd:element name="kontaktMedPasient" type="sykmeldingArbeidsgiver:KontaktMedPasient"/>
       <xsd:element name="behandler" type="sykmeldingArbeidsgiver:Behandler"/>
-      <xsd:element name="egenmeldingsdager" type="sykmeldingArbeidsgiver:EgenMeldingsdager"/>
+      <xsd:element minOccurs="0" name="egenmeldingsdager" type="sykmeldingArbeidsgiver:Egenmeldingsdager"/>
     </xsd:sequence>
   </xsd:complexType>
   <xsd:element name="sykmeldingArbeidsgiver" type="sykmeldingArbeidsgiver:SykmeldingArbeidsgiver"/>

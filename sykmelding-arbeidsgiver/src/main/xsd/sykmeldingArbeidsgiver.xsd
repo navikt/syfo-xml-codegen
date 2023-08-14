@@ -91,9 +91,9 @@
     <xsd:annotation>
       <xsd:documentation>Perioder for denne sykmeldingen.
 
-Sammenhengende perioder
+        Sammenhengende perioder
 
-Ikke overlappende perioder</xsd:documentation>
+        Ikke overlappende perioder</xsd:documentation>
     </xsd:annotation>
     <xsd:sequence>
       <xsd:element name="fom" type="xsd:date">
@@ -230,7 +230,7 @@ Ikke overlappende perioder</xsd:documentation>
       <xsd:documentation>egenmeldingsdager</xsd:documentation>
     </xsd:annotation>
     <xsd:sequence>
-      <xsd:element name="dager" type="Dager">
+      <xsd:element name="dager" type="sykmeldingArbeidsgiver:Dager">
       </xsd:element>
     </xsd:sequence>
   </xsd:complexType>
@@ -266,7 +266,7 @@ Ikke overlappende perioder</xsd:documentation>
         <xsd:annotation>
           <xsd:documentation>Mulighet for aktivitet /arbeidsevne (A)
 
-Sammenhengende, ikke overlappende perioder for denne sykmeldingen.</xsd:documentation>
+            Sammenhengende, ikke overlappende perioder for denne sykmeldingen.</xsd:documentation>
         </xsd:annotation>
       </xsd:element>
       <xsd:element minOccurs="0" name="prognose" type="sykmeldingArbeidsgiver:Prognose">
@@ -286,7 +286,7 @@ Sammenhengende, ikke overlappende perioder for denne sykmeldingen.</xsd:document
       </xsd:element>
       <xsd:element name="kontaktMedPasient" type="sykmeldingArbeidsgiver:KontaktMedPasient"/>
       <xsd:element name="behandler" type="sykmeldingArbeidsgiver:Behandler"/>
-      <xsd:element minOccurs="0" name="egenmeldingsdager" type="sykmeldingArbeidsgiver:Egenmeldingsdager"/>
+      <xsd:element name="egenmeldingsdager" type="sykmeldingArbeidsgiver:Egenmeldingsdager"/>
     </xsd:sequence>
   </xsd:complexType>
   <xsd:element name="sykmeldingArbeidsgiver" type="sykmeldingArbeidsgiver:SykmeldingArbeidsgiver"/>

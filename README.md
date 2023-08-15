@@ -1,12 +1,37 @@
+[![Build status](https://github.com/navikt/syfo-xml-codegen/workflows/Publish%20artifacts/badge.svg)](https://github.com/navikt/syfo-xml-codegen/workflows/Publish%20artifacts/badge.svg)
+
 # SYFO XML Codegen
-Since multiple projects reuse the same xml files we have this gradle based project for generating java sources from xsds
+Since multiple projects reuse the same xml files we have this gradle based project for generating java sources from xsd
 and publishing them to our internal nexus server. This project by itself doesn't do much. 
 
-Check GitHub releases to find the latest release version Check Github releases
+Check GitHub releases to find the latest release version Check GitHub releases
 to find the latest release version
 
-### Build status
-[![Build status](https://github.com/navikt/syfo-xml-codegen/workflows/Publish%20artifacts/badge.svg)](https://github.com/navikt/syfo-xml-codegen/workflows/Publish%20artifacts/badge.svg)
+
+## Technologies used
+
+* Kotlin
+* Gradle
+
+
+#### Requirements
+
+* JDK 11
+
+## Build
+
+``` bash 
+./gradlew build
+ ```
+
+
+### Upgrading the gradle wrapper
+
+Find the newest version of gradle here: https://gradle.org/releases/ Then run this command:
+
+``` bash
+./gradlew wrapper --gradle-version $gradleVersjon
+```
 
 ### Contact
 

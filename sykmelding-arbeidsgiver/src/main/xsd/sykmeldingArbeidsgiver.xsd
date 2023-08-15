@@ -230,7 +230,7 @@
       <xsd:documentation>egenmeldingsdager</xsd:documentation>
     </xsd:annotation>
     <xsd:sequence>
-      <xsd:element name="dager" type="xsd:date">
+      <xsd:element maxOccurs="unbounded" minOccurs="0" name="dager" type="xsd:date">
       </xsd:element>
     </xsd:sequence>
   </xsd:complexType>

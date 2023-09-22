@@ -6,6 +6,9 @@ on:
       - master
   pull_request:
     types: [opened, reopened, synchronize]
+
+permissions:
+  contents: write
     
 jobs:
   update_release_draft:

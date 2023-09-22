@@ -4,7 +4,10 @@ on:
     types: [published]
 env:
   NEW_VERSION: ${{ github.event.release.tag_name }}
-
+  
+permissions:
+  packages: write
+  
 jobs:
   build_and_release:
     runs-on: ubuntu-latest
